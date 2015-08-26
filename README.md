@@ -10,4 +10,4 @@ Latex files can be constructed using pdflatex.
 .ipynb notebooks can be launched from the command line with
 > ipython notebook -matplotlib
 
-Many course materials derived from Professor Massimiliano Fratoni.
+Many course materials derived from Professor Massimiliano Fratoni and "Nuclear Reactor Analysis" by Duderstadt and Hamilton.
