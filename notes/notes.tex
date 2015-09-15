@@ -147,11 +147,44 @@ Now, consider an infinite plane centered in a slab of finite thickness $a$, surr
 
 For $x > 0$, $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.
 
-\begin{equation*}
-\phi(x) = c_1cosh(\tfrac{x}{L}) + c_2sinh(\tfrac{x}{L})
-\end{equation*}
 
 Boundary conditions: 
 $\lim\limits_{x\rightarrow 0^+}\vec{J}(x) = \frac{S_0}{2}, \phi(\tfrac{\tilde{a}}{2}) = 0$
+
+For $x < 0$, $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.
+
+Boundary conditions: 
+$\lim\limits_{x\rightarrow 0^-}\vec{J}(x) = -\frac{S_0}{2}, \phi(-\tfrac{\tilde{a}}{2}) = 0$
+
+\begin{gather*}
+\phi(x) = c_1e^{-x/L} + c_2e^{x/L} \\
+\text{or} \\
+\phi(x) = c_1cosh(\tfrac{x}{L}) + c_2sinh(\tfrac{x}{L})
+\end{gather*}
+
+% 2013-10-03
+
+Now, consider a uniformly distributed source of strength $S_0 \tfrac{n}{cm^3s}$ within a finite slab of
+width $a$ with vacuum boundaries.
+
+\begin{equation*}
+\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S_0}{D}
+\end{equation*}
+
+\begin{equation*}
+\phi(x) = c_1e^{-x/L} + c_2e^{x/L} + \frac{S_0L^2}{D}
+\end{equation*}
+
+Boundary conditions: $\phi(\pm\tfrac{\tilde{a}}{2}) = 0$
+
+
+Alternative boundary condition: $\frac{d\phi(x)}{dx}\Bigr|_{x = 0} = 0$ (symmetry)
+
+
+Now, consider a uniform source in a reflected slab like so:
+
+\begin{center}
+\includegraphics[height=2.5 in]{../figs/ref_slab}
+\end{center}
 
 \end{document}
