@@ -168,7 +168,7 @@ Now, consider a uniformly distributed source of strength $S_0 \tfrac{n}{cm^3s}$ 
 width $a$ with vacuum boundaries.
 
 \begin{equation*}
-\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S_0}{D}
+\frac{d^2\phi(x)}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S_0}{D}
 \end{equation*}
 
 \begin{equation*}
@@ -186,5 +186,162 @@ Now, consider a uniform source in a reflected slab like so:
 \begin{center}
 \includegraphics[height=2.5 in]{../figs/ref_slab}
 \end{center}
+
+\begin{equation*}
+\frac{d^2\phi_2(x)}{dx_2^2} - \frac{1}{L_2^2}\phi_2(x) = -\frac{S_0}{D_2}, -\tfrac{a}{2}<x<\tfrac{a}{2}
+\end{equation*}
+
+Boundary conditions:
+
+\begin{gather*}
+\phi_2(\tfrac{a}{2}) = \phi_3(\tfrac{a}{2}) \\
+\vec{J}_2(\tfrac{a}{2}) = \vec{J}_3(\tfrac{a}{2}) \\
+\phi_1(-\tfrac{a}{2}) = \phi_2(-\tfrac{a}{2}) \\
+\vec{J}_1(-\tfrac{a}{2}) = \vec{J}_3(-\tfrac{a}{2}) 
+\end{gather*}
+
+\begin{equation*}
+\frac{d^2\phi_1(x)}{dx_1^2} - \frac{1}{L_1^2}\phi_1(x) = 0, -\infty<x<-\tfrac{a}{2}
+\end{equation*}
+
+\begin{equation*}
+\frac{d^2\phi_3(x)}{dx_3^2} - \frac{1}{L_3^2}\phi_3(x) = 0, \tfrac{a}{2}<x<\infty
+\end{equation*}
+
+Boundary conditions: 
+$\lim\limits_{x\to-\infty}|\phi_1(x)| <\infty, \lim\limits_{x\to\infty}|\phi_3(x)| < \infty$
+
+What if we want to solve a generic diffusion problem?
+
+\begin{equation*}
+D\nabla^2\phi(\rvec) - \Sigma_a\phi(\rvec) = -S(\rvec)
+\end{equation*}
+
+Working in 1D:
+
+\begin{equation*}
+M\phi(x) = f(x),\text{ where $M$ is an operator}
+\end{equation*}
+
+This is a non-homogenous order \emph{n} differential equation.
+
+\begin{equation*}
+a_0(x)\phi^{(n)}(x) + a_1(x)\phi^{(n-1)}(x) + \dotsc + a_n(x)\phi(x) = f(x)
+\end{equation*}
+
+One solution method is variation of constants.
+
+
+Homogeneous problem: $M\phi(x) = 0$.
+
+\begin{equation*}
+\phi_i(x), i = 1,\dotsc, n \text{ independent solutions}
+\end{equation*}
+
+\begin{equation*}
+\phi_{homog}(x) = \sum_{i=1}^n c_i\phi_i(x)
+\end{equation*}
+
+Assume that $c_i = c_i(x)$.
+
+\begin{equation*}
+\sum_{i=1}^n c_i\phi(x) = \phi_{particular}(x)
+\end{equation*}
+
+If $\sum_{i=1}^n c_i'\phi_i(x) = 0$, $\sum_{i=1}^n c_i'\phi^{(n)}_i(x) = 0$, 
+$\sum_{i=1}^n c_i'\phi^{(n-2)}_i(x) = 0$, etc.
+
+\begin{equation*}
+\sum_{i=1}^n c_i'\phi^{(n-1)}_i(x) = \frac{f(x)}{a_0(x)}
+\end{equation*}
+
+\begin{equation*}
+c_i(x) = \int dxc_i'(x)
+\end{equation*}
+
+For n = 2:
+\vspace{-5 mm}
+\begin{gather*}
+\phi_1(x)c_1'(x) + \phi_2(x)c_2'(x) = 0 \\
+\phi_1^{(1)}(x)c_1'(x) + \phi_2^{(1)}(x)c_2'(x) = \frac{f(x)}{a_0(x)} \\
+\phi_{part} = c_1(x)\phi_1(x) + c_2(x)\phi_2(x) \\
+a_0(x)\phi^{(2)}(x) + a_1(x)\phi^{(1)}(x) + a_2(x)\phi(x) = 0 \\
+\phi^{(1)}(x) = c_1'(x)\phi_1(x) + c_1(x)\phi_1'(x) + c_2'(x)\phi_2(x) + c_2(x)\phi_2'(x)
+\end{gather*}
+
+\begin{equation*}
+c_i(x) = \int dx c_i'(x) = A_i + \psi_i(x)
+\end{equation*}
+
+\begin{equation*}
+\phi(x) = \sum_{i=1}^n A_i\phi_i(x) + \sum_{i=1}^n \psi_i(x)\phi_i(x)
+\end{equation*}
+
+For n = 2: $\phi(x) = A_1\phi_1(x) + A_2\phi_2(x) + \psi_1(x)\phi_1(x) + \psi_2(x)\phi_2(x)$
+
+
+For a plane source in an infinite medium:
+
+\begin{equation*}
+\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S\delta(x)}{D}
+\end{equation*}
+
+Homogeneous problem: $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x)=0,\phi_1(x)=e^{-x/L},\phi_2(x)=e^{x/L}$
+
+\begin{equation*}
+e^{-x/L}c_1'(x) + e^{x/L}c_2'(x) = 0
+\end{equation*}
+
+\begin{equation*}
+-\frac{e^{-x/L}}{L}c_1'(x) + \frac{e^{x/L}}{L}c_2'(x) = -\frac{S}{D}\delta(x)
+\end{equation*}
+
+\begin{equation*}
+\phi_{part}(x) = c_1(x)\phi_1(x) + c_2(x)\phi_2(x)
+\end{equation*}
+
+\begin{equation*}
+c_1'(x) = \frac{SL}{2D}\delta(x)e^{x/L}
+\end{equation*}
+
+\begin{equation*}
+c_2'(x) = -\frac{SL}{2D}\delta(x)e^{-x/L}
+\end{equation*}
+
+\begin{equation*}
+c_1(x) = \int_{-\infty}^x dx\frac{SL}{2D}\delta(x)e^{x/L} = \frac{SL}{2D}H(x),
+\text{ where $H(x)$ is the Heaviside step function}
+\end{equation*}
+
+\begin{equation*}
+  H(x)=\begin{cases}
+    1, & x > 0 \\
+    \tfrac{1}{2}, & x = 0 \\
+    0, & x > 0
+  \end{cases}
+\end{equation*}
+
+\begin{equation*}
+c_2(x) = \int_{-\infty}^x dx\frac{-SL}{2D}\delta(x)e^{-x/L} = -\frac{SL}{2D}H(x),
+\end{equation*}
+
+\begin{equation*}
+\phi(x) = A_1\phi_1(x) + A_2\phi_2(x) + c_1(x)\phi_1(x) + c_2(x)\phi_2(x)
+\end{equation*}
+
+\begin{equation*}
+\phi(x) = \left(A_1 + \frac{SL}{2D}H(x)\right)e^{-x/L} + \left(A_2 - \frac{SL}{2D}H(x)\right)e^{x/L}
+\end{equation*}
+
+Boundary conditions:
+\vspace{-5 mm}
+\begin{gather*}
+\lim\limits_{x\to\infty}|\phi(x)\ < \infty \rightarrow A_2 = \frac{SL}{2D} \\
+\lim\limits_{x\to-\infty}|\phi(x)\ < \infty \rightarrow A_1 = 0
+\end{gather*}
+
+\begin{equation*}
+\phi(x) = \frac{SL}{2D}H(x)e^{-x/L} + \frac{SL}{2D}[1-H(x)]e^{x/L} = \frac{SL}{2D}e^{-|x|/L}
+\end{equation*}
 
 \end{document}
