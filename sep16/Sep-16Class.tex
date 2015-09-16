@@ -109,12 +109,14 @@ Rearranging the current equation gives:
 \begin{equation*}
 \frac{1}{|\vec{J}(\rvec,t)|}\frac{\partial\vec{J}(\rvec,t)}{\partial t} 
 = \frac{\bar{\mu_0}\Sigma_sv\vec{J}(\rvec,t)}{|\vec{J}(\rvec,t)|} - v\Sigma_t 
-- \frac{1}{3|\vec{J}(\rvec,t)|}\nabla\phi(\rvec,t)
+- \frac{v}{3|\vec{J}(\rvec,t)|}\nabla\phi(\rvec,t)
 \end{equation*}
 
 In general, $\frac{1}{|\vec{J}(\rvec,t)|}\frac{\partial\vec{J}(\rvec,t)}{\partial t} \ll v\Sigma_t$, so we
-assume/approximate $\frac{1}{|\vec{J}(\rvec,t)|}\frac{\partial\vec{J}(\rvec,t)}{\partial t} \approx 0$.
-The current equation then becomes
+assume/approximate $\frac{1}{|\vec{J}(\rvec,t)|}\frac{\partial\vec{J}(\rvec,t)}{\partial t}\approx 0$. The
+collision frequency $v\Sigma_t$ is typically on the order of $10^5$ sec${^-1}$ or larger, so only an
+extremely rapid time variation of the current would invalidate this assumption (such rapid changes are
+very rarely encountered in reactor dynamics). The current equation then becomes
 
 \begin{equation*}
 \vec{J}(\rvec,t) = \frac{-1}{3(\Sigma_t - \bar{\mu_0}\Sigma_s)}\nabla\phi(\rvec,t),
