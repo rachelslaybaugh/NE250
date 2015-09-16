@@ -429,4 +429,105 @@ G(x,x') = \frac{L}{2D}H(x-x')e^{-(x-x')/L} + \frac{L}{2D}[1-H(x-x')]e^{x-x'}
 \phi(x) = \frac{SL}{2D}e^{-|x|/L}
 \end{equation*}
 
+\underline{Eigenfunction expansion method}
+
+Term definitions:
+
+$Hf = \lambda f$
+
+$f =$ function
+
+$H =$ operator
+
+$\lambda =$ scalar value
+
+$f_n =$ eigenfunction
+
+$\lambda_n =$ eigenvalue
+
+
+\emph{Example}: $x = x \rightarrow H = 1, f = x, \lambda = 1$ 
+
+Consider a fairly general diffusion problem in a homogeneous volume.
+
+\begin{equation*}
+\nabla^2\phi(\vecr) - \frac{1}{L^2}\phi(\vecr) = -\frac{S(\rvec)}{D}, \forall \rvec \in V
+\end{equation*}
+
+\begin{equation*}
+\phi(\rvec) = 0 \quad\forall \rvec \in S
+\end{equation*}
+
+Eigenproblem:
+
+\begin{equation*}
+\nabla^2\psi_n(\rvec) + B_n^2\psi_n(\rvec) = 0 \quad\forall \rvec \in V
+\end{equation*}
+
+\begin{equation*}
+\nabla^2\psi_n(\rvec) = - B_n^2\psi_n(\rvec) \quad(H = \nabla^2, \lambda = -B_n^2)
+\end{equation*}
+
+\begin{equation*}
+\psi_n(\rvec) = 0 \quad\forall \rvec \in S
+\end{equation*}
+
+Orthonormality:
+
+\begin{equation*}
+\int_V dV\psi_n(\rvec)\psi_m(\rvec) = \text{1 if n = m, 0 if n $\neq$ m}
+\end{equation*}
+
+Complete set:
+
+\begin{equation*}
+\int_V dV\left(f - \sum_{n=1}^N f_n\psi_n\right)^2 < \varepsilon \qquad 
+\text{(for large N and small but positive $\varepsilon$)}
+\end{equation*}
+
+\begin{equation*}
+\phi(\rvec) \approx \sum_{n=1}^N c_n\psi_n(\rvec)
+\end{equation*}
+
+\begin{equation*}
+\nabla^2\sum_{n=1}^N c_n\psi_n(\rvec) - \Sigma_a\sum_{n=1}^N c_n\psi_n(\rvec) = 
+-\frac{1}{D}\sum_{n=1}^N s_n\psi_n(\rvec)
+\end{equation*}
+
+\begin{equation*}
+\sum_{n=1}^N c_n[\nabla^2\psi_n(\rvec) - \Sigma_a\psi_n(\rvec)]=-\frac{1}{D}\sum_{n=1}^N s_n\psi_n(\rvec)
+\end{equation*}
+
+\begin{equation*}
+\sum_{n=1}^N c_n(B_n^2 + \Sigma_a)\psi_n(\rvec) = \frac{1}{D}\sum_{n=1}^N s_n\psi_n(\rvec)
+\end{equation*}
+
+\begin{equation*}
+\int_V dV \sum_{n=1}^N c_n(B_n^2 + \Sigma_a)\psi_n(\rvec)\psi_m(\rvec) = 
+\int_V dV \frac{1}{D}\sum_{n=1}^N s_n\psi_n(\rvec)\psi_m(\rvec)
+\end{equation*}
+
+Due to orthonormality,
+
+\begin{equation*}
+c_n(B_n^2 + \Sigma_a) = \frac{1}{D}s_n
+\end{equation*}
+
+\begin{equation*}
+c_n = \frac{\frac{s_n}{\Sigma_a}}{1+\frac{B_n^2}{L}}
+\end{equation*}
+
+\begin{equation*}
+s_n = \int_V dV S(\rvec)\psi_n(\rvec)
+\end{equation*}
+
+\begin{equation*}
+\phi(\rvec) \approx \sum_{n=1}^N c_n\psi_n(\rvec) = 
+\int_V dV \frac{1}{\Sigma_a} \sum_{n=1}^N \frac{\psi_n(\rvec')}{1+L^2B_n^2}\psi_n(\rvec)S(\rvec')
+\end{equation*}
+
+\begin{equation*}
+\frac{1}{\Sigma_a} \sum_{n=1}^N \frac{\psi_n(\rvec')}{1+L^2B_n^2}\psi_n(\rvec) = \text{Green's function}
+\end{equation*}
+
 \end{document}
