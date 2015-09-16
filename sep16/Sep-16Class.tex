@@ -147,23 +147,23 @@ diffusion equation is valid a few mean paths away from a source or a boundary bu
 highly absorbing media.
 
 
-Now, assume an isotropic flux $\phi(\rvec,E,\omvec,t)$. The net current, $\vec{J}(\rvec,\omvec,t)$i, is 
+Now, assume an isotropic flux $\phi(\rvec,E,\omvec,t)$. The net current, $\vec{J}(\rvec,E,\omvec,t)$, is 
 then zero.
 
 
-Next, consider $J_x(\rvec,\omvec,t) > 0, J_y(\rvec,\omvec,t) = J_z(\rvec,\omvec,t) = 0$.
+Next, consider $J_x(\rvec,E,\omvec,t) > 0, J_y(\rvec,E,\omvec,t) = J_z(\rvec,E,\omvec,t) = 0$.
 
 
 With the $P_1$ approximation, we have
 
 \begin{equation*}
-\phi(\rvec,E,\omvec,t)\approx\frac{1}{4\pi}\phi(\rvec,E,t)+\frac{3}{4\pi}\nabla\vec{J}(\rvec,t)\cdot\omvec
+\phi(\rvec,E,\omvec,t)\approx\frac{1}{4\pi}\phi(\rvec,E,t)+\frac{3}{4\pi}\vec{J}(\rvec,E,t)\cdot\omvec
 \end{equation*}
 
 In order for both sides of this equation to be positive, it is required that
 
 \begin{equation*}
--\vec{J}(\rvec,t)\cdot\omvec < \frac{1}{3}\phi(\rvec,E,t).
+-\vec{J}(\rvec,E,t)\cdot\omvec < \frac{1}{3}\phi(\rvec,E,t).
 \end{equation*}
 
 For this to be valid, we require that
@@ -215,7 +215,7 @@ $\forall\rvec_s \in S, S \equiv \partial V, \forall E, \forall \omvec: \omvec\cd
 \end{minipage}
 
 \begin{equation*}
-\vec{J}(\rvec,t) = \int_{4\pi}d\omvec\omvec\phi(\rvec,E,\omvec,t) = \text{current at $\rvec$}
+\vec{J}(\rvec,E,t) = \int_{4\pi}d\omvec\omvec\phi(\rvec,E,\omvec,t) = \text{current at $\rvec$}
 \end{equation*}
 
 \begin{equation*}
