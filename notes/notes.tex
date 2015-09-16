@@ -106,7 +106,7 @@ Now, consider a plane source of strength $S_0$ in an infinitely absorbing medium
 \end{equation*}
 
 \begin{equation*}
-\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S_0\delta(x)}{D}
+\frac{d^2\phi(x)}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S_0\delta(x)}{D}
 \end{equation*}
 
 For $x > 0$, $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.
@@ -283,7 +283,7 @@ For n = 2: $\phi(x) = A_1\phi_1(x) + A_2\phi_2(x) + \psi_1(x)\phi_1(x) + \psi_2(
 For a plane source in an infinite medium:
 
 \begin{equation*}
-\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S\delta(x)}{D}
+\frac{d^2\phi(x)}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S\delta(x)}{D}
 \end{equation*}
 
 Homogeneous problem: $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x)=0,\phi_1(x)=e^{-x/L},\phi_2(x)=e^{x/L}$
@@ -342,6 +342,91 @@ Boundary conditions:
 
 \begin{equation*}
 \phi(x) = \frac{SL}{2D}H(x)e^{-x/L} + \frac{SL}{2D}[1-H(x)]e^{x/L} = \frac{SL}{2D}e^{-|x|/L}
+\end{equation*}
+
+%2013-10-8
+
+Other solution methods include the use of Green's function and the eigenfunction expansion method.
+
+\underline{Green's function}
+
+\begin{equation*}
+\nabla\cdot[D(\rvec)\nabla\phi(\rvec)] - \Sigma_a\phi(\vecr) = -S(\rvec), \forall \vecr \in V
+\end{equation*}
+
+\begin{equation*}
+\phi(\rvec) = 0, \forall \vecr \in S \equiv \partial V
+\end{equation*}
+
+Consider a unit source at $\rvec'$.
+
+
+$G(\rvec,\rvec') = $ flux at $\rvec$ due to a unit source $\rvec'$
+
+\begin{equation*}
+\nabla\cdot[D(\rvec)\nabla G(\rvec,\rvec')] - \Sigma_a G(\rvec,\rvec') = -\delta(\rvec - \rvec'), 
+\forall \rvec \in V
+\end{equation*}
+
+\begin{equation*}
+G(\rvec,\rvec') = 0, \forall \vecr \in S \equiv \partial V
+\end{equation*}
+
+\begin{multline*}
+\int_V dV \left\{\nabla\cdot[D(\rvec)\nabla\phi(\rvec)]G(\rvec,\rvec') - 
+\nabla\cdot[D(\rvec)\nabla G(\rvec,\rvec')]\phi(\rvec)\right\} \\
+= \int_S dS \hat{e}_s\cdot D(\rvec)[\nabla\phi(\rvec)\times G(\rvec,\rvec') - 
+\phi(\rvec)\nabla G(\rvec,\rvec')] = 0
+\end{multline*}
+
+\begin{equation*}
+\int_V dV \left\{S(\rvec)G(\rvec,\rvec') - \delta(\rvec-\rvec')\phi(\rvec)\right\} = 0
+\end{equation*}
+
+\begin{equation*}
+\phi(\rvec') = \int_V dVS(\rvec)G(\rvec,\rvec')
+\end{equation*}
+
+\begin{equation*}
+\phi(\rvec) = \int_V dVS(\rvec')G(\rvec',\rvec)
+\end{equation*}
+
+Green's function (``kernel"): $G(\rvec,\rvec') = G(\rvec',\rvec)$
+
+
+The challenge is: how do we determine Green's function?
+
+
+Consider a plane source in an infinite medium.
+
+\begin{equation*}
+\frac{d^2\phi(x)}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S}{D}\delta(x)
+\end{equation*}
+
+\begin{equation*}
+\lim\limits_{x\to\pm\infty}\phi(x) = 0
+\end{equation*}
+
+\begin{equation*}
+\frac{d^2 G(x,x')}{dx^2} - \frac{1}{L^2}G(x,x') = -\frac{\delta(x-x')}{D}
+\end{equation*}
+
+\begin{equation*}
+\lim\limits_{x\to\pm\infty}G(x,x') = 0
+\end{equation*}
+
+Using variation of constants:
+
+\begin{equation*}
+G(x,x') = \frac{L}{2D}H(x-x')e^{-(x-x')/L} + \frac{L}{2D}[1-H(x-x')]e^{x-x'}
+\end{equation*}
+
+\begin{equation*}
+\phi(x) = \int_{-\infty}^{\infty}dx'G(x,x')\delta(x')S
+\end{equation*}
+
+\begin{equation*}
+\phi(x) = \frac{SL}{2D}e^{-|x|/L}
 \end{equation*}
 
 \end{document}
