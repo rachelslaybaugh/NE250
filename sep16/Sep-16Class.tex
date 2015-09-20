@@ -96,12 +96,12 @@ Assuming that all neutrons have the same energy (``one-speed approximation"),
 Now, assume that the source is isotropic:
 
 \begin{equation*}
-S(\rvec,E,\omvec,t) = \frac{S(\rvec,E,t)}{4\pi}
+S(\rvec,\omvec,t) = \frac{S(\rvec,t)}{4\pi}
 \end{equation*}
 
 \begin{equation*}
-S_1(\rvec,E,\omvec,t) = \int_{4\pi}d\omvec S(\rvec,E,\omvec,t)\omvec 
-= \frac{S(\rvec,E,t)}{4\pi} \int_{4\pi}d\omvec\omvec = 0
+S_1(\rvec,\omvec,t) = \int_{4\pi}d\omvec S(\rvec,\omvec,t)\omvec 
+= \frac{S(\rvec,t)}{4\pi} \int_{4\pi}d\omvec\omvec = 0
 \end{equation*}
 
 Rearranging the current equation gives:
@@ -149,29 +149,29 @@ diffusion equation is valid a few mean paths away from a source or a boundary bu
 highly absorbing media.
 
 
-Now, assume an isotropic flux $\phi(\rvec,E,\omvec,t)$. The net current, $\vec{J}(\rvec,E,\omvec,t)$, is 
+Now, assume an isotropic flux $\phi(\rvec,\omvec,t)$. The net current, $\vec{J}(\rvec,\omvec,t)$, is 
 then zero.
 
 
-Next, consider $J_x(\rvec,E,\omvec,t) > 0, J_y(\rvec,E,\omvec,t) = J_z(\rvec,E,\omvec,t) = 0$.
+Next, consider $J_x(\rvec,\omvec,t) > 0, J_y(\rvec,\omvec,t) = J_z(\rvec,\omvec,t) = 0$.
 
 
 With the $P_1$ approximation, we have
 
 \begin{equation*}
-\phi(\rvec,E,\omvec,t)\approx\frac{1}{4\pi}\phi(\rvec,E,t)+\frac{3}{4\pi}\vec{J}(\rvec,E,t)\cdot\omvec
+\phi(\rvec,\omvec,t)\approx\frac{1}{4\pi}\phi(\rvec,t)+\frac{3}{4\pi}\vec{J}(\rvec,E,t)\cdot\omvec
 \end{equation*}
 
 In order for both sides of this equation to be positive, it is required that
 
 \begin{equation*}
--\vec{J}(\rvec,E,t)\cdot\omvec < \frac{1}{3}\phi(\rvec,E,t).
+-\vec{J}(\rvec,t)\cdot\omvec < \frac{1}{3}\phi(\rvec,t).
 \end{equation*}
 
 For this to be valid, we require that
 
 \begin{equation*}
-J_x < \frac{1}{3}\phi(\rvec,E,t).
+J_x < \frac{1}{3}\phi(\rvec,t).
 \end{equation*}
 
 To solve the diffusion equation, we need initial and boundary conditions.
@@ -185,8 +185,8 @@ Interface boundary conditions:
 % first column
 \begin{minipage}[t]{0.5\textwidth}
 \underline{Transport} \\
-$\phi_1(\rvec_s,E,\omvec,t) = \phi_2(\rvec_s,E,\omvec,t)$ \\
-$\forall\rvec_s \in S, S \equiv \partial V, \forall E, \forall \omvec, \forall t$
+$\phi_1(\rvec_s,\omvec,t) = \phi_2(\rvec_s,\omvec,t)$ \\
+$\forall\rvec_s \in S, S \equiv \partial V, \forall \omvec, \forall t$
 \end{minipage}
 %second column
 \begin{minipage}[t]{0.5\textwidth}
@@ -201,8 +201,8 @@ Vacuum boundary conditions:
 % first column
 \begin{minipage}[t]{0.5\textwidth}
 \underline{Transport} \\
-$\phi(\rvec_s,E,\omvec,t) = 0$ \\
-$\forall\rvec_s \in S, S \equiv \partial V, \forall E, \forall \omvec: \omvec\cdot\hat{e}_s<0, \forall t$
+$\phi(\rvec_s,\omvec,t) = 0$ \\
+$\forall\rvec_s \in S, S \equiv \partial V, \forall \omvec: \omvec\cdot\hat{e}_s<0, \forall t$
 \end{minipage}
 %second column
 \begin{minipage}[t]{0.5\textwidth}
@@ -217,7 +217,7 @@ $\forall\rvec_s \in S, S \equiv \partial V, \forall E, \forall \omvec: \omvec\cd
 \end{minipage}
 
 \begin{equation*}
-\vec{J}(\rvec,E,t) = \int_{4\pi}d\omvec\omvec\phi(\rvec,E,\omvec,t) = \text{current at $\rvec$}
+\vec{J}(\rvec,t) = \int_{4\pi}d\omvec\omvec\phi(\rvec,\omvec,t) = \text{current at $\rvec$}
 \end{equation*}
 
 \begin{equation*}
@@ -225,14 +225,14 @@ J = \int_Sds\vec{J}(\rvec,t)\cdot\hat{e}_s = \text{current through a surface $S$
 \end{equation*}
 
 \begin{equation*}
-J_{net} = \int_{4\pi}d\omvec\omvec\cdot\hat{e}_s\phi(\rvec,E,\omvec,t) 
+J_{net} = \int_{4\pi}d\omvec\omvec\cdot\hat{e}_s\phi(\rvec,\omvec,t) 
 = \text{net current at $\rvec$ with respect to $\hat{e}_s$}
 \end{equation*}
 
 Scalar currents:
 
 \begin{equation*}
-J_{\pm} = \int_{2\pi^{\pm}}d\omvec\omvec\cdot\hat{e}_s\phi(\rvec,E,\omvec,t)
+J_{\pm} = \int_{2\pi^{\pm}}d\omvec\omvec\cdot\hat{e}_s\phi(\rvec,\omvec,t)
 \end{equation*}
 
 \begin{equation*}
@@ -258,110 +258,5 @@ wrong, necessitating the introduction of an extrapolation distance:
 
 This allows us to obtain the correct solution away from the boundary.
 
-
-And now, back to discussion of the $P_1$ approximation...
-
-
-In the $P_1$ approximation of the neutron transport equation, the angular flux is linearly anisotropic.
-The approximation is valid away from boundaries, away from neutron sources and sinks, and in media that 
-are not highly absorbing.
-
-Other assumptions we'll introduce here are the one-speed approximation, an isotropic source term, and the
-approximation that $\frac{1}{|\vec{J}(\rvec,t)|}\frac{\partial\vec{J}(\rvec,t)}{\partial t}\ll v\Sigma_t$.
-This leads to the one-speed diffusion equation, which was derived above:
-
-\begin{equation*}
-\frac{1}{v}\frac{\partial\phi(\rvec,t)}{\partial t} = S(\rvec,t) - \Sigma_a\phi(\rvec,t) + 
-\nabla\cdot[D(\rvec)\nabla\phi(\rvec,t)],
-\end{equation*}
-
-The boundary conditions necessary to solve this equation are listed above. Now, again consider the 
-energy-dependent $P_1$ equations:
-
-\begin{equation*}
-\frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} = S(\rvec,E,t) + 
-\int^{\infty}_0dE'\Sigma_s(E'\rightarrow E)\phi(\rvec,E,t) - 
-\Sigma_t(E)\phi(\rvec,E,t) - \nabla\cdot\vec{J}(\rvec,E,t)
-\end{equation*}
-
-\begin{equation*}
-\frac{1}{v}\frac{\partial \vec{J}(\rvec,E,t)}{\partial t} = S_1(\rvec,E,t) + 
-\int^{\infty}_0dE'\bar{\mu_0}\Sigma_s(E'\rightarrow E)\vec{J}(\rvec,E,t) - 
-\Sigma_t(E)\vec{J}(\rvec,E,t) - \frac{1}{3}\nabla\phi(\rvec,E,t)
-\end{equation*}
-
-From the isotropic source assumption, $S_1(\rvec,E,t) = 0$.
-
-
-From the $\frac{1}{|\vec{J}(\rvec,t)|}\frac{\partial\vec{J}(\rvec,t)}{\partial t}\ll v\Sigma_t$ 
-assumption, $\frac{1}{v}\frac{\partial\vec{J}(\rvec,t)}{\partial t} = 0$.
-
-
-With the one-speed approximation,
-
-\begin{equation*}
-\vec{J}(\rvec,t) \approx -D(\rvec)\nabla\phi(\rvec,t)
-\end{equation*}
-
-Similarly,
-
-\begin{equation*}
-\vec{J}(\rvec,E,t) \approx -D(\rvec,E)\nabla\phi(\rvec,E,t)
-\end{equation*}
-
-Plugging this into the first $P_1$ equation gives
-
-\begin{equation*}
-\frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} = S(\rvec,E,t) + 
-\int^{\infty}_0dE'\Sigma_s(E'\rightarrow E)\phi(\rvec,E,t) - 
-\Sigma_t(E)\phi(\rvec,E,t) + \nabla\cdot[D(\rvec,E)\nabla\phi(\rvec,E,t)]
-\end{equation*}
-
-Now, let's make the \emph{one-group} (not one-speed) assumption. This means that we will integrate the
-entire equation over all energy space $[\int_0^{\infty}dE(\cdot)]$.
-
-
-``Group constants" are defined as follows:
-
-\begin{equation*}
-\Sigma_{t,1}(\rvec)=\frac{\int_0^{\infty}dE\Sigma_t(\rvec,E)\phi(\rvec,E,t)}{\int_0^{\infty}dE\phi(\rvec,E,t)}
-= \text{effective cross section}
-\end{equation*}
-
-\begin{equation*}
-\phi_1(\rvec,t) = \int_0^{\infty}dE\phi(\rvec,E,t) = \text{group flux}
-\end{equation*}
-
-Thus, $\int_0^{\infty}dE\Sigma_t(\rvec,E)\phi(\rvec,E,t) = \Sigma_{t,1}(\rvec)\phi_1(\rvec,t)$.
-
-\begin{equation*}
-\int_0^{\infty}dE\frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} = 
-\frac{1}{v_1}\frac{\partial \phi_1(\rvec,t)}{\partial t}, 
-\text{ where } \frac{1}{v_1} = \frac{\int_0^{\infty}dE\frac{1}{v}\phi(\rvec,E,t)}{\phi_1(\rvec,t)}
-\end{equation*}
-
-\begin{equation*}
-\int_0^{\infty}dES(\rvec,E,t) = S_1(\rvec,t)
-\end{equation*}
-
-\begin{equation*}
-\int_0^{\infty}dE\int_0^{\infty}dE'\Sigma_s(E'\rightarrow E)\phi(\rvec,E',t) =
-\int_0^{\infty}dE'\Sigma_s(E')\phi(\rvec,E',t) = \sigsi\phi_1
-\end{equation*}
-
-\begin{equation*}
-\int_0^{\infty}dE\nabla\cdot[D(\rvec,E)\nabla\phi(\rvec,E,t)]=\nabla\cdot[D_1(\rvec)\nabla\phi_1(\rvec,t)]
-\end{equation*}
-
-Note that although the subscripts used here for the one-group approximation are the same as those used in
-the $P_1$ approximation derivation, the quantities are not the same. Combining all of the above terms, we
-have
-
-\begin{equation*}
-\frac{1}{v_1}\frac{\partial \phi_1(\rvec,t)}{\partial t} = S_1(\rvec,t) - 
-\Sigma_{a,1}(\rvec)\phi_1(\rvec,t) + \nabla\cdot[D_1(\rvec)\nabla\phi_1(\rvec,t)]
-\end{equation*}
-
-This is the \emph{one-group} diffusion equation.
 
 \end{document}
