@@ -123,10 +123,9 @@ Plugging this into the first $P_1$ equation gives
 
 --------------------------------------------------------------\\
 Now, let's make the \emph{one-group} (not one-speed) assumption. This means that we will integrate the
-entire equation over all energy space $[\int_0^{\infty}dE(\cdot)]$.
+entire equation over all energy space $[\int_0^{\infty}dE(\cdot)]$; we will often weight this integration with the flux.
 
-
-``Group constants" are defined as follows:
+``Group constants" are defined as follows (note that subscripts are now group number, not expansion coefficient or time index):
 
 \begin{equation*}
 \Sigma_{t,1}(\rvec)=\frac{\int_0^{\infty}dE\Sigma_t(\rvec,E)\phi(\rvec,E,t)}{\int_0^{\infty}dE\phi(\rvec,E,t)}
@@ -169,21 +168,22 @@ have
 
 This is the \emph{one-group} diffusion equation.
 
-
+--------------------------------------------------------------\\
 We were talking about currents and boundary conditions at the end of class, so let's quickly revisit that. 
 
-Scalar currents:
+For the TE, the vacuum boundary condition is $\varphi (\vec{r}_s, \omvec, t) = 0 \quad \text{for }\omvec \cdot d\vec{S} < 0\:, \forall \rvec_s \text{ on } \vec{S}$.
 
+We will seek to satisfy this in an integral sense for the diffusion equation, remembering that
 \begin{equation*}
-J_{\pm} = \int_{2\pi^{\pm}}d\omvec\omvec\cdot\hat{e}_s\phi(\rvec,E,\omvec,t)
+J_{\pm} = \int_{2\pi^{\pm}}d\omvec\:\omvec\cdot\hat{e}_s\phi(\rvec,E,\omvec,t)\:.
 \end{equation*}
+Therefore, $J_-(\rvec_s,t) = 0$.
 
-\begin{equation*}
-2\pi^+ \equiv 0 < \theta < \pi/2, 2\pi^- \equiv \pi/2 < \theta < \pi
-\end{equation*}
+Using the $P_1$ approximation for this, then
+\[J_{-} = \int_{2\pi^{-}}d\omvec\:\omvec\cdot\hat{e}_s\phi(\rvec,E,\omvec,t) \approx \frac{1}{4}\phi(\rvec, t) + \frac{D}{2}\hat{e}_s \cdot \nabla \phi(\rvec, t) = 0\:.\]
+
 
 In 1D,
-
 \begin{equation*}
 J_-(z_s,t) = \frac{1}{4}\phi(z_s,t) + \frac{D(z_s)}{2}\frac{d\phi(z_s,t)}{dz}\Bigr|_{z_s} = 0
 \end{equation*}
@@ -192,14 +192,65 @@ J_-(z_s,t) = \frac{1}{4}\phi(z_s,t) + \frac{D(z_s)}{2}\frac{d\phi(z_s,t)}{dz}\Bi
 \frac{d\phi(z_s,t)}{dz}\Bigr|_{z_s} = \frac{-\phi(z_s,t)}{2D(z_s)}
 \end{equation*}
 
-In order to use the diffusion approximation, we must accept that the above solution at the vacuum is 
-wrong, necessitating the introduction of an extrapolation distance:
+In order to use the diffusion approximation, we must accept that the above solution at the vacuum is wrong, necessitating the introduction of an extrapolation distance:
 
 \begin{equation*}
 \tilde{z}_s = z_s + 2D(z_s)
 \end{equation*}
 
-This allows us to obtain the correct solution away from the boundary.
+We therefore typically use the boundary condition $\phi(\tilde{z}_s) = 0$. 
+Note that that a more accurate extrapolation distance that is obtained from transport theory is $z_0 = 0.7104 \lambda_{tr}$.
 
+\begin{figure}
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 3 in]{extrapolation}
+    \end{center}
+    \label{fig:phase_space}
+\end{figure}
+
+There are a few other types of conditions we might encounter or apply:
+\begin{itemize}
+\item We know that the flux must be nonnegative, finite, and real. 
+\item Symmetry often lets us eliminate solutions that don't make physical sense (e.g.\ at the centerline of a slab we know that $\phi(-x) \neq - \phi(x)$). 
+\item We use \textit{unit cells} or \textit{control cells} that are repeated in a regular fashion. 
+One can argue that there should be no net transfer of neutrons between cells, so $\vec{J}(\rvec)$ vanishes on those boundaries.
+\item When these cells are near strong absorbers, we usually end up doing a transport correction to get more accurate boundary conditions. 
+(Note that within the derivation of the DE, we used transport corrections in some occasions to make it more accurate. )
+\end{itemize}
+
+\begin{figure}
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 5 in]{unit-cell}
+    \end{center}
+    \label{fig:phase_space}
+\end{figure}
+
+-------------------------------------\\
+A quick one-speed diffusion summary:
+\[\frac{1}{v} \frac{\partial \phi}{\partial t} = S(\rvec, t) + \Sigma_a(\rvec) ]phi(\rvec, t) + \nabla \cdot D(\rvec \nabla \phi(\rvec, t)\:.\]
+
+Where
+\begin{itemize}
+\item $\phi(\rvec, 0) = \phi_0(\rvec) \: \forall \: \rvec$
+\item $\phi(\tilde{\rvec_s}, t) = 0$ or $J_-(\rvec_s, t) = 0$; (free surface)
+\item $\phi$ and the normal component of $\vec{J}$ are continuous across surfaces
+\item $0 \leq \phi(\rvec, t) < \infty$ (except near localized sources).
+\item $D = \lambda_{tr}/3 = [3(\Sigma_{tr} - \bar{\mu_0}\Sigma_s)]^{-1}$
+\item $z_0 = 0.7104 \lambda_{tr}$.
+\end{itemize}
+This equation is \textbf{parabolic}. Equations of this form apply to heat conduction, gas diffusion, the wave function, etc.
+
+If we are in a situation where the materials are homogeneous, we drop $\rvec$ dependence in all of the coefficients. 
+We also frequently neglect time dependence. 
+In this case:
+
+\begin{align*}
+-D \nabla^2 \phi(\rvec) &+ \Sigma_a \phi(\rvec) = S(\rvec) \\
+\nabla^2 \phi(\rvec) &- \frac{1}{L^2}\phi(\rvec) = \frac{S(\rvec)}{D}
+\end{align*}
+this second equation is in \textit{Helmholtz form}; which we use to take advantage of common mathematical solution techniques.
+Note that $L$ is the neutron diffusion length
+\[L \equiv \sqrt{\frac{D}{\sigma_a}}\:,\]
+which is a measure of how far neutrons diffuse before they are absorbed.
 
 \end{document}
