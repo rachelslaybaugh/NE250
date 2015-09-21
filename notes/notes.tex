@@ -687,4 +687,99 @@ G(x,x') = \sum_n \frac{2}{\tilde{a}\Sigma_a}\frac{\psi_n(x')}{1+B_n^2L^2}\psi_n(
 
 \underline{Fission Source}
 
+\begin{equation*}
+S(\rvec,E,\omvec,t) = S_{ext}(\rvec,E,\omvec,t) + 
+\int_0^{\infty}dE'\int_{4\pi}d\omvec' \nu(E')\Sigma_f(\rvec,E')\phi(\rvec,E',\omvec',t)
+\end{equation*}
+
+Of all the fission neutrons, we are only interested in the ones in the energy range $[E+dE]$ and in the
+space $d\omvec$ about $\omvec$. The fission term then becomes
+
+\begin{equation*}
+\frac{\chi(E)}{4\pi}\int_0^{\infty}dE'
+\int_{4\pi}d\omvec'\nu(E')\Sigma_f(\rvec,E')\phi(\rvec,E',\omvec',t)
+\end{equation*}
+
+Integrating the entire source term equation over angle gives
+
+\begin{equation*}
+\int_{4\pi}d\omvec'S(\rvec,E,\omvec,t) = S_{ext}(\rvec,E,t) + 
+\chi(E)\int_0^{\infty}dE'\nu(E')\Sigma_f(\rvec,E')\phi(\rvec,E',t)
+\end{equation*}
+
+With the one-group approximation:
+
+\begin{equation*}
+\int_{0}^{\infty}dE S(\rvec,E,t) = S_{ext}(\rvec,t) + 
+\nu\Sigma_f(\rvec)\phi(\rvec,t)
+\end{equation*}
+
+Effective value:
+
+\begin{equation*}
+\langle\nu\Sigma_f(\rvec)\rangle = 
+\frac{\int_{0}^{\infty}dE\nu(E)\Sigma_f(\rvec,E)\phi(\rvec,E,t)}{\int_{0}^{\infty}dE\phi(\rvec,E,t)}
+\end{equation*}
+
+We can now incorporate a fission source into the one-group diffusion equation:
+
+\begin{equation*}
+\frac{1}{v}\frac{\partial\phi(\rvec,t)}{\partial t} = \nu\Sigma_f(\rvec)\phi(\rvec,t) - 
+\Sigma_a(\rvec)\phi(\rvec,t) + \nabla\cdot[D(\rvec)\nabla\phi(\rvec,t)]
+\end{equation*}
+
+Assume a steady-state homogeneous system.
+
+\begin{equation*}
+\nu\Sigma_f(\rvec)\phi(\rvec) = 
+\Sigma_a(\rvec)\phi(\rvec) - D(\rvec)\nabla^2\phi(\rvec)
+\end{equation*}
+
+\begin{equation*}
+k = \frac{\int_V dV\nu\Sigma_f(\rvec)\phi(\rvec)}{\int_V dV[\Sigma_a(\rvec)\phi(\rvec) - D(\rvec)\nabla^2\phi(\rvec)]}
+\end{equation*}
+
+\begin{equation*}
+\nabla^2\phi(\rvec) + \frac{k_{\infty} - 1}{L^2}\phi(\rvec) = 0
+\end{equation*}
+
+\begin{equation*}
+k_{\infty} = \frac{\nu\Sigma_f}{\Sigma_a}
+\end{equation*}
+
+\begin{equation*}
+L^2 = \frac{D}{\Sigma_a}
+\end{equation*}
+
+For a bare reactor in a vacuum:
+
+\begin{gather*}
+\phi(\tilde{\rvec}) = 0 \\
+\nabla^2\psi(\rvec) + B^2\psi(\rvec) = 0 \\
+\psi(\tilde{\rvec}) = 0
+\end{gather*}
+
+The system is critical iff $B^2 = \frac{k_{\infty} - 1}{L^2}$.
+
+\begin{equation*}
+B_g^2 \equiv \frac{-\nabla^2\psi(\rvec)}{\psi(\vecr)} = 
+\text{ geometric buckling, proportional to the curvature of the flux}
+\end{equation*}
+
+\begin{equation*}
+B_m^2 \equiv \frac{k_{\infty} - 1}{L^2} = \text{ material buckling}
+\end{equation*}
+
+For a bare critical system, $B_g^2 = B_m^2$.
+
+
+If $k < 1$, $\nu\Sigma_f\phi < \Sigma_a\phi - D\nabla^2\phi$, $\nabla^2\phi + B_m^2\phi < 0$, 
+$B_g^2 > B_m^2$.
+
+
+If $k > 1$, $\nu\Sigma_f\phi > \Sigma_a\phi - D\nabla^2\phi$, $\nabla^2\phi + B_m^2\phi > 0$, 
+$B_g^2 < B_m^2$.
+
+%2013-10-15
+
 \end{document}
