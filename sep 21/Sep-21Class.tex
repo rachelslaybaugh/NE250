@@ -68,7 +68,7 @@ The collision frequency $v\Sigma_t$ is typically on the order of $10^5$ sec$^{-1
 All of that got us to \textit{Fick's law} and \textit{the one-speed diffusion equation}.  
 %
 \begin{equation*}
-\frac{1}{v}\frac{\partial\phi(\rvec,t)}{\partial t} = S(\rvec,t) - \Sigma_a\phi(\rvec,t) + 
+\frac{1}{v}\frac{\partial\phi(\rvec,t)}{\partial t} = S(\rvec,t) - \Sigma_a(\rvec)\phi(\rvec,t) + 
 \nabla\cdot[D(\rvec)\nabla\phi(\rvec,t)],
 \end{equation*}
 %
@@ -77,38 +77,36 @@ We talked about the boundary conditions necessary to solve this equation last ti
 --------------------------------------------------------------\\
 Now, let's revisit the the energy-dependent $P_1$ equations:
 
-\begin{equation*}
-\frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} = S(\rvec,E,t) + 
-\int^{\infty}_0dE'\:\Sigma_s(E'\rightarrow E)\phi(\rvec,E,t) - 
-\Sigma_t(E)\phi(\rvec,E,t) - \nabla\cdot\vec{J}(\rvec,E,t)
-\end{equation*}
-
-\begin{equation*}
-\frac{1}{v}\frac{\partial \vec{J}(\rvec,E,t)}{\partial t} = S_1(\rvec,E,t) + 
-\int^{\infty}_0dE'\:\bar{\mu_0}\Sigma_s(E'\rightarrow E)\vec{J}(\rvec,E,t) - 
-\Sigma_t(E)\vec{J}(\rvec,E,t) - \frac{1}{3}\nabla\phi(\rvec,E,t)
-\end{equation*}
+\begin{align*}
+\frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} &= S(\rvec,E,t) + 
+\int^{\infty}_0dE'\:\Sigma_s(\rvec, E'\rightarrow E)\phi(\rvec,E',t) - 
+\Sigma_t(\rvec,E)\phi(\rvec,E,t) - \nabla\cdot\vec{J}(\rvec,E,t)\\
+%
+\frac{1}{v}\frac{\partial \vec{J}(\rvec,E,t)}{\partial t} &= S_1(\rvec,E,t) + 
+\int^{\infty}_0dE'\:\bar{\mu_0}\Sigma_s(\rvec,E'\rightarrow E)\vec{J}(\rvec,E',t) - 
+\Sigma_t(\rvec,E)\vec{J}(\rvec,E,t) - \frac{1}{3}\nabla\phi(\rvec,E,t)
+\end{align*}
 
 From the $\frac{1}{|\vec{J}(\rvec,t)|}\frac{\partial\vec{J}(\rvec,t)}{\partial t}\ll v\Sigma_t$ 
 assumption, $\frac{1}{v}\frac{\partial\vec{J}(\rvec,t)}{\partial t} = 0$.
 
 From the isotropic source assumption, $S_1(\rvec,E,t) = 0$.
 
-The assumption of isotripic scattering would give $\Sigma_{s1}(E' \rightarrow E)$, which results in
+The assumption of isotripic scattering would give $\Sigma_{s1}(E' \rightarrow E)=0$, which results in
 \[\vec{J}(\vec{r}, E, t) \approx - \frac{1}{3 \Sigma_t(\vec{r}, E)}\nabla \phi(\vec{r}, E, t)\:. \]
 However, the assumption of isotropic scattering is often too strong for most reactor calculations.
 
 Instead, we can simply define an energy-dependent diffusion coefficient as
-\[D(\vec{r}, E) = \frac{1}{3} \biggl[ \Sigma_t(\vec{r}, E) - \frac{\int_0^{\infty} dE' \: \Sigma_{s1}(E' \rightarrow E)J_i(\vec{r}, E', t)}{J_i(\vec{r}, E', t)}\biggr]^{-1}\:,\]
+\[D(\vec{r}, E) = \frac{1}{3} \biggl[ \Sigma_t(\vec{r}, E) - \frac{\int_0^{\infty} dE' \: \Sigma_{s1}(\vec{r},E' \rightarrow E)J_i(\vec{r}, E', t)}{J_i(\vec{r}, E', t)}\biggr]^{-1}\:,\]
 which would automatically yield
 \[\vec{J}(\vec{r}, E, t) = -D(\vec{r},E)\nabla \phi(\vec{r}, E, t)\:.\]
-[Note that $i = x,y,z$. Technically we need to do each vector component separately and then recombine into $\vec{J}$. This is often skipped, but matches the formalism on pages 126-127 and 139 in Duderstadt.]\\
+[Note that $i = x,y,z$. We need to do each vector component separately since $D$ is a scalar, and then recombine to get $\vec{J} = J_x \Omega_x + J_y \Omega_y + J_z \Omega_z$.]\\
 This is artificial because $D$ actually depends on $\vec{J}$.
 
 One common way to avoid this is to neglect the anisotropic contribution to energy transfer in the scattering collision by saying
-\[\Sigma_{s1}(E' \rightarrow E) = \Sigma_{s1}(E) \delta(E' - E)\]
+\[\Sigma_{s1}(\vec{r},E' \rightarrow E) = \Sigma_{s1}(\vec{r},E) \delta(E' - E)\]
 such that
-\[\int_0^{\infty} dE' \: \Sigma_{s1}(E' \rightarrow E)J_i(\vec{r}, E', t) = \bar{\mu_0} \Sigma_s(E) J_i(\vec{r}, E, t)\:.\]
+\[\int_0^{\infty} dE' \: \Sigma_{s1}(\vec{r},E' \rightarrow E)J_i(\vec{r}, E', t) = \bar{\mu_0} \Sigma_s(\vec{r},E) J_i(\vec{r}, E, t)\:.\]
 And all of that gives
 \[D(\vec{r}, E) = \frac{1}{3} \bigl[\Sigma_t(\vec{r}, E) - \bar{\mu_0} \Sigma_s(\vec{r}, E) \bigr]^{-1}\:.\]
 
@@ -116,8 +114,8 @@ Plugging this into the first $P_1$ equation gives
 
 \begin{equation*}
 \frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} = S(\rvec,E,t) + 
-\int^{\infty}_0dE'\:\Sigma_s(E'\rightarrow E)\phi(\rvec,E',t) - 
-\Sigma_t(E)\phi(\rvec,E,t) + \nabla\cdot[D(\rvec,E)\nabla\phi(\rvec,E,t)]
+\int^{\infty}_0dE'\:\Sigma_s(\rvec,E'\rightarrow E)\phi(\rvec,E',t) - 
+\Sigma_t(\rvec,E)\phi(\rvec,E,t) + \nabla\cdot[D(\rvec,E)\nabla\phi(\rvec,E,t)]
 \end{equation*}
 
 
@@ -149,8 +147,8 @@ Thus, $\int_0^{\infty}dE\Sigma_t(\rvec,E)\phi(\rvec,E,t) = \Sigma_{t,1}(\rvec)\p
 \end{equation*}
 
 \begin{equation*}
-\int_0^{\infty}dE\int_0^{\infty}dE'\Sigma_s(E'\rightarrow E)\phi(\rvec,E',t) =
-\int_0^{\infty}dE'\Sigma_s(E')\phi(\rvec,E',t) = \sigsi\phi_1
+\int_0^{\infty}dE\int_0^{\infty}dE'\Sigma_s(\rvec,E'\rightarrow E)\phi(\rvec,E',t) =
+\int_0^{\infty}dE'\Sigma_s(\rvec,E')\phi(\rvec,E',t) = \sigsi\phi_1
 \end{equation*}
 
 \begin{equation*}
@@ -171,35 +169,35 @@ This is the \emph{one-group} diffusion equation.
 --------------------------------------------------------------\\
 We were talking about currents and boundary conditions at the end of class, so let's quickly revisit that. 
 
-For the TE, the vacuum boundary condition is $\varphi (\vec{r}_s, \omvec, t) = 0 \quad \text{for }\omvec \cdot d\vec{S} < 0\:, \forall \rvec_s \text{ on } \vec{S}$.
+For the TE, the one-group vacuum boundary condition is $\varphi_1 (\vec{r}_s, \omvec, t) = 0 \quad \text{for }\omvec \cdot d\vec{S} < 0\:, \forall \rvec_s \text{ on } \vec{S}$.
 
 We will seek to satisfy this in an integral sense for the diffusion equation, remembering that
 \begin{equation*}
-J_{\pm} = \int_{2\pi^{\pm}}d\omvec\:\omvec\cdot\hat{e}_s\phi(\rvec,E,\omvec,t)\:.
+J_{\pm,1} = \int_{2\pi^{\pm}}d\omvec\:\omvec\cdot\hat{e}_s\varphi_1(\rvec,E,\omvec,t)\:.
 \end{equation*}
-Therefore, $J_-(\rvec_s,t) = 0$.
+Therefore, $J_{-,1}(\rvec_s,t) = 0$.
 
 Using the $P_1$ approximation for this, then
-\[J_{-} = \int_{2\pi^{-}}d\omvec\:\omvec\cdot\hat{e}_s\phi(\rvec,E,\omvec,t) \approx \frac{1}{4}\phi(\rvec, t) + \frac{D}{2}\hat{e}_s \cdot \nabla \phi(\rvec, t) = 0\:.\]
+\[J_{-,1} = \int_{2\pi^{-}}d\omvec\:\omvec\cdot\hat{e}_s\varphi_1(\rvec,E,\omvec,t) \approx \frac{1}{4}\phi_1(\rvec, t) + \frac{D_1(\rvec)}{2}\hat{e}_s \cdot \nabla \phi_1(\rvec, t) = 0\:.\]
 
 
 In 1D,
 \begin{equation*}
-J_-(z_s,t) = \frac{1}{4}\phi(z_s,t) + \frac{D(z_s)}{2}\frac{d\phi(z_s,t)}{dz}\Bigr|_{z_s} = 0
+J_{-,1}(z_s,t) = \frac{1}{4}\phi_1(z_s,t) + \frac{D_1(z_s)}{2}\frac{d\phi_1(z_s,t)}{dz}\Bigr|_{z_s} = 0
 \end{equation*}
 
 \begin{equation*}
-\frac{d\phi(z_s,t)}{dz}\Bigr|_{z_s} = \frac{-\phi(z_s,t)}{2D(z_s)}
+\frac{d\phi_1(z_s,t)}{dz}\Bigr|_{z_s} = \frac{-\phi_1(z_s,t)}{2D_1(z_s)}
 \end{equation*}
 
 In order to use the diffusion approximation, we must accept that the above solution at the vacuum is wrong, necessitating the introduction of an extrapolation distance:
 
 \begin{equation*}
-\tilde{z}_s = z_s + 2D(z_s)
+\tilde{z}_s = z_s + 2D_1(z_s)
 \end{equation*}
 
 We therefore typically use the boundary condition $\phi(\tilde{z}_s) = 0$. 
-Note that that a more accurate extrapolation distance that is obtained from transport theory is $z_0 = 0.7104 \lambda_{tr}$.
+Note that that a more accurate extrapolation distance that is obtained from transport theory is $\tilde{z}_s = z_s + z_0; z_0 = 0.7104 \lambda_{tr}$.
 
 \begin{figure}
     \begin{center}
@@ -227,7 +225,7 @@ One can argue that there should be no net transfer of neutrons between cells, so
 
 -------------------------------------\\
 A quick one-speed diffusion summary:
-\[\frac{1}{v} \frac{\partial \phi}{\partial t} = S(\rvec, t) + \Sigma_a(\rvec) ]phi(\rvec, t) + \nabla \cdot D(\rvec \nabla \phi(\rvec, t)\:.\]
+\[\frac{1}{v} \frac{\partial \phi}{\partial t} = S(\rvec, t) + \Sigma_a(\rvec) ]\phi(\rvec, t) + \nabla \cdot D(\rvec) \nabla \phi(\rvec, t)\:.\]
 
 Where
 \begin{itemize}
@@ -236,21 +234,21 @@ Where
 \item $\phi$ and the normal component of $\vec{J}$ are continuous across surfaces
 \item $0 \leq \phi(\rvec, t) < \infty$ (except near localized sources).
 \item $D = \lambda_{tr}/3 = [3(\Sigma_{tr} - \bar{\mu_0}\Sigma_s)]^{-1}$
-\item $z_0 = 0.7104 \lambda_{tr}$.
+\item $\rvec_0 = 0.7104 \lambda_{tr}$.
 \end{itemize}
 This equation is \textbf{parabolic}. Equations of this form apply to heat conduction, gas diffusion, the wave function, etc.
 
-If we are in a situation where the materials are homogeneous, we drop $\rvec$ dependence in all of the coefficients. 
+If we are in a situation where the materials are homogeneous, we drop $\rvec$ dependence in all of the coefficients (we can then bring the $\nabla$ inside the $D$). 
 We also frequently neglect time dependence. 
 In this case:
-
+%
 \begin{align*}
 -D \nabla^2 \phi(\rvec) &+ \Sigma_a \phi(\rvec) = S(\rvec) \\
 \nabla^2 \phi(\rvec) &- \frac{1}{L^2}\phi(\rvec) = \frac{S(\rvec)}{D}
 \end{align*}
 this second equation is in \textit{Helmholtz form}; which we use to take advantage of common mathematical solution techniques.
 Note that $L$ is the neutron diffusion length
-\[L \equiv \sqrt{\frac{D}{\sigma_a}}\:,\]
+\[L \equiv \sqrt{\frac{D}{\Sigma_a}}\:,\]
 which is a measure of how far neutrons diffuse before they are absorbed.
 
 \end{document}
