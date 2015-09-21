@@ -530,4 +530,161 @@ s_n = \int_V dV S(\rvec)\psi_n(\rvec)
 \frac{1}{\Sigma_a} \sum_{n=1}^N \frac{\psi_n(\rvec')}{1+L^2B_n^2}\psi_n(\rvec) = \text{Green's function}
 \end{equation*}
 
+% 2013-10-10
+
+\begin{equation*}
+\nabla^2\phi(\rvec) - \frac{1}{L^2}\phi(\rvec) = -\frac{S}{D}
+\end{equation*}
+
+Boundary condition: $\phi(\tilde{\rvec}) = 0$
+
+
+Consider a finite slab of thickness $a$ with a plane source at $x=0$ and a vacuum boundary.
+
+\begin{equation*}
+\frac{d^2\phi(x)}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S}{D}\delta(x),\quad
+-\frac{a}{2} \leq x \leq \frac{a}{2}
+\end{equation*}
+
+\begin{equation*}
+\phi\left(\pm\tilde{\tfrac{a}{2}}\right) = 0
+\end{equation*}
+
+\begin{equation*}
+\frac{d^2G(x,x')}{dx^2} - \frac{1}{L^2}G(x,x') = -\frac{1}{D}\delta(x-x'),\quad
+-\frac{a}{2} < x < \frac{a}{2}
+\end{equation*}
+
+\begin{equation*}
+G\left(\pm\tilde{\tfrac{a}{2}}\right) = 0
+\end{equation*}
+
+\begin{equation*}
+\phi(x) = \int_{-\tilde{a}/2}^{\tilde{a}/2}dx'G(x,x')S(x')
+\end{equation*}
+
+\begin{equation*}
+\frac{d^2\psi(x)}{dx^2} + B^2\psi(x) = 0,\quad
+-\frac{a}{2} < x < \frac{a}{2}
+\end{equation*}
+
+\begin{equation*}
+\psi\left(\pm\tilde{\tfrac{a}{2}}\right) = 0
+\end{equation*}
+
+\begin{equation*}
+G(x,x') = \sum_n c_n \psi_n(x)
+\end{equation*}
+
+\begin{equation*}
+\psi(x) = c_1cos(Bx) + c_2sin(Bx)
+\end{equation*}
+
+\begin{equation*}
+\psi(\tfrac{\tilde{a}}{2}) = c_1cos(B\tfrac{\tilde{a}}{2}) + c_2sin(B\tfrac{\tilde{a}}{2}) = 0
+\end{equation*}
+
+\begin{equation*}
+\psi(-\tfrac{\tilde{a}}{2}) = c_1cos(B\tfrac{\tilde{a}}{2}) - c_2sin(B\tfrac{\tilde{a}}{2}) = 0
+\end{equation*}
+
+Trivial solution: $c_1 = c_2 = 0 \rightarrow \psi(x) = 0$
+
+
+Non-trivial solution:
+
+\begin{gather*}
+c_2 = 0, cos(B\tfrac{\tilde{a}}{2}) = 0 \rightarrow B\frac{\tilde{a}}{2} = \frac{n\pi}{2}, B_n = \frac{n\pi}{\tilde{a}},\quad\text{n odd} \\
+c_1 = 0, sin(B\tfrac{\tilde{a}}{2}) = 0 \rightarrow B\frac{\tilde{a}}{2} = \frac{n\pi}{2}, B_n = \frac{n\pi}{\tilde{a}},\quad\text{n even}
+\end{gather*}
+
+\begin{equation*}
+  \psi(x)=\begin{cases}
+    cos(\tfrac{n\pi}{\tilde{a}}x), & \text{n odd} \\
+    sin(\tfrac{n\pi}{\tilde{a}}x), & \text{n even}
+  \end{cases}
+\end{equation*}
+
+\begin{equation*}
+G(x,x') = \sum_n c_n \psi_n(x)
+\end{equation*}
+
+\begin{equation*}
+\frac{d^2}{dx^2}\sum_n c_n \psi_n(x) - \frac{1}{L^2}\sum_n c_n \psi_n(x)=-\frac{1}{D}\sum_n s_n \psi_n(x)
+\end{equation*}
+
+\begin{equation*}
+\sum_n c_n\left[\frac{d^2}{dx^2}\psi_n(x) - \frac{1}{L^2}\psi_n(x)\right] =
+-\frac{1}{D}\frac{2}{\tilde{a}}\sum_n \psi_n(x') \psi_n(x)
+\end{equation*}
+
+\begin{equation*}
+s_n = \int_{-\tfrac{\tilde{a}}{2}}^{\tfrac{\tilde{a}}{2}}dxS(x)\psi_n(x)
+\end{equation*}
+
+To normalize $s_n$, we introduce a correction factor:
+
+\begin{equation*}
+s_n = \frac{2}{\tilde{a}}\int_{-\tfrac{\tilde{a}}{2}}^{\tfrac{\tilde{a}}{2}}dxS(x)\psi_n(x)
+\end{equation*}
+
+\begin{equation*}
+\int_{-\tfrac{\tilde{a}}{2}}^{\tfrac{\tilde{a}}{2}}dx\psi_n(x)\psi_m(x) =\begin{cases}
+	\tfrac{\tilde{a}}{2}, n = m \\
+	0, n \neq m
+	\end{cases}
+\end{equation*}
+
+\begin{equation*}
+s_n = \frac{2}{\tilde{a}}\int_{-\tfrac{\tilde{a}}{2}}^{\tfrac{\tilde{a}}{2}}dx\delta(x-x')\psi_n(x)
+= \frac{2}{\tilde{a}}\psi_n(x')
+\end{equation*}
+
+Now multiply both sides of the summation equation by $\psi_n(x)$ and integrate over space:
+
+\begin{equation*}
+\int_{-\tfrac{\tilde{a}}{2}}^{\tfrac{\tilde{a}}{2}}dx\psi_n(x)
+\sum_n c_n\left[\frac{d^2}{dx^2}\psi_n(x) - \frac{1}{L^2}\psi_n(x)\right] =
+\int_{-\tfrac{\tilde{a}}{2}}^{\tfrac{\tilde{a}}{2}}dx
+-\frac{1}{D}\frac{2}{\tilde{a}}\sum_n \psi_n(x') \psi_n(x)\psi_n(x)
+\end{equation*}
+
+\begin{equation*}
+c_n\left(B_n^2 + \frac{1}{L^2}\right)\frac{\tilde{a}}{2} = 
+\frac{1}{D}\frac{2}{\tilde{a}}\frac{\tilde{a}}{2}\psi_n(x')
+\end{equation*}
+
+\begin{equation*}
+c_n = \frac{2}{\tilde{a}\Sigma_a}\frac{\psi_n(x')}{1+B_n^2L^2}
+\end{equation*}
+
+\begin{equation*}
+G(x,x') = \sum_n \frac{2}{\tilde{a}\Sigma_a}\frac{\psi_n(x')}{1+B_n^2L^2}\psi_n(x)
+\end{equation*}
+
+\begin{equation*}
+\phi(x) = \int_{-\tfrac{\tilde{a}}{2}}^{\tfrac{\tilde{a}}{2}}dxG(x,x')S(x) = 
+\int_{-\tfrac{\tilde{a}}{2}}^{\tfrac{\tilde{a}}{2}}dx 
+\sum_n \frac{2}{\tilde{a}\Sigma_a}\frac{\psi_n(x')}{1+B_n^2L^2}\psi_n(x) S_0 \delta(x)
+= \frac{2S_0}{\tilde{a}\Sigma_a}\sum_n\frac{\psi_n(x\psi_n(0))}{1+B_n^2L^2}
+\end{equation*}
+
+\begin{equation*}
+\psi_n(0) = 
+	\begin{cases}
+	0, \text{ n even} \\
+	1, \text{ n odd}
+	\end{cases}
+\end{equation*}
+
+\begin{equation*}
+\phi(x)=\frac{2S_0}{\tilde{a}\Sigma_a}\sum_{\text{n odd}}\frac{cos(\tfrac{n\pi}{\tilde{a}}x)}{1+B_n^2L^2}
+\end{equation*}
+
+\begin{equation*}
+\phi(x) = \frac{S_0L}{2D}\frac{sinh(\tfrac{(\tilde{a} - 2|x|)}{L})}{cosh\tfrac{\tilde{a}}{2L}}
+\end{equation*}
+
+\underline{Fission Source}
+
 \end{document}
