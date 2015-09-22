@@ -782,4 +782,32 @@ $B_g^2 < B_m^2$.
 
 %2013-10-15
 
+Steady-state non-critical systems can exist with non-zero external sources.
+
+\begin{equation*}
+S_{ext} + \nu\Sigma_f(\rvec)\phi(\rvec) = \Sigma_a(\rvec)\phi(\rvec) - D(\rvec)\nabla^2\phi(\rvec)
+\end{equation*}
+
+A ``balance factor" can be used to rewrite this equation:
+
+\begin{equation*}
+\lambda\nu\Sigma_f(\rvec)\phi_{\lambda}(\rvec) = 
+\Sigma_a(\rvec)\phi_{\lambda}(\rvec) - D(\rvec)\nabla^2\phi_{\lambda}(\rvec), 
+\text{ $\lambda =$ balance factor}
+\end{equation*}
+
+Here, $\phi_{\lambda}$ is physical $(0\leq\phi_{\lambda}(\rvec)<\infty)$ but not realized. The
+multiplication factor $k$ can be defined in terms of $\lambda$:
+
+\begin{equation*}
+k = \frac{1}{\lambda} = 
+\frac{\int_VdV\nu\Sigma_f(\rvec)\phi(\rvec)}{\int_VdV[\Sigma_a(\rvec)\phi(\rvec)+D(\rvec)\nabla^2\phi(\rvec)]}
+\end{equation*}
+
+\begin{equation*}
+\Sigma_a(\rvec)\phi(\rvec) - D(\rvec)\nabla^2\phi(\rvec) = \frac{1}{k}\nu\Sigma_f(\rvec)\phi(\rvec)
+\end{equation*}
+
+%2013-10-17
+
 \end{document}
