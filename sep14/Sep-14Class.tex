@@ -112,14 +112,14 @@ P_1(\mu) = \mu \\
 Using $N=1$ with Legendre polynomials (the ``$P_1$ method") gives
 
 \begin{equation*}
-\phi(z,E,\mu,t) = \frac{1}{2}P_0(\mu)\phi_0(z,E,t) + \frac{3}{2}P_1(\mu)\phi_1(z,E,t).
+\phi(z,E,\mu,t) \approx \frac{1}{2}P_0(\mu)\phi_0(z,E,t) + \frac{3}{2}P_1(\mu)\phi_1(z,E,t).
 \end{equation*}
 
-In general, (where did this come from???)
+In general, 
 
 \begin{equation*}
 \phi_{\el}(z,E,t) = \int^{1}_{-1}d\mu\phi(z,E,\mu,t)P_{\el}(\mu) 
-= \sum_{\el'=0}^{\infty}\frac{2\el'+1}{2}P_{\ell'}(\mu)\phi_{\el'}P_{\ell}(\mu).
+%= \sum_{\el'=0}^{\infty}\frac{2\el'+1}{2}P_{\ell'}(\mu)\phi_{\el'}P_{\ell}(\mu).
 \end{equation*}
 
 Plugging the new approximate definition of $\phi$ into the transport equation gives
@@ -133,13 +133,16 @@ Plugging the new approximate definition of $\phi$ into the transport equation gi
 \end{multline*}
 
 Now, let's take the zeroth moment of this equation (that is, multiply it by $P_0(\mu)$) and integrate the
-equation over $\int_{-1}^{1}d\mu$. Let $\mu_s = cos(\theta'-\theta) = \omvec'\cdot\omvec$ such that
+equation over $\int_{-1}^{1}d\mu$. We will frequently use the orthogonality property of Legendre polynomials ($\delta_{n,m}$) to eliminate terms.
+
+We need to deal with a few terms explicitly. Let's look at the \textit{scattering term} first. Let $\mu_s = cos(\theta'-\theta) = \omvec'\cdot\omvec$ such that
 $\Sigma_s(\mu'\rightarrow\mu) = \Sigma_s(\mu_s)$. Then,
 
 \begin{equation*}
 \Sigma_s(\mu_s) = \frac{1}{2}P_0(\mu_s)\sigso + \frac{3}{2}P_1(\mu_s)\sigsi
 \end{equation*}
 
+Plugging this in we get
 \begin{multline*}
 \int_{-1}^{1}d\mu\int_{-1}^{1}d\mu'\left[\frac{1}{2}P_0(\mu_s)\sigso+\frac{3}{2}P_1(\mu_s)\sigsi\right]
 \left[\frac{1}{2}P_0(\mu')\phi_0(z,E,t)+\frac{3}{2}P_1(\mu')\phi_1(z,E,t)\right]P_0(\mu) = \\
@@ -147,32 +150,45 @@ $\Sigma_s(\mu'\rightarrow\mu) = \Sigma_s(\mu_s)$. Then,
 \sigso\phi_0(z,E,t)
 \end{multline*}
 
+We also need to look at the \textit{streaming term}
 \begin{equation*}
-\int_{-1}^{1}d\mu\mu\left[\frac{1}{2}P_0(\mu)\phi_0(z,E,t)+\frac{3}{2}P_1(\mu)\phi_1(z,E,t)\right]P_0(\mu)
-= \phi_1
+-\frac{\partial}{\partial z}\int_{-1}^{1}d\mu\:\mu\left[\frac{1}{2}P_0(\mu)\phi_0(z,E,t)+\frac{3}{2}P_1(\mu)\phi_1(z,E,t)\right]P_0(\mu)
+= \frac{\partial\phi_1}{\partial z}
 \end{equation*}
+To see this result, we can eliminate the second term above using orthogonality. This leaves the first term:
+\[ -\frac{\partial}{\partial z}\int_{-1}^{1}d\mu\:\mu\frac{1}{2}P_0(\mu)P_0(\mu)\phi_0(z,E,t)\:.\]
+We also know that $\int_{-1}^{1}d\mu\:P_0(\mu)P_0(\mu) = 2$ and $\phi_{\el}(z,E,t) = \int^{1}_{-1}d\mu\:\phi(z,E,\mu,t)P_{\el}(\mu)$, where $P_1(\mu) = \mu$. All of that gives the result of $\phi_1$.
 
-This gives us
-
+\vspace*{1 em}
+Together, this gives us
 \begin{equation*}
 \frac{1}{v}\frac{\partial\phi_0}{\partial t} = S_0 + \sigso\phi_0 - \Sigma_t\phi_0 - 
 \frac{\partial\phi_1}{\partial z}
 \end{equation*}
 
-Now, let's take the first moment of the transport equation with the approximate $\phi$ definition and 
+Now, let's take the first moment of the transport equation (multiplying by $P_1$ rather than $P_0$) with the approximate $\phi$ definition and 
 integrate it over $\int_{-1}^{1}d\mu$:
 
+The \textit{scattering term}, which uses the same expansion as above:
 \begin{multline*}
 \int_{-1}^{1}d\mu\int_{-1}^{1}d\mu'\left[\frac{1}{2}P_0(\mu_s)\sigso+\frac{3}{2}P_1(\mu_s)\sigsi\right]
 \left[\frac{1}{2}P_0(\mu')\phi_0(z,E,t)+\frac{3}{2}P_1(\mu')\phi_1(z,E,t)\right]P_1(\mu) = \\
-\int_{-1}^{1}d\mu\int_{-1}^{1}d\mu'\frac{3}{2}P_1(\mu_s)\sigsi\frac{3}{2}P_1(\mu')\phi_1(z,E,t)P_1(\mu) =
+\int_{-1}^{1}d\mu\int_{-1}^{1}d\mu'\:\frac{3}{2}P_1(\mu_s)\sigsi\frac{3}{2}P_1(\mu')\phi_1(z,E,t)P_1(\mu) =
 \sigsi\phi_1(z,E,t)
 \end{multline*}
 
+And the \textit{streaming term}:
 \begin{equation*}
-\int_{-1}^{1}d\mu\mu\left[\frac{1}{2}P_0(\mu)\phi_0(z,E,t)+\frac{3}{2}P_1(\mu)\phi_1(z,E,t)\right]P_1(\mu)
-= \frac{1}{3}\phi_0
+-\frac{\partial}{\partial z}\int_{-1}^{1}d\mu\:\mu\left[\frac{1}{2}P_0(\mu)\phi_0(z,E,t)+\frac{3}{2}P_1(\mu)\phi_1(z,E,t)\right]P_1(\mu)
+= \frac{1}{3}\frac{\partial\phi_0}{\partial z}\:.
 \end{equation*}
+%
+To see where this comes from, again separate the terms. Instead of using orthogonality, we will actually substitute in $P_0$ and $P_1$ to get
+\begin{align*}
+-\frac{\partial}{\partial z}&\bigl[ \frac{1}{2}\phi_0(z,E,t)\int_{-1}^{1}d\mu\:\mu\mu+\frac{3}{2}\phi_1(z,E,t)\int_{-1}^{1}d\mu\:\mu \mu \mu \bigr] \\
+-\frac{\partial}{\partial z}&\bigl[ \frac{1}{2}\phi_0(z,E,t)\left(\frac{1}{3}\mu^3\right)|_{-1}^1+\frac{3}{2}\phi_1(z,E,t)\left(\frac{1}{4}\mu^4\right)|_{-1}^1\bigr] \\
+-\frac{\partial}{\partial z}&\bigl[ \frac{1}{2}\phi_0(z,E,t)\frac{1}{3}2+\frac{3}{2}\phi_1(z,E,t)\frac{1}{4}0\bigr] 
+\end{align*} 
 
 This gives us
 
