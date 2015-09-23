@@ -192,17 +192,17 @@ Boundary conditions: $\phi(\pm\tfrac{\tilde{a}}{2}) = 0$
 Alternative boundary condition: $\frac{d\phi(x)}{dx}\Bigr|_{x = 0} = 0$ (symmetry)
 
 
-Now, consider a uniform source in a reflected slab like so:
+Now, consider a uniform source in a reflected slab, where region 2 contains the source and 1 and 3 are reflectors (high scattering compared to absorption):
 
 \begin{center}
 \includegraphics[height=2.5 in]{../figs/ref_slab}
 \end{center}
 
 \begin{equation*}
-\frac{d^2\phi_2(x)}{dx_2^2} - \frac{1}{L_2^2}\phi_2(x) = -\frac{S_0}{D_2}, -\tfrac{a}{2}<x<\tfrac{a}{2}
+\frac{d^2\phi_2(x)}{dx_2^2} - \frac{1}{L_2^2}\phi_2(x) = -\frac{S_0}{D_2}, \quad -\tfrac{a}{2}<x<\tfrac{a}{2}
 \end{equation*}
 
-Boundary conditions:
+Boundary conditions (where subscript indicates region number):
 
 \begin{gather*}
 \phi_2(\tfrac{a}{2}) = \phi_3(\tfrac{a}{2}) \\
@@ -212,17 +212,18 @@ Boundary conditions:
 \end{gather*}
 
 \begin{equation*}
-\frac{d^2\phi_1(x)}{dx_1^2} - \frac{1}{L_1^2}\phi_1(x) = 0, -\infty<x<-\tfrac{a}{2}
+\frac{d^2\phi_1(x)}{dx_1^2} - \frac{1}{L_1^2}\phi_1(x) = 0, \quad -\infty<x<-\tfrac{a}{2}
 \end{equation*}
 
 \begin{equation*}
-\frac{d^2\phi_3(x)}{dx_3^2} - \frac{1}{L_3^2}\phi_3(x) = 0, \tfrac{a}{2}<x<\infty
+\frac{d^2\phi_3(x)}{dx_3^2} - \frac{1}{L_3^2}\phi_3(x) = 0, \quad \tfrac{a}{2}<x<\infty
 \end{equation*}
 
 Boundary conditions: 
-$\lim\limits_{x\to-\infty}|\phi_1(x)| <\infty, \lim\limits_{x\to\infty}|\phi_3(x)| < \infty$
+$\lim\limits_{x\to-\infty}|\phi_1(x)| <\infty, \quad \lim\limits_{x\to\infty}|\phi_3(x)| < \infty$
 
-What if we want to solve a generic diffusion problem?
+----------------------\\
+What if we want to solve a \textbf{generic diffusion problem}?
 
 \begin{equation*}
 D\nabla^2\phi(\rvec) - \Sigma_a\phi(\rvec) = -S(\rvec)
@@ -231,44 +232,52 @@ D\nabla^2\phi(\rvec) - \Sigma_a\phi(\rvec) = -S(\rvec)
 Working in 1D:
 
 \begin{equation*}
-M\phi(x) = f(x),\text{ where $M$ is an operator}
+M\phi(x) = f(x)
 \end{equation*}
+%
+where $M$ is non-homogenous differential operator of order \emph{n} on a differential equation:
+%
+\begin{align*}
+a_0(x)\phi^{(n)}(x) &+ a_1(x)\phi^{(n-1)}(x) + \dotsc + a_n(x)\phi(x) = f(x)\\
+&\text{for example}\\
+M = \frac{d^2}{dx^2} &- \frac{1}{L}
+\end{align*}
 
-This is a non-homogenous order \emph{n} differential equation.
+One solution method is \textit{variation of constants / parameters}, where we break the solution into homogeneous and particular portions:
+\begin{align*}
+M\phi_{homog}(x) &= 0 \\
+M \phi_{part} &= rhs \\
+\phi(x) &= \phi_{homog}(x) + \phi_{part}(x)
+\end{align*}
+%
+We solve the homogeneous part to yield
+\[\phi_{i,h}(x),  \:i = 1,\dotsc, n \:\text{ independent solutions}\]
+%
+and we also know
+\[\phi_{part}(x) = \sum_{i=1}^n c_i\phi_{i,h}(x)\]
+%
+where $c_i = c_i(x)$ and are differentiable functions that satisfy the conditions
+\[\sum_{i=1}^n c'_i(x) \phi^{(j)}_{i,h}(x) = 0, \quad j = 0, \dots, n-1 \:.\]
+%https://en.wikipedia.org/wiki/Variation_of_parameters
 
+If 
+\begin{align*}
+\sum_{i=1}^n c_i'\phi_{i,h}(x) &= 0 \\
+\sum_{i=1}^n c_i'\phi^{(1)}_{i,h}(x) &= 0 \\
+&\vdots\\
+\sum_{i=1}^n c_i'\phi^{(n-2)}_{i,h}(x) &= 0 \\
+&\text{then} \\
+\sum_{i=1}^n c_i'\phi^{(n-1)}_{i,h}(x) &= \frac{f(x)}{a_0(x)}
+\end{align*}
+which indicates
 \begin{equation*}
-a_0(x)\phi^{(n)}(x) + a_1(x)\phi^{(n-1)}(x) + \dotsc + a_n(x)\phi(x) = f(x)
+c_i(x) = \int dx\:c_i'(x) \:.
 \end{equation*}
-
-One solution method is variation of constants.
-
-
-Homogeneous problem: $M\phi(x) = 0$.
-
-\begin{equation*}
-\phi_i(x), i = 1,\dotsc, n \text{ independent solutions}
-\end{equation*}
-
-\begin{equation*}
-\phi_{homog}(x) = \sum_{i=1}^n c_i\phi_i(x)
-\end{equation*}
-
-Assume that $c_i = c_i(x)$.
-
-\begin{equation*}
-\sum_{i=1}^n c_i\phi(x) = \phi_{particular}(x)
-\end{equation*}
-
-If $\sum_{i=1}^n c_i'\phi_i(x) = 0$, $\sum_{i=1}^n c_i'\phi^{(n)}_i(x) = 0$, 
-$\sum_{i=1}^n c_i'\phi^{(n-2)}_i(x) = 0$, etc.
-
-\begin{equation*}
-\sum_{i=1}^n c_i'\phi^{(n-1)}_i(x) = \frac{f(x)}{a_0(x)}
-\end{equation*}
-
-\begin{equation*}
-c_i(x) = \int dxc_i'(x)
-\end{equation*}
+%further
+%\begin{align*}
+%\phi_{part}(x)^{(j)} &= \sum_{i=1}^n c_i(x) \phi^{(j)}_{i,h}(x), \quad j = 0, \dots, n-1  \quad \text{and} \\
+%\phi_{part}(x)^{(j)} &= \sum_{i=1}^n c_i(x) \phi^{(n)}_{i,h}(x) + \sum_{i=1}^n c'_i(x) \phi^{(n-1)}_{i,h}(x) 
+%\end{align*}
 
 For n = 2:
 \vspace{-5 mm}
@@ -290,9 +299,8 @@ c_i(x) = \int dx c_i'(x) = A_i + \psi_i(x)
 
 For n = 2: $\phi(x) = A_1\phi_1(x) + A_2\phi_2(x) + \psi_1(x)\phi_1(x) + \psi_2(x)\phi_2(x)$
 
-
+--------------------------\\
 For a plane source in an infinite medium:
-
 \begin{equation*}
 \frac{d^2\phi(x)}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S\delta(x)}{D}
 \end{equation*}
