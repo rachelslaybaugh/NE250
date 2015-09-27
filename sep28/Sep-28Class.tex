@@ -266,9 +266,50 @@ We can extend all of that we get the ``conservation form" of the term (see B \& 
 
 A table of this term is given in L \& M 1.1-3 for various geometries.
 
-
-
 %--------------------------------------------------------------------
+\underline{Criticality and Eigenproblems}
+\begin{itemize}
+\item Criticality refers to a self-sustaining \textit{and} controlled chain reaction $\rightarrow$ production = losses
+\item subcritical: production < loss $\rightarrow$ chain reaction cannot sustain itself
+\item supercritical: production > loss $\rightarrow$ chain reaction increases 
+\end{itemize}
+%
+In the transport model (separation of variables):
+\[\psi(\rvec, E, \vOmega, t) = T(t) \Psi(\rvec, E, \vOmega) \:.\]
+Plug this in and divide by $\psi$ to get
+\[\frac{1}{T}\frac{dT}{dt} = \frac{v}{\Psi} L \Psi(\rvec, E, \vOmega) = \alpha \:.\]
+%
+Here, $L$ contains streaming, total, scattering, and fission operators.
+
+Because the TE is linear, we can use the principle of superposition. 
+therefore, the general solution is the sum of \textbf{all} permissible solutions indicated by $\alpha$.
+
+This means time dependence looks like
+\[ T(t) = \tau \exp(\alpha t)\]
+where $\tau$ is a constant of integration determined by the initial condition.
+Then
+\[L\Psi = \frac{\alpha}{v}\Psi\]
+%
+We assume (which is usually true) that the boundary conditions are homogeneous (that is, have no fixed parts).
+In this case, we have a linear and homogeneous system.
+
+$\Psi(\rvec, E, \vOmega) = 0$ is a valid solution, but it is the trivial one.
+
+``Eigenvalues" are special values of $\alpha$ for which non-trivial solutions are valid.
+for example
+\begin{align*}
+(L - \frac{\alpha}{v})\Psi &= 0 \:, \quad \in \mathbb{R} \\
+\Psi \neq 0 \rightarrow \: &\alpha = v L
+\end{align*}
+
+The solutions for this problem are eigenfunctions determined to within a multiplicative constant.
+If you fine a $\Psi$ that is a solution, then $c \Psi$ is also a solution, where $c$ is a constant:
+\[L(c \Psi) = cL \Psi = \frac{\alpha}{v}c \Psi \:.\]
+
+
+\clearpage
+%--------------------------------------------------------------------
+Old notes I'm skipping:\\
 -------------------------------------------------\\
 \underline{Eigenfunction expansion method}
 
