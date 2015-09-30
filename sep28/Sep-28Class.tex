@@ -139,8 +139,8 @@ c_2(x) = \int_{-\infty}^x dx\frac{-SL}{2D}\delta(x)e^{-x/L} = -\frac{SL}{2D}H(x)
 Boundary conditions:
 \vspace{-5 mm}
 \begin{gather*}
-\lim\limits_{x\to\infty}|\phi(x)\ < \infty \rightarrow A_2 = \frac{SL}{2D} \\
-\lim\limits_{x\to-\infty}|\phi(x)\ < \infty \rightarrow A_1 = 0
+\lim\limits_{x\to\infty}|\phi(x)| < \infty \rightarrow A_2 = \frac{SL}{2D} \\
+\lim\limits_{x\to-\infty}|\phi(x)| < \infty \rightarrow A_1 = 0
 \end{gather*}
 
 \begin{equation*}
@@ -232,7 +232,7 @@ With that in mind, here's an update of the TE, where I will use $\psi(\vec{r}, E
 %
 \begin{align*}
 \frac{1}{v} \frac{d \psi}{dt} &+ \vOmega \cdot \nabla \psi(\vec{r}, E, \vOmega, t) + \Sigma_t \psi(\vec{r}, E, \vOmega, t) = \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega', t)\\
- +& \frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega', t + S(\vec{r}, E, \vOmega, t)
+ +& \frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega', t) + S(\vec{r}, E, \vOmega, t)
 \end{align*}
 
 For generality (and because it can be tricky), I want to cover the \underline{streaming term in curvilinear coordinates}.

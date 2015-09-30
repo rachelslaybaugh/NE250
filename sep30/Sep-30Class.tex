@@ -61,7 +61,7 @@ Announcements:
 
 ---------------------------------\\
 Last time we were discussing the \underline{streaming term in curvilinear coordinates}.
-Recall, $\vOmega \cdot \nabla$ is the derivative of angular flux along the direction of motion $\vOmega$. We will use the coordinate system (See Figure~\ref{fig:sph-coord}).
+Recall, $\vOmega \cdot \nabla$ is the derivative of angular flux along the direction of motion $\vOmega$. We will use this coordinate system.
 %
 \begin{figure}[h!]
     \begin{center}
@@ -165,6 +165,7 @@ and $\Psi_0$ must be real and positive.
 \item \textit{Determine} composition and geometry, $\alpha_0 = 0$ for criticality, $\alpha_j$ are evals.
 \end{itemize}
 
+%------------------------------------------------------------
 \vspace*{1 em}
 \underline{Existence of SS Soln to TE}
 \[\frac{1}{v}\frac{\partial \psi}{\partial t} = L\psi + S = 0\]
@@ -177,6 +178,7 @@ in steady state (assumes $L$ and $S$ are time independent).
 \item $\alpha_0 > 0$: a bounded ss soln does \textit{not} exist unless $S=0$ and $\Psi_0 = 0$.
 \end{enumerate}
 
+%------------------------------------------------------------
 \vspace*{1 em}
 \underline{Effective multiplication factor}\\
 All of that is a bit restrictive. 
@@ -221,5 +223,69 @@ If $\frac{-\alpha_0}{v} > \Sigma_t$ then total interaction becomes a ``source" r
 \item If $\alpha_0 < 0$, absorption of \textbf{fast} neutrons is enhanced by a $\alpha_0$/v absorber $\rightarrow$ softer spectrum.
 \item This is important b/c rxn rate is $\int_0^{\infty} dE \Sigma_j(E) \phi(E)$
 \end{itemize}
+
+
+%------------------------------------------------------------
+\vspace*{1 em}
+\underline{Integral form of TE} using MOC formalism (B\&G 1.2).\\
+The neutron transport equation is an integro-differential equation for the
+neutron angular density (or flux). We will derive an equivalent integral equation. This raises the question of whether there is or is not also an
+equivalent purely differential expression for the neutron transport problem.
+The answer is that there is not. In deriving the transport
+equation it was necessary to consider the neutron angular density in the 
+immediate (space-time) vicinity only of the point under consideration, whereas the
+whole range of energies and angles had to be included in the transport equation
+for the angular density at a particular energy and angle. Hence, the formulation
+IS local, involving derivatives, in space and time, but it is extended, involving
+integrals, in energy and angle.
+
+In a collision, the position
+and time associated with a neutron change continuously whereas the energy and
+angle will change in a discontinuous manner. As a consequence, a mathematical
+formulation of the neutron transport problem must contain integrals over energy
+and angle.
+
+Since the neutron transport equation is a linear first order partial differential-
+integral equation, it can be converted into an integral equation by a standard
+procedure known as the \textit{method of characteristics}.
+
+\[\vOmega \cdot \nabla \psi(\rvec, \vOmega, E) + \Sigma_t \psi(\rvec, \vOmega, E) = q(\rvec, \vOmega, E)\:,\]
+where $q$ contains fixed, inscattering, and fission sources. \\
+
+\begin{figure}[h!] 
+    \label{fig:cosines}
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 2 in]{../figs/cosines}
+    \end{center}    
+\end{figure}
+%
+The streaming term is 
+\begin{align*}
+\vOmega \cdot \nabla \psi(\rvec, \vOmega, E) &= \mu \frac{\partial \psi}{\partial x} + \eta \frac{\partial \psi}{\partial x} + \xi \frac{\partial \psi}{\partial z} \\
+\mu^2 &+ \eta^2 + \xi^2 = 1 \\
+\vOmega &= \mu \hat{x} + \eta \hat{y} + \xi \hat{z}
+\end{align*}
+%
+Note that in this figure $\vOmega$ is a direction of motion of a point on a unit sphere, not a point in space.
+
+We will use the figure below in our derivation with $\vec{r} = \rvec_0 + s(\mu \hat{x} + \eta \hat{y} + \xi \hat{z})$, where $\rvec_0$ is an arbitrary point.
+Further $x = x_0 + s\mu$, $y = y_0 + s\eta$, $z = z_0 + s\xi$.
+%
+\begin{figure}[h!] 
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 2.5 in]{../figs/moc-stream}    
+    \end{center}
+    \label{fig:stream}   
+\end{figure}
+
+Using this we can see
+\[\frac{d\psi}{ds} = \frac{d\psi}{dx}\underbrace{\frac{dx}{ds}}_{\mu} + \frac{d\psi}{dy}\underbrace{\frac{dy}{ds}}_{\eta} + \frac{d\psi}{dz}\underbrace{\frac{dz}{ds}}_{\xi}\:,\]
+which shows 
+\[\frac{d\psi}{ds} = \vOmega \cdot \nabla \psi\:,\]
+Now we can look at
+\[\frac{d}{ds}\psi(\rvec_0 + \vOmega s, \vOmega, E) + \Sigma_t \psi = q(\rvec_0 + \vOmega s, \vOmega, E)\:.\]
+This is a derivative along a characteristic curve. 
+The equation is a linear, first-order ODE that can be integrated. 
+We will do this by introducing an integrating factor: $\exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]$. 
 
 \end{document}
