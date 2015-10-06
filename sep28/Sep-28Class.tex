@@ -228,19 +228,20 @@ This means the material would come much more out of Bell and Glasstone (freely a
 Would that be okay for everyone?
 I think it will be way more interesting. 
 
-With that in mind, here's an update of the TE, where I will use $\psi(\vec{r}, E, \vOmega, t)$ for angular neutron flux.
+With that in mind, here's an update of the TE, where I will use $\psi(\vec{r}, E, \vOmega, t)$ for angular neutron flux. 
 %
 \begin{align*}
 \frac{1}{v} \frac{d \psi}{dt} &+ \vOmega \cdot \nabla \psi(\vec{r}, E, \vOmega, t) + \Sigma_t \psi(\vec{r}, E, \vOmega, t) = \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega', t)\\
  +& \frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega', t) + S(\vec{r}, E, \vOmega, t)
 \end{align*}
 
-For generality (and because it can be tricky), I want to cover the \underline{streaming term in curvilinear coordinates}.
+For generality (and because it can be tricky), I want to cover the \underline{streaming term in curvilinear coordinates}. 
+ This is taken from B \& G 1.3.
 $\vOmega \cdot \nabla$ is the derivative of angular flux along the direction of motion $\vOmega$. (See Figure~\ref{fig:cart-coord}).
 %
 \begin{figure}[h!]
     \begin{center}
-    \includegraphics[keepaspectratio, width = 4 in]{../figs/cartesian-coords}
+    \includegraphics[keepaspectratio, width = 3.75 in]{../figs/cartesian-coords}
     \end{center}   
     \caption{Cartesian: L\&M Chp.\ 1}
     \label{fig:cart-coord}
@@ -252,45 +253,49 @@ $\vOmega \cdot \nabla$ is the derivative of angular flux along the direction of 
 &= \hat{e}_1 \frac{d}{dx} + \hat{e}_2 \frac{d}{dy} + \hat{e}_3 \frac{d}{dz} \quad \text{in Cartesian}
 \end{align*}
 
-%--------------------------------------------------------------------
-\underline{Criticality and Eigenproblems}
-\begin{itemize}
-\item Criticality refers to a self-sustaining \textit{and} controlled chain reaction $\rightarrow$ production = losses
-\item subcritical: production $<$ loss $\rightarrow$ chain reaction cannot sustain itself
-\item supercritical: production $>$ loss $\rightarrow$ chain reaction increases 
-\end{itemize}
+In curvilinear geometry, neutrons ``migrate" across $\vOmega$ as they stream in straight lines. 
+We can see this in spherical geometry (note, $dr$, $d\theta$, and $ds$ are assumed to be very small). We will use Figure~\ref{fig:sph-m} to understand our derivatives. Also recall sin = O/H, cos = A/H, and $\sin^2 + \cos^2 = 1$. Also recall that $\vOmega \cdot \hat{\vec{r}} = \mu$
 %
-In the transport model (separation of variables):
-\[\psi(\rvec, E, \vOmega, t) = T(t) \Psi(\rvec, E, \vOmega) \:.\]
-Plug this in and divide by $\psi$ to get
-\[\frac{1}{T}\frac{dT}{dt} = \frac{v}{\Psi} L \Psi(\rvec, E, \vOmega) = \alpha \:.\]
-%
-Here, $L$ contains streaming, total, scattering, and fission operators.
+\begin{figure}[h!]
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 4.25 in]{../figs/n-motion-sph}
+    \end{center}    
+    \caption{Spherical: B\&G Chp.\ 1}
+    \label{fig:sph-m} 
+\end{figure}
 
-Because the TE is linear, we can use the principle of superposition. 
-therefore, the general solution is the sum of \textbf{all} permissible solutions indicated by $\alpha$.
-
-This means time dependence looks like
-\[ T(t) = \tau \exp(\alpha t)\]
-where $\tau$ is a constant of integration determined by the initial condition.
-Then
-\[L\Psi = \frac{\alpha}{v}\Psi\]
-%
-We assume (which is usually true) that the boundary conditions are homogeneous (that is, have no fixed parts).
-In this case, we have a linear and homogeneous system.
-
-$\Psi(\rvec, E, \vOmega) = 0$ is a valid solution, but it is the trivial one.
-
-``Eigenvalues" are special values of $\alpha$ for which non-trivial solutions are valid.
-for example
 \begin{align*}
-(L - \frac{\alpha}{v})\Psi &= 0 \:, \quad \in \mathbb{R} \\
-\Psi \neq 0 \rightarrow \: &\alpha = v L
+\frac{d \psi}{ds} &= \frac{d \psi}{dr} \frac{dr}{ds} + \frac{d\psi}{d\mu} \frac{d\mu}{ds} \\
+&\text{Look a the figure to define the terms}\\
+\frac{dr}{ds} &= \cos(\theta) = \mu \\
+%
+\frac{d \mu}{ds} &= -\sin(\theta) \frac{d \theta}{ds} = -\sin(\theta) \biggl(\frac{-\sin(\theta)}{r} \biggr) = \biggl(\frac{1 - \mu^2}{r} \biggr) \\
+%
+\frac{d\psi}{ds} &= \mu \frac{\partial \psi}{\partial r} + \underbrace{\frac{(1 - \mu^2)}{r}\frac{\partial \psi}{\partial \mu}}_{\text{redistribution term}}
 \end{align*}
 
-The solutions for this problem are eigenfunctions determined to within a multiplicative constant.
-If you fine a $\Psi$ that is a solution, then $c \Psi$ is also a solution, where $c$ is a constant:
-\[L(c \Psi) = cL \Psi = \frac{\alpha}{v}c \Psi \:.\]
+We can extend all of that we get the ``conservation form" of the term (see B\&G 1.3b for derivation)
+\[\frac{d\psi}{ds} = \frac{\mu}{r^2} \frac{\partial(r^2 \psi)}{\partial r} + \frac{1}{r} \frac{\partial}{\partial \mu}\bigl[(1 - \mu^2) \psi \bigr] \:. \]
+
+I've included a table of the spherical conservative form terms as well as the coordinate system and conservative form for cylindrical coordinates in the notes.
+%
+\begin{figure}[h!] 
+    \label{fig:sph-op}
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 6 in]{../figs/spherical-operator}
+    \end{center}    
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 4 in]{../figs/cyl-coords}
+    \end{center}    
+    \label{fig:cyl-coord}
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 5 in]{../figs/cyl-operator}
+    \end{center}    
+    \caption{Cylindrical: L\&M Chp.\ 1}
+\end{figure}
 
 
 \clearpage

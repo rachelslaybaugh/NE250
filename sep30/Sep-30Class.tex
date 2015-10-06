@@ -60,76 +60,51 @@ Announcements:
 \end{itemize}
 
 ---------------------------------\\
-Last time we were discussing the \underline{streaming term in curvilinear coordinates}.
-Recall, $\vOmega \cdot \nabla$ is the derivative of angular flux along the direction of motion $\vOmega$. We will use this coordinate system.
+\underline{Criticality and Eigenproblems}
+\begin{itemize}
+\item Criticality refers to a self-sustaining \textit{and} controlled chain reaction $\rightarrow$ production = losses
+\item subcritical: production $<$ loss $\rightarrow$ chain reaction cannot sustain itself
+\item supercritical: production $>$ loss $\rightarrow$ chain reaction increases 
+\end{itemize}
 %
-\begin{figure}[h!]
-    \begin{center}
-    \includegraphics[keepaspectratio, width = 3.5 in]{../figs/spherical-coords}
-    \end{center}    
-    \label{fig:sph-coord} 
-    \caption{Spherical: L\&M Chp.\ 1}
-\end{figure}
-
-In curvilinear geometry, neutrons ``migrate" across $\vOmega$ as they stream in straight lines. 
-We can see this in spherical geometry (note, $dr$, $d\theta$, and $ds$ are assumed to be very small) and use that figure to understand our derivatives. Also recall sin = O/H, cos = A/H, and $\sin^2 + \cos^2 = 1$.
-%
-\begin{figure}[h!]
-    \begin{center}
-    \includegraphics[keepaspectratio, width = 4.5 in]{../figs/n-motion-sph}
-    \end{center}    
-    \label{fig:sph-m} 
-    \caption{Spherical: B\&G Chp.\ 1}
-\end{figure}
-
-\begin{align*}
-\frac{d \psi}{ds} &= \frac{d \psi}{dr} \frac{dr}{ds} + \frac{d\psi}{d\mu} \frac{d\mu}{ds} \\
-&\text{Look a the figure to define the terms}\\
-\frac{dr}{ds} &= \cos(\theta) = \mu \\
-%
-\frac{d \mu}{ds} &= -\sin(\theta) \frac{d \theta}{ds} = -\sin(\theta) \biggl(\frac{-\sin(\theta)}{r} \biggr) = \biggl(\frac{1 - \mu^2}{r} \biggr) \\
-%
-\frac{d\psi}{ds} &= \mu \frac{\partial \psi}{\partial r} + \underbrace{\frac{(1 - \mu^2)}{r}\frac{\partial \psi}{\partial \mu}}_{\text{redistribution term}}
-\end{align*}
-%
-We can extend all of that we get the ``conservation form" of the term (see B\&G 1.3b for derivation)
-\[\frac{d\psi}{ds} = \frac{\mu}{r^2} \frac{\partial(r^2 \psi)}{\partial r} + \frac{1}{r} \frac{\partial}{\partial \mu}\bigl[(1 - \mu^2) \psi \bigr] \:. \]
-
-I've included a table of the spherical conservative form terms as well as the coordinate system and conservative form for cylindrical coordinates in the notes.
-%
-\begin{figure}[h!] 
-    \label{fig:sph-op}
-    \begin{center}
-    \includegraphics[keepaspectratio, width = 6 in]{../figs/spherical-operator}
-    \end{center}    
-\end{figure}
-
-\begin{figure}[h!]
-    \begin{center}
-    \includegraphics[keepaspectratio, width = 4 in]{../figs/cyl-coords}
-    \end{center}    
-    \label{fig:cyl-coord}
-    \begin{center}
-    \includegraphics[keepaspectratio, width = 5 in]{../figs/cyl-operator}
-    \end{center}    
-    \caption{Cylindrical: L\&M Chp.\ 1}
-\end{figure}
-
-\clearpage
-%------------------------------------------------------------
-Back to \textbf{Eigenvalues and Criticality}
-
 In the transport model (separation of variables):
+\[\psi(\rvec, E, \vOmega, t) = T(t) \Psi(\rvec, E, \vOmega) \:.\]
+Plug this in and divide by $\psi$ to get
+\[\frac{1}{T}\frac{dT}{dt} = \frac{v}{\Psi} L \Psi(\rvec, E, \vOmega) = \alpha \:.\]
+%
+Here, $L$ contains streaming, total, scattering, and fission operators.
+
+Because the TE is linear, we can use the principle of superposition. 
+therefore, the general solution is the sum of \textbf{all} permissible solutions indicated by $\alpha$.
+
+This means time dependence looks like
+\[ T(t) = \tau \exp(\alpha t)\]
+where $\tau$ is a constant of integration determined by the initial condition.
+Then
+\[L\Psi = \frac{\alpha}{v}\Psi\]
+%
+We assume (which is usually true) that the boundary conditions are homogeneous (that is, have no fixed parts).
+In this case, we have a linear and homogeneous system.
+
+$\Psi(\rvec, E, \vOmega) = 0$ is a valid solution, but it is the trivial one.
+
+``Eigenvalues" are special values of $\alpha$ for which non-trivial solutions are valid.
+for example
 \begin{align*}
-\psi(\rvec, E, \vOmega, t) &= T(t) \Psi(\rvec, E, \vOmega) \\
-T(t) &= \tau \exp(\alpha t) \quad \alpha \text{ depends on the evals of the ss transport operator} \\
-\text{Eigenproblem: }L\Psi(\rvec, E, \vOmega) &= \frac{\alpha}{v}\Psi(\rvec, E, \vOmega)
+(L - \frac{\alpha}{v})\Psi &= 0 \:, \quad \in \mathbb{R} \\
+\Psi \neq 0 \rightarrow \: &\alpha = v L
 \end{align*}
 %
-Homogeneous boundary conditions.\\
+The solutions for this problem are eigenfunctions determined to within a multiplicative constant.
+If you fine a $\Psi$ that is a solution, then $c \Psi$ is also a solution, where $c$ is a constant:
+\[L(c \Psi) = cL \Psi = \frac{\alpha}{v}c \Psi \:.\]
+
+Thus, we want to solve the Eigenproblem: $L\Psi(\rvec, E, \vOmega) = \frac{\alpha}{v}\Psi(\rvec, E, \vOmega)$.\\
 A non-trivial solution requires $(L - \frac{\alpha}{v})$ is singular. \\
 That is, for $\Psi \neq 0 \rightarrow \: \alpha = v L$, which causes $L - \frac{\alpha}{v}$ to be zero, or non-invertible.
 
+
+----- aside ----\\
 Linear operators: $L(a*x + b*y) = aL(x) + bL(y)$, where $a$ and $b$ and constants and $x$ and $y \: \in \: L$.\\
 Examples are the derivative operator and integration. \\
 A counter example is a quadratic:
@@ -138,7 +113,7 @@ L(z) &= z^2 \\
 L(a(x) + b(y)) &= (ax + by)^2 = a^2 x^2 + axby + b^2 y^2 \\
 & \neq \underbrace{a x^2}_{aL(x)} + \underbrace{b x^2}_{bL(x)}
 \end{align*}
-%
+-------\\
 Our transport operator is linear, so each eval gives an emode, and the solution is a superposition of all emodes. \\
 The collection of evals defines the spectrum of $L$.
 
