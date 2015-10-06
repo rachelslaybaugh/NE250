@@ -1,0 +1,164 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% writing elements
+\usepackage{mhchem}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\vecr}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+\newcommand{\sigs}{\ensuremath{\Sigma_s(\rvec,E'\rightarrow E,\omvec'\rightarrow\omvec)}}
+\newcommand{\el}{\ensuremath{\ell}}
+\newcommand{\sigso}{\ensuremath{\Sigma_{s,0}}}
+\newcommand{\sigsi}{\ensuremath{\Sigma_{s,1}}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, F15\\
+October 7, 2015 
+}
+\end{center}
+
+\underline{Effective multiplication factor}\\
+All of that is a bit restrictive. 
+Instead, we can use a mathematical shift to give us more flexibility. 
+
+Alter the effective fission yield, $\nu$, by scaling it with $k$. 
+This allows us to vary $k$ to achieve $\alpha_o = 0$.
+%
+\begin{align*}
+\vOmega \cdot \nabla \psi(\vec{r}, E, \vOmega) &+ \Sigma_t \psi(\vec{r}, E, \vOmega) = \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega')\\
+ +& \underbrace{\frac{1}{k}}_{\text{new}}\frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega')
+\end{align*}
+%
++ homogeneous boundary conditions.
+\begin{itemize}
+\item $k$ as a multiplication factor: the ratio of neutron production in one generation to the neutron production in the previous generation.
+\item Let's define $p$ as all phase space, then
+  \[\int dp = \int_{V} d\rvec \int_{4 \pi} d\vOmega \int_0^{\infty} dE\]
+\item compute neutron production in $p$:
+  \[\int dp\:\frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega') \]
+\item compute neutron losses in $p$:
+  \[\int dp\:\biggl[\vOmega \cdot \nabla \psi + \Sigma_t \psi - \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega') \biggr] \]
+\item ss: losses in this generation = production in the immediate past generation.
+\item $k$ is the ratio of these two equations, giving the multiplication factor over $p$.
+\item Note that $p$ is arbitrary, it applies pointwise over the system (limit as $V$ goes to zero).
+\item $k=1$ corresponds to criticality.
+\end{itemize}
+
+We can compare this formulation (which we're more used to) to the $\alpha$ version, which is used more frequently at LLNL and LANL, for example.
+%
+\begin{align*}
+\vOmega \cdot \nabla \psi &+ \bigl(\Sigma_t + \underbrace{\frac{\alpha_0}{v}}_{\text{new}}\bigr)\psi = \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega')\\
+ +& \frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega')
+\end{align*}
+%
+\begin{itemize}
+\item we can see that $k=1$ means $\alpha_0 = 0$ and vice versa.
+\item $\alpha$-eval problem: the total xsec is modified by a 1/v absorber.
+\item There is numerical difficulty if $\alpha_0 < 0$.\\
+If $\frac{-\alpha_0}{v} > \Sigma_t$ then total interaction becomes a ``source" rather than a loss!
+\item If $\alpha_0 > 0$, absorption of \textbf{slow} neutrons is enhanced by a $\alpha_0$/v absorber $\rightarrow$ harder spectrum.
+\item If $\alpha_0 < 0$, absorption of \textbf{fast} neutrons is enhanced by a $\alpha_0$/v absorber $\rightarrow$ softer spectrum.
+\item This is important b/c rxn rate is $\int_0^{\infty} dE \Sigma_j(E) \phi(E)$
+\end{itemize}
+
+
+%------------------------------------------------------------
+\vspace*{1 em}
+\underline{Integral form of TE} using MOC formalism (B\&G 1.2).\\
+The neutron transport equation is an integro-differential equation for the
+neutron angular density (or flux). We will derive an equivalent integral equation. This raises the question of whether there is or is not also an
+equivalent purely differential expression for the neutron transport problem.
+The answer is that there is not. In deriving the transport
+equation it was necessary to consider the neutron angular density in the 
+immediate (space-time) vicinity only of the point under consideration, whereas the
+whole range of energies and angles had to be included in the transport equation
+for the angular density at a particular energy and angle. Hence, the formulation
+IS local, involving derivatives, in space and time, but it is extended, involving
+integrals, in energy and angle.
+
+In a collision, the position
+and time associated with a neutron change continuously whereas the energy and
+angle will change in a discontinuous manner. As a consequence, a mathematical
+formulation of the neutron transport problem must contain integrals over energy
+and angle.
+
+Since the neutron transport equation is a linear first order partial differential-
+integral equation, it can be converted into an integral equation by a standard
+procedure known as the \textit{method of characteristics}.
+
+\[\vOmega \cdot \nabla \psi(\rvec, \vOmega, E) + \Sigma_t \psi(\rvec, \vOmega, E) = q(\rvec, \vOmega, E)\:,\]
+where $q$ contains fixed, inscattering, and fission sources. \\
+
+\begin{figure}[h!] 
+    \label{fig:cosines}
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 2 in]{../figs/cosines}
+    \end{center}    
+\end{figure}
+%
+The streaming term is 
+\begin{align*}
+\vOmega \cdot \nabla \psi(\rvec, \vOmega, E) &= \mu \frac{\partial \psi}{\partial x} + \eta \frac{\partial \psi}{\partial x} + \xi \frac{\partial \psi}{\partial z} \\
+\mu^2 &+ \eta^2 + \xi^2 = 1 \\
+\vOmega &= \mu \hat{x} + \eta \hat{y} + \xi \hat{z}
+\end{align*}
+%
+Note that in this figure $\vOmega$ is a direction of motion of a point on a unit sphere, not a point in space.
+
+We will use the figure below in our derivation with $\vec{r} = \rvec_0 + s(\mu \hat{x} + \eta \hat{y} + \xi \hat{z})$, where $\rvec_0$ is an arbitrary point.
+Further $x = x_0 + s\mu$, $y = y_0 + s\eta$, $z = z_0 + s\xi$.
+%
+\begin{figure}[h!] 
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 2.5 in]{../figs/moc-stream}    
+    \end{center}
+    \label{fig:stream}   
+\end{figure}
+
+Using this we can see
+\[\frac{d\psi}{ds} = \frac{d\psi}{dx}\underbrace{\frac{dx}{ds}}_{\mu} + \frac{d\psi}{dy}\underbrace{\frac{dy}{ds}}_{\eta} + \frac{d\psi}{dz}\underbrace{\frac{dz}{ds}}_{\xi}\:,\]
+which shows 
+\[\frac{d\psi}{ds} = \vOmega \cdot \nabla \psi\:,\]
+Now we can look at
+\[\frac{d}{ds}\psi(\rvec_0 + \vOmega s, \vOmega, E) + \Sigma_t \psi = q(\rvec_0 + \vOmega s, \vOmega, E)\:.\]
+This is a derivative along a characteristic curve. 
+The equation is a linear, first-order ODE that can be integrated. 
+We will do this by introducing an integrating factor: $\exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]$. 
+
+\end{document}
