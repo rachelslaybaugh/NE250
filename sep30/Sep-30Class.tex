@@ -61,7 +61,7 @@ Announcements:
 
 
 \underline{Criticality and Eigenproblems}\\
-Loosely from B\&G 1.5.
+Loosely from B\&G 1.5 and L\&M 1-5.
 \begin{itemize}
 \item Criticality refers to a self-sustaining \textit{and} controlled chain reaction $\rightarrow$ production = losses
 \item subcritical: production $<$ loss $\rightarrow$ chain reaction cannot sustain itself
@@ -130,9 +130,9 @@ Let us order the eigenvalues such that $Re(\alpha_j) \geq Re(\alpha_{j+1})$. At 
 \[\lim_{t \to \infty} \psi(\rvec, E, \vOmega, t) = \tau_0 \exp[\alpha_0 t] \Psi_0(\rvec, E, \vOmega)\]
 %
 \begin{itemize}
-\item critical: $\alpha_0 = 0$; the solution is steady state. 
-\item subcritical: $\alpha_0 < 0$; the solution diminishes over time.
-\item supercritical: $\alpha_0 > 0$; the solution grows over time.
+\item critical: $Re(\alpha_0) = 0$; the solution is steady state. 
+\item subcritical: $Re(\alpha_0) < 0$; the solution diminishes over time.
+\item supercritical: $Re(\alpha_0) > 0$; the solution grows over time.
 \end{itemize} 
 %
 %\begin{itemize}
@@ -145,7 +145,7 @@ Let us order the eigenvalues such that $Re(\alpha_j) \geq Re(\alpha_{j+1})$. At 
 \vspace*{1 em}
 \underline{Existence of SS Soln to TE}
 
-The time independent TE with no external source, $L\Psi_0 = 0$, will be critical if $\alpha_0 = 0$ and will have a unique solution if $\Psi_0$ is unique. \\
+The time independent TE with no external source, $L\Psi_0 = 0$, will be critical if $Re(\alpha_0) = 0$ and will have a unique solution if $\Psi_0$ is unique. \\
 More generally, consider the \textit{inhomogenous}, time dependent TE (assumes $L$ and $S$ are time independent):
 %
 \[\frac{1}{v}\frac{\partial \psi}{\partial t} = L\psi + S = 0\]
@@ -154,10 +154,10 @@ We're looking for circumstances under which a solution will exist for
 \[\frac{1}{v}\frac{\partial \psi}{\partial t} = 0 \quad \text{and} \quad L\psi + S = 0\]
 
 \begin{enumerate}
-\item $\alpha_0 < 0$: $\psi$ decays in time and any final solution will be independent of initial conditions since the effect decays with time. If there is a non-zero $\psi$ that balances production and loss (because of the source), a solution exists.
-\item $\alpha_0 = 0$: if $S \neq 0$, then ss soln is unbounded; \\
-\hspace*{3.5 em}if $S=0$, then ss soln is $\Psi_0$.
-\item $\alpha_0 > 0$: a bounded ss soln does \textit{not} exist unless $S=0$ and $\Psi_0 = 0$. That is, no physical solutions can exist in a supercritical system for which $\frac{1}{v}\frac{\partial \psi}{\partial t} = 0$.
+\item $Re(\alpha_0) < 0$: $\psi$ decays in time and any final solution will be independent of initial conditions since the effect decays with time. If there is a non-zero $\psi$ that balances production and loss (because of the source), a solution exists.
+\item $Re(\alpha_0) = 0$: if $S \neq 0$, then ss soln is unbounded; \\
+\hspace*{5.5 em}if $S=0$, then ss soln is $\Psi_0$.
+\item $Re(\alpha_0) > 0$: a bounded ss soln does \textit{not} exist unless $S=0$ and $\Psi_0 = 0$. That is, no physical solutions can exist in a supercritical system for which $\frac{1}{v}\frac{\partial \psi}{\partial t} = 0$.
 \end{enumerate}
 
 \end{document}
