@@ -230,10 +230,22 @@ Now, we can combine this with the rhs of Eqn.~\ref{eq:int-fact}:
 &\psi(\rvec_0 + \vOmega s, \vOmega, E) = \int_{-\infty}^s ds' \:\exp[-\int_{s'}^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]q(\rvec_0 + \vOmega s', \vOmega, E)
 \end{align*}
 %
-Functionally, this means that the flux at any point is a result of all sources up to that point attenuated by the exponent of the negative integral of the total number of mfps up to that point. See Figure~\ref{fig:int-s}.
+Functionally, this means that the flux at any point is a result of all sources up to that point attenuated by the exponent of the negative integral of the total number of mfps up to that point (optical length). See Figure~\ref{fig:int-s}.
 
-
-
+Some notes about this form:
+\begin{itemize}
+\item The integro-differential form is a local balance and the \textit{coupling is local}.
+\item The integral form is a tracking mechanism of particles from birth to observation; it is an accumulation process and the \textit{coupling is global}. 
+\end{itemize}
+%
+We can write this more nicely by setting $\rho' \equiv s-s'$, $d\rho' = -ds'$ and  $\rho'' \equiv s-s''$, $d\rho'' = -ds''$. Then:
+\begin{align*}
+\psi(\rvec, \vOmega, E) &= -\int_{\infty}^0 d\rho' \: \exp[-\int_0^{\rho'} d\rho'' \: \Sigma_t(\overbrace{\rvec_0 + \vOmega s}^{\vec{r}} - \overbrace{\vOmega s + \vOmega s''}^{\rho''\vOmega}, E)]q(\overbrace{\rvec_0 + \vOmega s}^{\vec{r}} - \overbrace{\vOmega s + \vOmega s'}^{\rho'\vOmega}, \vOmega, E) \\
+\psi(\rvec, \vOmega, E) &=\int_0^{\infty} d\rho' \:\exp[-\int_0^{\rho'} d\rho'' \: \Sigma_t(\rvec-\rho''\vOmega,E)]q(\rvec-\rho'\vOmega,\vOmega,E)
+\end{align*}
+%
+The exponential represents the attenuation of neutrons as they move from $\rvec-\rho'\vOmega$ to $\rvec$. \\
+The source term represents the production of neutrons at $\rvec-\rho'\vOmega$ of neutrons in $(\vOmega, E)$.
 
 
 \end{document}
