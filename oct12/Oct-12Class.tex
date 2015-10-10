@@ -113,6 +113,15 @@ In this last equation, the term multiplying the source is the probability that a
 The integration over all values of $\vec{r}'$ is equivalent to adding neutrons from all possible sources. \\
 It is of interest to note that this terms is a Green's function for a unit isotropic source at $\vec{r}'$ in an absorbing medium.
 
+---------------------------\\
+We frequently, however, have \textbf{anisotopric scattering}. We can derive an equation similar to the isotropic one.\\
+We will reframe how we think about the source. We will say the production kernel is
+%
+\[\Pi(\rvec, \vOmega',E' \rightarrow \vOmega, E) \equiv \Sigma_s(\rvec, \vOmega',E' \rightarrow \vOmega, E) + \frac{\chi(E)}{4\pi} \nu(E') \Sigma_f(\rvec', E')\]
+Then, the collision source of neutrons is
+\[\Phi(\vec{r}, \vOmega, E) = \int_{4\pi} d\vOmega' \int_0^{\infty} dE' \: \Pi(\rvec, \vOmega',E' \rightarrow \vOmega, E) \psi(\rvec, \vOmega', E')\]
+%
+We can say that $q$ is the collision source combined with the external source. We perform the same sort of operations as above, and now we have an integral equation that has $\Phi$ as a dependent variable. See B\&G 1.2d for a full treatment.
 
 
 \end{document}
