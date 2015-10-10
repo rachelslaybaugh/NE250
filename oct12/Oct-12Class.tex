@@ -1,0 +1,93 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% writing elements
+\usepackage{mhchem}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\vecr}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+\newcommand{\sigs}{\ensuremath{\Sigma_s(\rvec,E'\rightarrow E,\omvec'\rightarrow\omvec)}}
+\newcommand{\el}{\ensuremath{\ell}}
+\newcommand{\sigso}{\ensuremath{\Sigma_{s,0}}}
+\newcommand{\sigsi}{\ensuremath{\Sigma_{s,1}}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, F15\\
+October 7, 2015 
+}
+\end{center}
+
+Last time we derived the integral form of the TE:
+\[
+\psi(\rvec, \vOmega, E) =\int_0^{\infty} d\rho' \:\exp[-\int_0^{\rho'} d\rho'' \: \Sigma_t(\rvec-\rho''\vOmega,E)]q(\rvec-\rho'\vOmega,\vOmega,E)\]
+%
+We can reframe with with operators to think about how the levels of collisions build up the flux at a given point in phase space.\\
+If we define $Q'$ as the integrated fixed source and\\
+$K$ as the appropriate integral operator \\
+then $K\psi$ is the neutron production by scattering and fission. \\
+We can then see
+\[\psi = K \psi + Q'\]
+We can think about this equation 
+\begin{align*}
+\psi_0 &= Q' \quad \text{uncollided flux}\\
+\psi_1 &= K \psi_0 \quad \text{flux of neutrons that have had one collision}\\
+&\vdots \\
+\psi_n &= K \psi_{n-1} \quad \text{flux of neutrons that have had n collisions} \\
+\psi &= \sum_{j=0}^{\infty} \psi_j \quad \text{total flux distribution}
+\end{align*}
+
+---------------------------\\
+If we have \textbf{isotropic scattering}, we can remove the angle dependence and up with a volume integral.
+%
+\begin{itemize}
+\item The fission process is isotropic:
+\[\frac{\chi(E)}{4\pi} \int_0^{\infty} dE' \: \nu(E') \Sigma_f(\rvec, E') \underbrace{\int_{4\pi} d\vOmega' \: \psi(\rvec, \vOmega', E')}_{\phi(\rvec,E')}\]
+\item The fixed source becomes
+\[S(\rvec, \vOmega, E) = \frac{S(\rvec, E)}{4 \pi}\]
+\item and the scattering source becomes
+\[\int_0^{\infty} dE' \int_{4\pi} d\vOmega' \: \frac{\Sigma_s(\rvec,E' \rightarrow E)}{4\pi} = \frac{1}{4\pi}\int_0^{\infty} dE'\:\Sigma_s(\rvec,E' \rightarrow E) \phi(\rvec,E')\]
+\item The total source is the sum of these three, and is now independent of angle.
+\end{itemize}
+
+
+
+
+
+
+\end{document}
