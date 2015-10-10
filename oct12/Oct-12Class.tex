@@ -54,8 +54,10 @@ October 7, 2015
 \end{center}
 
 Last time we derived the integral form of the TE:
-\[
-\psi(\rvec, \vOmega, E) =\int_0^{\infty} d\rho' \:\exp[-\int_0^{\rho'} d\rho'' \: \Sigma_t(\rvec-\rho''\vOmega,E)]q(\rvec-\rho'\vOmega,\vOmega,E)\]
+\begin{equation}
+\psi(\rvec, \vOmega, E) =\int_0^{\infty} d\rho' \:\exp[-\int_0^{\rho'} d\rho'' \: \Sigma_t(\rvec-\rho''\vOmega,E)]q(\rvec-\rho'\vOmega,\vOmega,E)
+\label{eq:integral}
+\end{equation}
 %
 We can reframe with with operators to think about how the levels of collisions build up the flux at a given point in phase space.\\
 If we define $Q'$ as the integrated fixed source and\\
@@ -84,9 +86,32 @@ If we have \textbf{isotropic scattering}, we can remove the angle dependence and
 \[\int_0^{\infty} dE' \int_{4\pi} d\vOmega' \: \frac{\Sigma_s(\rvec,E' \rightarrow E)}{4\pi} = \frac{1}{4\pi}\int_0^{\infty} dE'\:\Sigma_s(\rvec,E' \rightarrow E) \phi(\rvec,E')\]
 \item The total source is the sum of these three, and is now independent of angle.
 \end{itemize}
+%
+We can use this source in Eqn.~\ref{eq:integral}, integrate the integrating factor over angle, and get an expression for the scalar flux. When doing this, we will note the following things
+\begin{align*}
+d\vOmega &= \frac{dA}{\rho'^2}\\
+d\rho' dA &= dV \\
+\int_{4\pi} d\vOmega \int_0^{\infty} d\rho' &-= \int_{V} \frac{dV}{\rho'^2}
+\end{align*}
+%
+We can also recall that $\rho' = |\vec{r} - \vec{r}'|$, we can let $dV = d^3r'$, and we will define
+\[\int_0^{\rho'} d\rho'' \: \Sigma_t(\rvec-\rho''\vOmega,E) \equiv \tau(E,\vec{r} - \rho' \vOmega \rightarrow \vec{r})
+\]
+which is the optical path length. \\
+Combining all of this we get
+\begin{align}
+\phi(\rvec,E) &= \int_V d^3r' \: \biggl[\frac{\exp[-\tau(E,\vec{r}' \rightarrow \vec{r})}{4\pi|\vec{r} - \vec{r}'|^2} \biggl(S(\vec{r}',E) + \frac{\chi(E)}{4\pi} \int_0^{\infty} dE' \: \nu(E') \Sigma_f(\rvec', E')\phi(\vec{r}', E') \nonumber \\
+&+ \int_0^{\infty} dE'\:\Sigma_s(\rvec',E' \rightarrow E) \phi(\rvec',E') \biggr)  \biggr]
+\label{eq:iso-integral}
+\end{align}
+%
+Interestingly, if $|\vec{r} - \vec{r}'|$ is replaced by $R$, then in the simple case of total cross section being independent of position, Eqn.~\ref{eq:iso-integral} becomes
+\[\phi(\rvec,E) = \int_V d^3r' \: \biggl[\frac{\exp[-\Sigma_t(E, R)]}{4\pi R^2} \biggl( \text{isotropic source at }\vec{r}' \biggr)\biggr]\]
 
-
-
+In both of these equations, the source term is the rate at which neutrons of energy $E$ appear at $\vec{r}'$ from each source type. \\
+In this last equation, the term multiplying the source is the probability that a neutron appearing at $\vec{r}'$ will reach $\vec{r}$ without suffering a collision.\\
+The integration over all values of $\vec{r}'$ is equivalent to adding neutrons from all possible sources. \\
+It is of interest to note that this terms is a Green's function for a unit isotropic source at $\vec{r}'$ in an absorbing medium.
 
 
 
