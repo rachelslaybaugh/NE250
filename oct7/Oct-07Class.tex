@@ -111,8 +111,8 @@ compute neutron losses in $p$:
   \[\int dp\:\biggl[\vOmega \cdot \nabla \psi + \Sigma_t \psi - \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega') \biggr] \]
 ss: losses in this generation = production in the immediate past generation.\\
 $k$ is the ratio of these two equations, giving the multiplication factor over $p$.\\
-Note that $p$ is arbitrary, it applies pointwise over the system (limit as $V$ goes to zero).
-
+Note that $p$ is arbitrary, it applies pointwise over the system (limit as $V$ goes to zero).\\
+We move the scattering to the lhs since it involves neutrons from this generation while fission is the only term involving neutrons from the previous one.
 
 
 %------------------------------------------------------------
@@ -184,7 +184,7 @@ This is a derivative along a characteristic curve.
 The equation is a linear, first-order ODE that can be integrated. 
 
 
-We will do this by introducing an integrating factor: $\exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]$, which is the total number of points from an arbitrary starting point to the point $s$ distance away.
+We will do this by introducing an integrating factor: $\exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]$, which is the total number of mean free paths from an arbitrary starting point to the point $s$ distance away.
 
 -----------\\
 Note: if you are unfamiliar with integrating factors, look in a textbook or Wolfram Mathworld (when I first saw this material I hadn't learned about them and was pretty confused). \\

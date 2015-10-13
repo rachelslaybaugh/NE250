@@ -49,7 +49,7 @@
 \begin{document}
 \begin{center}
 {\bf NE 250, F15\\
-October 7, 2015 
+October 12, 2015 
 }
 \end{center}
 
@@ -83,7 +83,7 @@ If we have \textbf{isotropic scattering}, we can remove the angle dependence and
 \item The fixed source becomes
 \[S(\rvec, \vOmega, E) = \frac{S(\rvec, E)}{4 \pi}\]
 \item and the scattering source becomes
-\[\int_0^{\infty} dE' \int_{4\pi} d\vOmega' \: \frac{\Sigma_s(\rvec,E' \rightarrow E)}{4\pi} = \frac{1}{4\pi}\int_0^{\infty} dE'\:\Sigma_s(\rvec,E' \rightarrow E) \phi(\rvec,E')\]
+\[\int_0^{\infty} dE' \int_{4\pi} d\vOmega' \: \frac{\Sigma_s(\rvec,E' \rightarrow E)}{4\pi} \psi(\rvec, \vOmega', E') = \frac{1}{4\pi}\int_0^{\infty} dE'\:\Sigma_s(\rvec,E' \rightarrow E) \phi(\rvec,E')\]
 \item The total source is the sum of these three, and is now independent of angle.
 \end{itemize}
 %
@@ -111,7 +111,7 @@ Interestingly, if $|\vec{r} - \vec{r}'|$ is replaced by $R$, then in the simple 
 In both of these equations, the source term is the rate at which neutrons of energy $E$ appear at $\vec{r}'$ from each source type. \\
 In this last equation, the term multiplying the source is the probability that a neutron appearing at $\vec{r}'$ will reach $\vec{r}$ without suffering a collision.\\
 The integration over all values of $\vec{r}'$ is equivalent to adding neutrons from all possible sources. \\
-It is of interest to note that this terms is a Green's function for a unit isotropic source at $\vec{r}'$ in an absorbing medium.
+It is of interest to note that the exponential term, including the denominator, is a Green's function for a unit isotropic source at $\vec{r}'$ in an absorbing medium.
 
 ---------------------------\\
 We frequently, however, have \textbf{anisotopric scattering}. We can derive an equation similar to the isotropic one.\\
@@ -122,6 +122,23 @@ Then, the collision source of neutrons is
 \[\Phi(\vec{r}, \vOmega, E) = \int_{4\pi} d\vOmega' \int_0^{\infty} dE' \: \Pi(\rvec, \vOmega',E' \rightarrow \vOmega, E) \psi(\rvec, \vOmega', E')\]
 %
 We can say that $q$ is the collision source combined with the external source. We perform the same sort of operations as above, and now we have an integral equation that has $\Phi$ as a dependent variable. See B\&G 1.2d for a full treatment.
+
+---------------------------\\
+The \textbf{Adjoint Transport Equation} (L\&M 1.6).
+
+The adjoint TE has two main applications: use in MC variance reduction and use in perturbation theory for eigenvalue problems (estimate changes in the neutron multiplication cause by small changes in material properties). \\
+We will start with some mathematical concepts we will use.
+
+\textit{Inner product}
+\begin{itemize}
+\item An inner product is a binary operation (takes 2 arguments) that combines 2 vectors into a scalar quantity.
+\item in Euclidean space comprises all 3D vectors the inner product is the project of one vector onto another ($\vec{v}_1 \cdot \vec{v}_2 = |v_1||v_2|\cos(\theta)$).
+\item Euclidean space (comprises all 3D vectors)
+\item A function space comprises all functions that have a given property. e.g.\ all continuous functions; all functions with Dirichlet BCs; etc.
+\item $f \: \in$ a function space: $f$ satisfies the properties of the space
+\item one way to define an inner product: $<f,g> \equiv \int_{\rho} d\rho \: f^{*}(\rho) g(\rho)$, where superscript $*$ indicates complex conjugate.
+\item Inner products are linear: $<f, [ag_1 + bg_2]> = a<f, g_1> + b<f, g_2>$ ($a$ and $b$ are scalars).
+\end{itemize}
 
 
 \end{document}
