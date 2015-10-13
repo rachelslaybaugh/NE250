@@ -57,7 +57,7 @@ The \textbf{Adjoint Transport Equation} (L\&M 1.6).
 
 Last time we started talking about the adjoint transport equation and began be defining inner products. 
 
-The \textit{adjoint operator} obeys the following identity: $<A^{\dagger}f, g> = <f, Ag>$ for all $f$ and $g$ is the vector space. Superscript $\dagger$ indicates adjoint quantities.\\
+The \textit{adjoint operator} obeys the following identity: $\langle A^{\dagger}f, g\rangle = \langle f, Ag\rangle$ for all $f$ and $g$ is the vector space. Superscript $\dagger$ indicates adjoint quantities.\\
 Note that if $M_1^{\dagger}$ and $M_2^{\dagger}$ are both adjoints of $M_1$ and $M_2$, respectively, then $(M_1 + M_2)^{\dagger}  = M_1^{\dagger} + M_2^{\dagger}$.
 
 We can relate the forward and adjoint eigenspaces\\
@@ -65,12 +65,12 @@ Forward: $Mf = \lambda f$ with homogeneous BCs;\\
 Adjoint: $M^{\dagger}f^{\dagger} = \lambda^{\dagger} f^{\dagger}$ with homogeneous BCs.
 
 \begin{align*}
-<M^{\dagger}f^{\dagger}, f> - <f^{\dagger}, Mf> &= <\lambda^{\dagger} f^{\dagger}, f> - <f^{\dagger} ,\lambda f> \\
-0 &= <\lambda^{\dagger} - \lambda> <f^{\dagger}, f> \quad \text{orthogonality condition}
+\langle M^{\dagger}f^{\dagger}, f\rangle - \langle f^{\dagger}, Mf\rangle &= \langle\lambda^{\dagger} f^{\dagger}, f\rangle - \langle f^{\dagger} ,\lambda f\rangle \\
+0 &= \langle\lambda^{\dagger} - \lambda\rangle \langle f^{\dagger}, f\rangle \quad \text{orthogonality condition}
 \end{align*}
 %
-If $\lambda^{\dagger, *} \neq \lambda$ then $<f^{\dagger}, f> = 0$.\\
-If $<f^{\dagger}, f> \neq 0$ then $\lambda^{\dagger, *} = \lambda \rightarrow \lambda^{\dagger} = \lambda$.\\
+If $\lambda^{\dagger, *} \neq \lambda$ then $\langle f^{\dagger}, f\rangle = 0$.\\
+If $\langle f^{\dagger}, f\rangle \neq 0$ then $\lambda^{\dagger, *} = \lambda \rightarrow \lambda^{\dagger} = \lambda$.\\
 If $M = M^{\dagger}$, the operator is called self adjoint. 
 
 The \textit{Adjoint Transport Equation for non-multiplying media}.
@@ -82,7 +82,7 @@ Recall that $\zeta(\vec{r}_s, \vOmega, E)$ must be continuous in the direction o
 
 
 We will can $H$ our transport operator.\\
-Our goal is to get something that looks like $<\zeta^{\dagger}, H \zeta> = <\zeta, H^{\dagger} \zeta^{\dagger}>$.\\
+Our goal is to get something that looks like $\langle\zeta^{\dagger}, H \zeta\rangle = \langle\zeta, H^{\dagger} \zeta^{\dagger}\rangle$.\\
 
 
 To do get the lhs, we will multiply the regular TE by $\zeta^{\dagger}$, ingrate over all phase space, and manipulate the result to get $\zeta$ in front of the operator.
@@ -120,10 +120,10 @@ We will also swap $E'$ and $E$, $\vOmega'$ and $\vOmega$ to get (leaving out vol
 %
 We now combine all three terms to get the adjoint form of the transport equation (!):
 \begin{align*}
-<\zeta^{\dagger}, H \zeta> = \int_{V} dV \int_{4\pi} d\vOmega \int_0^{\infty} dE \: &\zeta (\rvec, \vOmega, E) \times \biggl[-\vOmega \cdot \nabla \zeta^{\dagger}(\vec{r}, E, \vOmega)  + \Sigma_t(\rvec,E) \zeta^{\dagger}(\vec{r}, E, \vOmega) \\&- \int d\vOmega' \int dE'\: \Sigma_s(\rvec, E \rightarrow E', \vOmega \cdot \vOmega') \zeta^{\dagger}(\rvec, \vOmega', E') \biggr]
+\langle\zeta^{\dagger}, H \zeta\rangle = \int_{V} dV \int_{4\pi} d\vOmega \int_0^{\infty} dE \: &\zeta (\rvec, \vOmega, E) \times \biggl[-\vOmega \cdot \nabla \zeta^{\dagger}(\vec{r}, E, \vOmega)  + \Sigma_t(\rvec,E) \zeta^{\dagger}(\vec{r}, E, \vOmega) \\&- \int d\vOmega' \int dE'\: \Sigma_s(\rvec, E \rightarrow E', \vOmega \cdot \vOmega') \zeta^{\dagger}(\rvec, \vOmega', E') \biggr]
 \end{align*}
 %
-We can see that $<\zeta^{\dagger}, H \zeta> = <\zeta, H^{\dagger} \zeta^{\dagger}>$ will be satisfied if we define the adjoint operator as
+We can see that $\langle\zeta^{\dagger}, H \zeta\rangle = \langle\zeta, H^{\dagger} \zeta^{\dagger}\rangle$ will be satisfied if we define the adjoint operator as
 \[
 H^{\dagger} = -\vOmega \cdot \nabla  + \Sigma_t(\rvec,E) - \int d\vOmega' \int dE'\: \Sigma_s(\rvec, E \rightarrow E', \vOmega \cdot \vOmega')
 \]
@@ -142,14 +142,14 @@ where $\psi^{\dagger}(\vec{r}_s, \vOmega, E) = 0$ for $\rvec$ on $\Gamma$ and $\
 %
 \item We can multiply the initial equation (forward) by $\psi^{\dagger}$ and integrate over phase space. We can do the opposite/same to the adjoint equation. This gives
 \begin{align*}
-<\psi^{\dagger}, H\psi> &= <\psi^{\dagger}, q_{ex}> \quad \text{and}\\
-<\psi, H^{\dagger} \psi^{\dagger}> &= \underbrace{<\psi, V_d \Sigma_d \delta(\rvec - \rvec_d)> }_R
+\langle\psi^{\dagger}, H\psi\rangle &= \langle\psi^{\dagger}, q_{ex}\rangle \quad \text{and}\\
+\langle\psi, H^{\dagger} \psi^{\dagger}\rangle &= \underbrace{\langle\psi, V_d \Sigma_d \delta(\rvec - \rvec_d)\rangle }_R
 \end{align*}
 %
 \item We can subtract the two and then apply the adjoint equivalence identity to see
 \begin{align*}
-<\psi^{\dagger}, H\psi> - <\psi, H^{\dagger} \psi^{\dagger}> &= <\psi^{\dagger}, q_{ex}> - R \\
-R &= <\psi^{\dagger}, q_{ex}>
+\langle\psi^{\dagger}, H\psi\rangle - \langle\psi, H^{\dagger} \psi^{\dagger}\rangle &= \langle\psi^{\dagger}, q_{ex}\rangle - R \\
+R &= \langle\psi^{\dagger}, q_{ex}\rangle
 \end{align*}
 \end{itemize}
 %
@@ -182,5 +182,86 @@ Thus, the contribution to $\psi^{\dagger}(\rvec, \vOmega, E)$ from scattering is
 \item Boundary condition: $\psi^{\dagger}(\rvec, \vOmega, E) = 0\:, \: \hat{n}\cdot \vOmega > 0$.\\
 Neutrons exiting the problem configuration cannot scatter back and so cannot contribute to the detector inside. 
 \end{itemize}
+
+------------------------\\
+The Adjoint Equation in \textbf{Multiplying Media}
+
+We will call the fission operator $G$, where
+\[
+G \zeta = \frac{\chi(E)}{4\pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4\pi} d\vOmega' \psi(\rvec, \vOmega', E')
+\]
+To get the adjoint version, we can take the same approach as with the scattering operator to get
+\[
+G^{\dagger} \zeta^{\dagger} = \frac{\nu(E) \Sigma_f(E)}{4\pi}\int_0^{\infty} dE' \: \chi(E') \int_{4\pi} d\vOmega' \psi^{\dagger}(\rvec, \vOmega', E')
+\]
+We can combine this operator with $H$ to use the techniques in the preceding section to look at subcritical systems.\\
+We replace $H$ and $H^{\dagger}$ with $H-G$ and $H^{\dagger}-G^{\dagger}$, respectively.\\
+
+To look at the \textit{eigenvalue} form of the problem:
+\[
+H\psi - \frac{1}{k}G\psi = 0
+\]
+where $\psi$ is the fundamental solution mode, $\psi > 0$ for $\rvec \in V$, $\psi(\vec{r}_s, \vOmega, E) = 0$ for $\hat{n} \cdot \vOmega < 0$ with $\vec{r}_s \in \Gamma$.  
+\[
+H^{\dagger}\psi^{\dagger} - \frac{1}{k^{\dagger}}G^{\dagger}\psi^{\dagger} = 0
+\]
+Now $\psi^{\dagger}$ is the fundamental mode, $\psi^{\dagger} > 0$ for $\rvec \in V$, $\psi^{\dagger}(\vec{r}_s, \vOmega, E) = 0$ for $\hat{n} \cdot \vOmega > 0$ with $\vec{r}_s \in \Gamma$.  
+
+Next, compare the two equations the way we did for response: multiply the forward equation by $\psi^{\dagger}$, integrate both over volume, and subtract
+\begin{align*}
+\langle\psi^{\dagger}, H\psi\rangle - \langle\psi, H^{\dagger} \psi^{\dagger}\rangle &- \frac{1}{k}\langle\psi^{\dagger}, G\psi\rangle + \frac{1}{k^{\dagger}}\langle\psi, G^{\dagger}\psi^{\dagger}\rangle = 0\\
+\bigl(\frac{1}{k} - \frac{1}{k^{\dagger}} \bigr)\langle\psi^{\dagger}, G\psi\rangle  &= 0 \\
+k &= k^{\dagger} \quad \text{because }G\psi > 0
+\end{align*}
+
+\clearpage----------------------------\\
+\textbf{Reactivity} of a \textbf{Perturbed System}
+
+Recall that reactivity is the measure of a system's deviation from critical: $\rho = \frac{k-1}{k}$.\\
+We are interested in how small changes (perturbations) in a system will cause reactivity to change.\\
+We can use the adjoint equation to help us.
+
+We will denote small changes with a preceding $\delta$ and unperturbed values with a subscript $0$. Thus, for small changes in $k$ we can say 
+\[
+\delta \rho = \frac{\delta k}{k_0^2}
+\]
+For an unperturbed reactor we have these fundamental mode equations:
+\begin{align*}
+H_0\psi_0 &- \frac{1}{k_0}G_0\psi_0 = 0\\
+H_0^{\dagger}\psi_0^{\dagger} &- \frac{1}{k_0^{\dagger}}G_0^{\dagger}\psi_0^{\dagger} = 0
+\end{align*}
+We can represent system perturbation by adding small quantities to the operators and fluxes (very small compared to things themselves). For the forward system we get
+\[
+(H_0 + \delta H)(\psi_0 + \delta \psi) - \frac{1}{k_0 + \delta k}(G_0 + \delta G)(\psi_0 + \delta \psi) = 0
+\]
+Because perturbations are small, we can ignore second order terms. Then
+\begin{align*}
+H_0 \psi_0 + \delta H \psi_0 &+ H_0\delta\psi - \bigl(\frac{1}{k_0 + \delta k}\bigr)\bigl(G_0\psi_0 + \delta G \psi_0 + G_0\delta\psi \bigr) \approx 0 \\
+%
+\frac{1}{k_0 + \delta k} &= \frac{1}{k_0(1 + \delta k/k_0)} \approx \frac{1}{k_0}\bigl(1 - \frac{\delta k}{k_0}\bigr) \\
+\\
+%
+-\frac{\delta k}{k_0^2}G_0\psi_0 &\approx \underbrace{\bigl(H_0 - \frac{1}{k_0}G_0 \bigr)\psi_0}_{\text{fundamental mode}=0} + \bigl(\delta H - \frac{1}{k_0}\delta G\bigr)\psi_0  + \bigl(H_0 - \frac{1}{k_0}G_0 \bigr)\delta \psi
+\end{align*}
+To use inner product identities, we can multiply by $\psi_0^{\dagger}$ and integrate over phase space to get
+\begin{equation}
+-\frac{\delta k}{k_0^2} \langle \psi_0^{\dagger}, G_0\psi_0 \rangle \approx \langle \psi_0^{\dagger},\bigl(\delta H - \frac{1}{k_0}\delta G\bigr)\psi_0 \rangle + \langle \psi_0^{\dagger},\bigl(H_0 - \frac{1}{k_0}G_0 \bigr)\delta \psi \rangle
+\label{eq:perturb}
+\end{equation}
+
+Next, we can use the adjoint identity (using a modified operator) and let $\zeta = \delta\psi$ and $\zeta^{\dagger} = \psi_0^{\dagger}$ we can see:
+\begin{align*}
+\langle\zeta^{\dagger}, H \zeta\rangle &= \langle\zeta, H^{\dagger} \zeta^{\dagger}\rangle \\
+%
+\langle \psi_0^{\dagger}, \bigl(H_0 - \frac{1}{k_0}G_0 \bigr)\delta \psi \rangle &= \langle \delta \psi,  \bigl(H_0^{\dagger} - \frac{1}{k_0^{\dagger}}G_0^{\dagger} \bigr)\psi_0^{\dagger} \rangle
+\end{align*}
+We know that the second part of the rhs is 0 because of the definition of the adjoint equation.\\
+This means the lhs is also 0, we can can remove it from Eqn.~\ref{eq:perturb}.
+
+With all of this, we can now say
+\[
+\frac{\delta k}{k_0^2} \approx \frac{\langle \psi_0^{\dagger},\bigl(\delta H - \frac{1}{k_0}\delta G\bigr)\psi_0 \rangle}{\langle \psi_0^{\dagger}, G_0\psi_0 \rangle}
+\]
+This means that if we know the two unperturbed solutions $\psi_0^{\dagger}$ and $\psi$ we can find the reactivity change for any perturbations.
 
 \end{document}
