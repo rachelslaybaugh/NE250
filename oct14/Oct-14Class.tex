@@ -152,5 +152,35 @@ where $\psi^{\dagger}(\vec{r}_s, \vOmega, E) = 0$ for $\rvec$ on $\Gamma$ and $\
 R &= <\psi^{\dagger}, q_{ex}>
 \end{align*}
 \end{itemize}
+%
+So what does that mean? \\
+It means that the detector response is the volume integral of the adjoint-weighted source distribution. \\
+What does that mean? \\
+The weighting of the adjoint flux directly corresponds to how influential a given source particle will be on the answer we're looking for (what we defined as the adjoint source).
+
+This is a pretty powerful concept. \\
+We can look at a delta source to clarify this a bit.
+\begin{align*}
+q_{ex} &= \delta(\rvec - \rvec_0) \delta(E - E_0) \delta(\vOmega \cdot \vOmega_0) \\
+R &= \psi^{\dagger}(\rvec_0, \vOmega_0, E_0)
+\end{align*}
+It is clear here that the importance provides the detector response to particles produced at $(\rvec_0, \vOmega_0, E_0)$.
+
+This also makes sense if we think through the differences in the equations:
+\begin{itemize}
+\item $-\vOmega \cdot \nabla$: by convention, $\vOmega \cdot \nabla \psi$ implies the \textit{out}flow of $\psi$ from an infinitesimal volume.\\
+A neutron that exits $dV$ has a better chance to contribute to whatever you are measuring and so has a higher importance. \\
+In the adjoint equation the streaming is therefore a \textit{gain} term (recall it's a loss in the forward, so the negative makes it production in the adjoint).
+%
+\item Scattering term: transposed $E'$ and $E$, $\vOmega'$ and $\vOmega$. \\
+A neutron with energy $E$ and direction  $\vOmega$ has importance $\psi^{\dagger}(\rvec, \vOmega, E)$. \\
+If it scatters into $E'$ and $\vOmega'$ it produces neutrons whose importance is $\psi^{\dagger}(\rvec, \vOmega', E')$.\\
+Thus, the contribution to $\psi^{\dagger}(\rvec, \vOmega, E)$ from scattering is:
+\[
+\int_0^{\infty} dE' \int_{4\pi} d\vOmega' \:\Sigma_s(\rvec, E \rightarrow E', \vOmega \cdot \vOmega')\psi^{\dagger}(\rvec, \vOmega', E')
+\]
+\item Boundary condition: $\psi^{\dagger}(\rvec, \vOmega, E) = 0\:, \: \hat{n}\cdot \vOmega > 0$.\\
+Neutrons exiting the problem configuration cannot scatter back and so cannot contribute to the detector inside. 
+\end{itemize}
 
 \end{document}
