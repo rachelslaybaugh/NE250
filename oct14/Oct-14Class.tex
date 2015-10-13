@@ -85,7 +85,7 @@ We will can $H$ our transport operator.\\
 Our goal is to get something that looks like $<\zeta^{\dagger}, H \zeta> = <\zeta, H^{\dagger} \zeta^{\dagger}>$.\\
 
 
-To do get the rhs, we will multiply the regular TE by $\zeta^{\dagger}$, ingrate over all phase space, and manipulate the result to get $\zeta$ in front of the operator.
+To do get the lhs, we will multiply the regular TE by $\zeta^{\dagger}$, ingrate over all phase space, and manipulate the result to get $\zeta$ in front of the operator.
 %
 \[\int_{\rho} d\rho\: \zeta^{\dagger}(\rho)\biggl[ \bigl[\vOmega \cdot \nabla + \Sigma_t\bigr] \zeta(\vec{r}, E, \vOmega) - \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \zeta(\vec{r}, E', \vOmega') \biggr]\]
 % 
@@ -98,21 +98,59 @@ To look at one term at a time:
 \[\nabla \cdot \bigl(\vOmega \zeta^{\dagger} \zeta \bigr) = \zeta^{\dagger}\vOmega \cdot \nabla \zeta + \zeta \vOmega \cdot \nabla \zeta^{\dagger}\]
 then
 \[
-\int_V d^3r \:\zeta^{\dagger}\vOmega \cdot \nabla \zeta + \int_V d^3r \:\zeta \vOmega \cdot \nabla \zeta^{\dagger} = \int_S d \Lambda \hat{n} \cdot \vOmega \zeta^{\dagger} \zeta
+\int_V d^3r \:\zeta^{\dagger}\vOmega \cdot \nabla \zeta + \int_V d^3r \:\zeta \vOmega \cdot \nabla \zeta^{\dagger} = \int_S d \Gamma \hat{n} \cdot \vOmega \zeta^{\dagger} \zeta
 \]
 from divergence theorem. Now, we apply the boundary condition that we originally had for $\zeta$, which causes the surface integral to vanish for $\vOmega \cdot \hat{n} < 0$.
 
-We have a corresponding boundary condition for $\zeta^{\dagger}$ that at any point $\rvec_s$ on the surface, $\zeta^{\dagger}(\rvec, \vOmega, E) = 0$, $\vec{r} \in \Lambda$ and $\vOmega \cdot \hat{n} \geq 0$.
+We have a corresponding boundary condition for $\zeta^{\dagger}$ that at any point $\rvec_s$ on the surface, $\zeta^{\dagger}(\rvec, \vOmega, E) = 0$, $\vec{r} \in \Gamma$ and $\vOmega \cdot \hat{n} \geq 0$.
 
 This means that the surface integral has to vanish for all $\vOmega$ giving
 \[
 \int_V d^3r \:\zeta^{\dagger}\vOmega \cdot \nabla \zeta = -\int_V d^3r \:\zeta \vOmega \cdot \nabla \zeta^{\dagger}
 \]
 %
-\item Finally we'll look at the scattering term. 
+\item Finally we'll look at the scattering term. As with total interaction, we know $\zeta^{\dagger} \Sigma_s \zeta  = \zeta \Sigma_s \zeta^{\dagger}$. \\
+We will also swap $E'$ and $E$, $\vOmega'$ and $\vOmega$ to get (leaving out volume integration but we'll add it later)
+\begin{align*}
+\int d\vOmega \int dE\: &\zeta^{\dagger}(\rvec, \vOmega, E) \int d\vOmega' \int dE'\: \Sigma_s(\rvec, E' \rightarrow E, \vOmega' \cdot \vOmega) \zeta(\rvec, \vOmega', E') = \\
+%
+&\int d\vOmega \int dE\: \zeta(\rvec, \vOmega, E) \int d\vOmega' \int dE'\: \Sigma_s(\rvec, E \rightarrow E', \vOmega \cdot \vOmega') \zeta^{\dagger}(\rvec, \vOmega', E') 
+\end{align*}
 \end{itemize}
+%
+We now combine all three terms to get the adjoint form of the transport equation (!):
+\begin{align*}
+<\zeta^{\dagger}, H \zeta> = \int_{V} dV \int_{4\pi} d\vOmega \int_0^{\infty} dE \: &\zeta (\rvec, \vOmega, E) \times \biggl[-\vOmega \cdot \nabla \zeta^{\dagger}(\vec{r}, E, \vOmega)  + \Sigma_t(\rvec,E) \zeta^{\dagger}(\vec{r}, E, \vOmega) \\&- \int d\vOmega' \int dE'\: \Sigma_s(\rvec, E \rightarrow E', \vOmega \cdot \vOmega') \zeta^{\dagger}(\rvec, \vOmega', E') \biggr]
+\end{align*}
+%
+We can see that $<\zeta^{\dagger}, H \zeta> = <\zeta, H^{\dagger} \zeta^{\dagger}>$ will be satisfied if we define the adjoint operator as
+\[
+H^{\dagger} = -\vOmega \cdot \nabla  + \Sigma_t(\rvec,E) - \int d\vOmega' \int dE'\: \Sigma_s(\rvec, E \rightarrow E', \vOmega \cdot \vOmega')
+\]
+Where key differences are the negative in front of the streaming term and the reversal of energy direction in the scattering cross section.\\
+We also need the boundary condition of zero \textit{outgoing} adjoint flux.
 
+------------------------\\
+Interpretation of adjoint flux as \textit{neutron importance}
 
-
+Let's think about a problem with an external source: $H \psi = q_{ex}$, where $\psi$ meets the boundary conditions.\\
+We'd like to find out the response of a detector with cross section $\Sigma_d$ and volume $V_d$ to that source: $R = V_d \int dE\: \Sigma_d(E) \int_{4\pi} \psi(\rvec_d, \vOmega, E)$. \\
+\begin{itemize}
+\item we'll set up the adjoint problem with the detector response as the source
+\[H^{\dagger}\psi^{\dagger} = q_{ex}^{\dagger} \equiv V_d \Sigma_d \delta(\rvec - \rvec_d)\]
+where $\psi^{\dagger}(\vec{r}_s, \vOmega, E) = 0$ for $\rvec$ on $\Gamma$ and $\vOmega \cdot \hat{n} > 0$.
+%
+\item We can multiply the initial equation (forward) by $\psi^{\dagger}$ and integrate over phase space. We can do the opposite/same to the adjoint equation. This gives
+\begin{align*}
+<\psi^{\dagger}, H\psi> &= <\psi^{\dagger}, q_{ex}> \quad \text{and}\\
+<\psi, H^{\dagger} \psi^{\dagger}> &= \underbrace{<\psi, V_d \Sigma_d \delta(\rvec - \rvec_d)> }_R
+\end{align*}
+%
+\item We can subtract the two and then apply the adjoint equivalence identity to see
+\begin{align*}
+<\psi^{\dagger}, H\psi> - <\psi, H^{\dagger} \psi^{\dagger}> &= <\psi^{\dagger}, q_{ex}> - R \\
+R &= <\psi^{\dagger}, q_{ex}>
+\end{align*}
+\end{itemize}
 
 \end{document}
