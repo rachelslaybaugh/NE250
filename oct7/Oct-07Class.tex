@@ -61,7 +61,7 @@ Recall, that for a system to be critical, a time-independent, non-negative solut
 %
 A solution may exist in a subcritical system if we additionally have a source.
 
-However, in practice it is very difficult to find the critical system configuration that will yield a solution. If we find no solution, we do not have information about whether we are subcricitical or supercritical.
+However, in practice it is very difficult to find the critical system configuration that will yield a solution. If we find no solution, we do not have information about whether we are subcritical or supercritical.
 
 \underline{Effective multiplication factor}\\
 Instead, we can use a mathematical ``knob" to give us more flexibility. There are two ways we do this:
@@ -80,12 +80,12 @@ Instead, we can use a mathematical ``knob" to give us more flexibility. There ar
 %
 Some important notes about this
 \begin{itemize}
-\item In the $\alpha$-eval problem, the total xsec is modified by a 1/v absorber.
+\item In the $\alpha$-evaluation problem, the total cross section is modified by a 1/v absorber.
 \item There is numerical difficulty if $\alpha_0 < 0$.\\
 If $\frac{-\alpha_0}{v} > \Sigma_t$ then total interaction becomes a ``source" rather than a loss!
 \item If $\alpha_0 > 0$, absorption of \textbf{slow} neutrons is enhanced by an $\alpha_0$/v absorber $\rightarrow$ harder spectrum.
 \item If $\alpha_0 < 0$, absorption of \textbf{fast} neutrons is enhanced by an $\alpha_0$/v absorber $\rightarrow$ softer spectrum.
-\item These spectral effects are important b/c rxn rate is $\int_0^{\infty} dE \:\Sigma_j(E) \phi(E)$
+\item These spectral effects are important because reaction rate is $\int_0^{\infty} dE \:\Sigma_j(E) \phi(E)$
 \end{itemize}
 
 \textbf{The $k$-eigenvalue problem} is a little bit different:
@@ -109,10 +109,10 @@ compute neutron production in $p$:
   \[\int dp\:\frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega') \]
 compute neutron losses in $p$:
   \[\int dp\:\biggl[\vOmega \cdot \nabla \psi + \Sigma_t \psi - \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega') \biggr] \]
-ss: losses in this generation = production in the immediate past generation.\\
+Steady state: losses in this generation = production in the immediate past generation.\\
 $k$ is the ratio of these two equations, giving the multiplication factor over $p$.\\
 Note that $p$ is arbitrary, it applies pointwise over the system (limit as $V$ goes to zero).\\
-We move the scattering to the lhs since it involves neutrons from this generation while fission is the only term involving neutrons from the previous one.
+We move the scattering to the LHS since it involves neutrons from this generation while fission is the only term involving neutrons from the previous one.
 
 
 %------------------------------------------------------------
@@ -196,16 +196,16 @@ And that
 \begin{align*}
 \frac{d}{ds}\bigl[\exp[\int^s ds'' \: \Sigma_t(\rvec_0 &+ \vOmega s'', E)]\psi(\rvec_0 + \vOmega s, \vOmega, E)\bigr] =\\ &\exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]\frac{d \psi}{ds} + \psi \Sigma_t \exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]
 \end{align*}
-We can see that the rhs of this expression is equal to the lhs of Eqn.~\ref{eq:ds-te} multiplied by the integrating factor.
+We can see that the rhs of this expression is equal to the LHS of Eqn.~\ref{eq:ds-te} multiplied by the integrating factor.
 
-We can therefore multiply the rhs of Eqn.~\ref{eq:ds-te} by the same factor and say:
+We can therefore multiply the RHS of Eqn.~\ref{eq:ds-te} by the same factor and say:
 %
 \begin{equation}
 \frac{d}{ds}\bigl[\exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]\psi(\rvec_0 + \vOmega s, \vOmega, E)  \bigr] = \exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]q(\rvec_0 + \vOmega s, \vOmega, E)
 \label{eq:int-fact}
 \end{equation}
 %
-Now, we will integrate this equation from $s'=-\infty$ to $s'=s$. Let's first look at the lhs of Eqn.~\ref{eq:int-fact}. 
+Now, we will integrate this equation from $s'=-\infty$ to $s'=s$. Let's first look at the LHS of Eqn.~\ref{eq:int-fact}. 
 %
 \begin{align*}
 \int_{-\infty}^s ds' \: \frac{d}{ds'}&\bigl[\exp[\int^{s'} ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]\psi(\rvec_0 + \vOmega s', \vOmega, E)  \bigr]  \\
@@ -223,14 +223,14 @@ The second term here goes to 0 since the integrating factor is going to 0 ($e^{-
     \label{fig:int-s}
 \end{figure}
 %
-Now, we can combine this with the rhs of Eqn.~\ref{eq:int-fact}:
+Now, we can combine this with the RHS of Eqn.~\ref{eq:int-fact}:
 \begin{align*}
 \psi(\rvec_0 + \vOmega s, \vOmega, E) &\exp[\int^{s} ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)] = \int_{-\infty}^s ds' \:\exp[\int^{s'} ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]q(\rvec_0 + \vOmega s', \vOmega, E) \\
 %
 &\psi(\rvec_0 + \vOmega s, \vOmega, E) = \int_{-\infty}^s ds' \:\exp[-\int_{s'}^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]q(\rvec_0 + \vOmega s', \vOmega, E)
 \end{align*}
 %
-Functionally, this means that the flux at any point is a result of all sources up to that point attenuated by the exponent of the negative integral of the total number of mfps up to that point (optical length). See Figure~\ref{fig:int-s}.
+Functionally, this means that the flux at any point is a result of all sources up to that point attenuated by the exponent of the negative integral of the total number of mean free paths up to that point (optical length). See Figure~\ref{fig:int-s}.
 
 Some notes about this form:
 \begin{itemize}
