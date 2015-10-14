@@ -76,7 +76,7 @@ Plug this in and divide by $\psi$ to get
 Here, $L$ contains streaming, total, scattering, and fission operators. Note that \textit{there is no external source in this equation}, and thus it is homogeneous.
 
 Because the TE is linear, we can use the principle of superposition. 
-therefore, the general solution is the sum of \textbf{all} permissible solutions indicated by $\alpha$.
+Therefore, the general solution is the sum of \textbf{all} permissible solutions indicated by $\alpha$.
 
 This means time dependence looks like
 \[ T(t) = \tau \exp(\alpha t)\]
@@ -90,7 +90,7 @@ In this case, we have a linear and homogeneous system.
 $\Psi(\rvec, E, \vOmega) = 0$ is a valid solution, but it is the trivial one.
 
 ``Eigenvalues" are special values of $\alpha$ for which non-trivial solutions are valid.
-for example
+For example,
 \begin{align*}
 (L - \frac{\alpha}{v})\Psi &= 0 \:, \quad \in \mathbb{R} \\
 \Psi \neq 0 \rightarrow \: &\alpha = v L
@@ -100,7 +100,7 @@ The solutions for this problem are eigenfunctions determined to within a multipl
 If you fine a $\Psi$ that is a solution, then $c \Psi$ is also a solution, where $c$ is a constant:
 \[L(c \Psi) = cL \Psi = \frac{\alpha}{v}c \Psi \:.\]
 
-Thus, we want to solve the Eigenproblem: $L\Psi(\rvec, E, \vOmega) = \frac{\alpha}{v}\Psi(\rvec, E, \vOmega)$.\\
+Thus, we want to solve the eigenproblem: $L\Psi(\rvec, E, \vOmega) = \frac{\alpha}{v}\Psi(\rvec, E, \vOmega)$.\\
 A non-trivial solution requires $(L - \frac{\alpha}{v})$ is singular. \\
 That is, for $\Psi \neq 0 \rightarrow \: \alpha = v L$, which causes $L - \frac{\alpha}{v}$ to be zero, or non-invertible.
 
@@ -117,16 +117,16 @@ L(a(x) + b(y)) &= (ax + by)^2 = a^2 x^2 + axby + b^2 y^2 \\
 -------\\
 Solving our equation gives a collection of eigenvalues, $\alpha_j$, and eigenfunctions/modes, $\Psi_j$. 
 
-Our transport operator is linear, so each eval gives an emode, and the solution is a superposition of all emodes. \\
-The collection of evals defines the spectrum of $L$.
+Our transport operator is linear, so each evaluation gives an eigenmode, and the solution is a superposition of all eigenmodes. \\
+The collection of evaluations defines the spectrum of $L$.
 
-Superposition of emodes for the general soln of the TE:
+Superposition of eigenmodes for the general solution of the TE:
 \begin{align*}
 \psi(\rvec, E, \vOmega, t) &= \sum_{j} \tau_j \exp[\alpha_j t] \Psi_j(\rvec, E, \vOmega) \\
 \psi(\rvec, E, \vOmega, 0) &= \sum_{j} \tau_j \Psi_j(\rvec, E, \vOmega) \quad \text{is known.}
 \end{align*}
 
-Let us order the eigenvalues such that $Re(\alpha_j) \geq Re(\alpha_{j+1})$. At long times, the solution will be dominated by the $\alpha_0$ term (all components but this one will attenuate). Then, the fundamental emode is correspondingly $\Psi_0$ (which must be real and positive).
+Let us order the eigenvalues such that $Re(\alpha_j) \geq Re(\alpha_{j+1})$. At long times, the solution will be dominated by the $\alpha_0$ term (all components but this one will attenuate). Then, the fundamental eigenmode is correspondingly $\Psi_0$ (which must be real and positive).
 \[\lim_{t \to \infty} \psi(\rvec, E, \vOmega, t) = \tau_0 \exp[\alpha_0 t] \Psi_0(\rvec, E, \vOmega)\]
 %
 \begin{itemize}
@@ -143,7 +143,7 @@ Let us order the eigenvalues such that $Re(\alpha_j) \geq Re(\alpha_{j+1})$. At 
 
 %------------------------------------------------------------
 \vspace*{1 em}
-\underline{Existence of SS Soln to TE}
+\underline{Existence of SS Solution to TE}
 
 The time independent TE with no external source, $L\Psi_0 = 0$, will be critical if $Re(\alpha_0) = 0$ and will have a unique solution if $\Psi_0$ is unique. \\
 More generally, consider the \textit{inhomogenous}, time dependent TE (assumes $L$ and $S$ are time independent):
@@ -155,9 +155,9 @@ We're looking for circumstances under which a solution will exist for
 
 \begin{enumerate}
 \item $Re(\alpha_0) < 0$: $\psi$ decays in time and any final solution will be independent of initial conditions since the effect decays with time. If there is a non-zero $\psi$ that balances production and loss (because of the source), a solution exists.
-\item $Re(\alpha_0) = 0$: if $S \neq 0$, then ss soln is unbounded; \\
-\hspace*{5.5 em}if $S=0$, then ss soln is $\Psi_0$.
-\item $Re(\alpha_0) > 0$: a bounded ss soln does \textit{not} exist unless $S=0$ and $\Psi_0 = 0$. That is, no physical solutions can exist in a supercritical system for which $\frac{1}{v}\frac{\partial \psi}{\partial t} = 0$.
+\item $Re(\alpha_0) = 0$: if $S \neq 0$, then SS solution is unbounded; \\
+\hspace*{5.5 em}if $S=0$, then SS solution is $\Psi_0$.
+\item $Re(\alpha_0) > 0$: a bounded SS solution does \textit{not} exist unless $S=0$ and $\Psi_0 = 0$. That is, no physical solutions can exist in a supercritical system for which $\frac{1}{v}\frac{\partial \psi}{\partial t} = 0$.
 \end{enumerate}
 
 \end{document}
