@@ -248,4 +248,10 @@ The exponential represents the attenuation of neutrons as they move from $\rvec-
 The source term represents the production of neutrons at $\rvec-\rho'\vOmega$ of neutrons in $(\vOmega, E)$.
 
 
+Notes about MOC:\\
+The issues with 3-D MOC are purely due to the computational burden.  The number of rays necessary to resolve a 3-D geometry makes it intractable, both from the standpoint of actually storing all of the rays as well as the computational time required to do a sweep.  3-D MOC has been attempted several times, Brendan Kochunas did his dissertation on 3-D MOC at Michigan and his conclusion was that it isn't practical except for small-scale benchmarking purposes.  Lulu Li (Kord's student at MIT) is supposedly working on a new approach that focuses on extruded 2-D geometries.  They claim they're going to be able to do 3-D MOC efficiently for that case, and let's just say that the rest of the world is skeptical.
+
+The biggest reason for doing MOC is that it handles complex geometries very naturally.  Curved surfaces (i.e. everything in a reactor) don't have to get approximated by polygons; that greatly reduces the number of cells needed to geometrically represent a problem.  Think about the clad around a fuel pin, it can be a single spatial cell in MOC but would require possibly a huge number of cells/edges to resolve it, even with an unstructured mesh.
+
+
 \end{document}
