@@ -56,7 +56,7 @@ October 19, 2015
 More on \textbf{Adjoint Transport Equation} (L\&M 1.6).
 
 Last time we started derived the adjoint transport equation. We used the \textit{adjoint operator} identity: $\langle A^{\dagger}f, g\rangle = \langle f, Ag\rangle$ for all $f$ and $g$ is the vector space. \\
-We called $A$ $H$, $f$ $\zeta^{\dagger}$, and $g$ $\zeta$: $\langle\zeta^{\dagger}, H \zeta\rangle = \langle\zeta, H^{\dagger} \zeta^{\dagger}\rangle$.
+We wrote this as $A=H$, $f=\zeta^{\dagger}$, and $g=\zeta$ giving $\langle H^{\dagger} \zeta^{\dagger}, \zeta\rangle = \langle\zeta^{\dagger}, H \zeta\rangle$.
 
 We multiplied the regular TE by $\zeta^{\dagger}$, integrated over all phase space, and manipulated the result to get $\zeta$ in front of the operator.
 
@@ -65,13 +65,13 @@ We combined all three terms to get the adjoint form of the transport equation:
 \langle\zeta^{\dagger}, H \zeta\rangle = \int_{V} dV \int_{4\pi} d\vOmega \int_0^{\infty} dE \: &\zeta (\rvec, \vOmega, E) \times \biggl[-\vOmega \cdot \nabla \zeta^{\dagger}(\vec{r}, E, \vOmega)  + \Sigma_t(\rvec,E) \zeta^{\dagger}(\vec{r}, E, \vOmega) \\&- \int d\vOmega' \int dE'\: \Sigma_s(\rvec, E \rightarrow E', \vOmega \cdot \vOmega') \zeta^{\dagger}(\rvec, \vOmega', E') \biggr]
 \end{align*}
 
-We could see how to define $H^{\dagger}$ such that $\langle\zeta^{\dagger}, H \zeta\rangle = \langle\zeta, H^{\dagger} \zeta^{\dagger}\rangle$ is satisfied.\\
+We could see how to define $H^{\dagger}$ such that  $\langle H^{\dagger} \zeta^{\dagger}, \zeta\rangle = \langle\zeta^{\dagger}, H \zeta\rangle$ is satisfied.\\
 We also noted the boundary condition of zero \textit{outgoing} adjoint flux.
 
 ------------------------\\
 I want to revisit the idea of adjoint flux \textit{neutron importance} since it's an important one. 
 
-What we're going to show is that the angular flux can represent a map of how every part of phase space will influence the answer we say we are looking for. You can think of it as the reverse of the transport equation 
+What we're going to show is that the angular adjoint flux can represent a map of how every part of phase space will influence the answer we say we are looking for. You can think of it as the reverse of the transport equation 
 \begin{itemize}
 \item forward: $\psi$ represents how the source particles go forward and affect the rest of the problem space.
 \item adjoint: $\psi^{\dagger}$ represents how the particles from a source come into the solution space and affect the answer. 
@@ -80,20 +80,20 @@ What we're going to show is that the angular flux can represent a map of how eve
 Let's think about a problem with an external source: $H \psi = q_{ex}$, where $\psi$ meets the boundary conditions. We will just look at the point source this time
 %
 \begin{align*}
-q_{ex} &= \delta(\rvec - \rvec_0) \delta(E - E_0) \delta(\vOmega \cdot \vOmega_0) \\
+q_{ex} &= \delta(\rvec - \rvec_0) \delta(E - E_0) \delta(\vOmega - \vOmega_0) \\
 R &= \int_V dV \int dE \int_{4\pi} d\vOmega\: q_{ex} \psi(\rvec_d, \vOmega, E)%=\psi^{\dagger}(\rvec_0, \vOmega_0, E_0)
 \end{align*}
 
 Here's how we went through this (last time with a detector response as the adjoint source):
 \begin{itemize}
 \item we'll set up the adjoint problem with the detector response as the source
-\[H^{\dagger}\psi^{\dagger} = q_{ex}^{\dagger} \equiv  \delta(\rvec - \rvec_0) \delta(E - E_0) \delta(\vOmega \cdot \vOmega_0)\]
+\[H^{\dagger}\psi^{\dagger} = q_{ex}^{\dagger} \equiv  \delta(\rvec - \rvec_0) \delta(E - E_0) \delta(\vOmega - \vOmega_0)\]
 where $\psi^{\dagger}(\vec{r}_s, \vOmega, E) = 0$ for $\rvec$ on $\Gamma$ and $\vOmega \cdot \hat{n} > 0$.
 %
 \item We multiply the initial equation (forward) by $\psi^{\dagger}$ and integrate over phase space. We can do the opposite/same to the adjoint equation. This gives
 \begin{align*}
 \langle\psi^{\dagger}, H\psi\rangle &= \langle\psi^{\dagger}, q_{ex}\rangle \quad \text{and}\\
-\langle\psi, H^{\dagger} \psi^{\dagger}\rangle &= \underbrace{\langle\psi, \delta(\rvec - \rvec_0) \delta(E - E_0) \delta(\vOmega \cdot \vOmega_0)\rangle }_R
+\langle\psi, H^{\dagger} \psi^{\dagger}\rangle &= \underbrace{\langle\psi, \delta(\rvec - \rvec_0) \delta(E - E_0) \delta(\vOmega - \vOmega_0)\rangle }_R
 \end{align*}
 %
 \item We can subtract the two and then apply the adjoint equivalence identity to see
@@ -194,15 +194,16 @@ This means the LHS is also $0$, so we can can remove it from Eqn.~\ref{eq:pertur
 
 With all of this, we can now say
 \[
-\frac{\delta k}{k_0^2} \approx \frac{\langle \psi_0^{\dagger},\bigl(\delta H - \frac{1}{k_0}\delta G\bigr)\psi_0 \rangle}{\langle \psi_0^{\dagger}, G_0\psi_0 \rangle}
+\frac{\delta k}{k_0^2} \approx -\frac{\langle \psi_0^{\dagger},\bigl(\delta H - \frac{1}{k_0}\delta G\bigr)\psi_0 \rangle}{\langle \psi_0^{\dagger}, G_0\psi_0 \rangle}
 \]
-This means that if we know the two unperturbed solutions $\psi_0^{\dagger}$ and $\psi$ we can find the reactivity change for any perturbations.
+This means that if we know the two unperturbed solutions $\psi_0^{\dagger}$ and $\psi_0$ we can find the reactivity change for any perturbations.
 
 ----------------------------\\
 Other \textbf{Boundary Conditions} for the adjoint operator
 
+For reflected and periodic boundaries:
 \begin{itemize}
-\item For reflected and periodic boundaries, take the reflected BC configuration and unfold it to the full extent (write explicitly in each region).
+\item Take the reflected BC configuration and unfold it to the full extent (write explicitly in each region).
 \item Then, take the adjoint of this with zero outgoing flux at the boundaries.
 \item Apply the same argument as in the forward case, but now we know what's going in instead of what's going out. This preserves the form of reflected and periodic BCs.
 \end{itemize}
@@ -226,7 +227,7 @@ Some notes on this:
 \begin{itemize}
 \item The boundary condition  has an integral nature for $\psi_{out}^{\dagger}$.
 \item This balance requires both $\psi_{out}^{\dagger}$ and $\psi_{in}$. This means we have to solve both the forward and adjoint TEs to determine these values and therefore the BCs.
-\item the contribution of outgoing neutrons to detector response must equal the contribution of incoming neutrons: $R = \langle \psi^{\dagger}, q_{ex} \rangle$.
+\item the contribution of outgoing ``adjoint neutrons" to detector response must equal the contribution of incoming ``forward neutrons": $R = \langle \psi^{\dagger}, q_{ex} \rangle$.
 \end{itemize}
 
 \end{document}
