@@ -106,13 +106,13 @@ We can also recall that $\rho' = |\vec{r} - \vec{r}'|$, we can let $dV = d^3r'$,
 which is the optical path length. \\
 Combining all of this we get
 \begin{align}
-\phi(\rvec,E) &= \int_V d^3r' \: \biggl[\frac{\exp[-\tau(E,\vec{r}' \rightarrow \vec{r})}{4\pi|\vec{r} - \vec{r}'|^2} \biggl(S(\vec{r}',E) + \frac{\chi(E)}{4\pi} \int_0^{\infty} dE' \: \nu(E') \Sigma_f(\rvec', E')\phi(\vec{r}', E') \nonumber \\
+\phi(\rvec,E) &= \int_V d^3r' \: \biggl[\frac{\exp[-\tau(E,\vec{r}' \rightarrow \vec{r})]}{4\pi|\vec{r} - \vec{r}'|^2} \biggl(S(\vec{r}',E) + \frac{\chi(E)}{4\pi} \int_0^{\infty} dE' \: \nu(E') \Sigma_f(\rvec', E')\phi(\vec{r}', E') \nonumber \\
 &+ \int_0^{\infty} dE'\:\Sigma_s(\rvec',E' \rightarrow E) \phi(\rvec',E') \biggr)  \biggr]
 \label{eq:iso-integral}
 \end{align}
 %
 Interestingly, if $|\vec{r} - \vec{r}'|$ is replaced by $R$, then in the simple case of total cross section being independent of position, Eqn.~\ref{eq:iso-integral} becomes
-\[\phi(\rvec,E) = \int_V d^3r' \: \biggl[\frac{\exp[-\Sigma_t(E, R)]}{4\pi R^2} \biggl( \text{isotropic source at }\vec{r}' \biggr)\biggr]\]
+\[\phi(\rvec,E) = \int_V d^3r' \: \biggl[\frac{\exp[-\Sigma_t(E)R]}{4\pi R^2} \biggl( \text{isotropic source at }\vec{r}' \biggr)\biggr]\]
 
 In both of these equations, the source term is the rate at which neutrons of energy $E$ appear at $\vec{r}'$ from each source type. \\
 In this last equation, the term multiplying the source is the probability that a neutron appearing at $\vec{r}'$ will reach $\vec{r}$ without suffering a collision.\\
