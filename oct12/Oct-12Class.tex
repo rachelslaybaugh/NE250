@@ -75,7 +75,7 @@ We can think about this equation
 \end{align*}
 
 ---------------------------\\
-If we have \textbf{isotropic scattering}, we can remove the angle dependence and up with a volume integral.
+If we have \textbf{isotropic scattering} and \textbf{isotropic sources}, we can remove the angle dependence and up with a volume integral.
 %
 \begin{itemize}
 \item The fission process is isotropic:
@@ -106,7 +106,7 @@ We can also recall that $\rho' = |\vec{r} - \vec{r}'|$, we can let $dV = d^3r'$,
 which is the optical path length. \\
 Combining all of this we get
 \begin{align}
-\phi(\rvec,E) &= \int_V d^3r' \: \biggl[\frac{\exp[-\tau(E,\vec{r}' \rightarrow \vec{r})}{4\pi|\vec{r} - \vec{r}'|^2} \biggl(S(\vec{r}',E) + \frac{\chi(E)}{4\pi} \int_0^{\infty} dE' \: \nu(E') \Sigma_f(\rvec', E')\phi(\vec{r}', E') \nonumber \\
+\phi(\rvec,E) &= \int_V d^3r' \: \biggl[\frac{\exp[-\tau(E,\vec{r}' \rightarrow \vec{r})]}{4\pi|\vec{r} - \vec{r}'|^2} \biggl(S(\vec{r}',E) + \frac{\chi(E)}{4\pi} \int_0^{\infty} dE' \: \nu(E') \Sigma_f(\rvec', E')\phi(\vec{r}', E') \nonumber \\
 &+ \int_0^{\infty} dE'\:\Sigma_s(\rvec',E' \rightarrow E) \phi(\rvec',E') \biggr)  \biggr]
 \label{eq:iso-integral}
 \end{align}
