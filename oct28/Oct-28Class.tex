@@ -54,7 +54,7 @@ October 28, 2015
 }
 \end{center}
 
-Last time we covered a bunch of basics for MC transport: sampling, scoring, and statstics. We ended class with beginning to talk about variance reduction. Recall, we measure improvement by:
+Last time we covered a bunch of basics for MC transport: sampling, scoring, and statistics. We ended class with beginning to talk about variance reduction. Recall, we measure improvement by:
 \[
 FOM =\frac{1}{R^2 t}\:.
 \]
@@ -110,7 +110,7 @@ P_{abs} = \frac{\Sigma_a}{\Sigma_t}
 \]
 We can use this to change particle weight and keep particles around for longer
 \[
-\text{tally }w_i*\frac{\Sigma_a}{\Sigma_t} \qquad \text{and } w_{i+1} = w_1*(1 - \frac{\Sigma_a}{\Sigma_t})
+\text{tally }w_i*\frac{\Sigma_a}{\Sigma_t} \qquad \text{and } w_{i+1} = w_i*(1 - \frac{\Sigma_a}{\Sigma_t})
 \]
 The reduction in particle weight at each collision compensates, statistically, for the nonphysical scattering. This maintains a fair game and provides more information per history, though at the cost of each collision being worth less.
 
@@ -124,8 +124,10 @@ When looking for a specific answer, some regions may be more important to the an
 
 We can use the idea of importance to create the target weights where we'd like particles to exist and associated bounding values. We usually make a map of $w_{nom}$ and set $w_{\min}$ and $w_{\max}$ from there. 
 
+%problem here - no definition of w_nom prior to its introduction in the above sentence
+
 \textbf{Splitting}\\
-If particles have too high a weight or are moving into a more important region we can split them into more particles with lower weights. We preserve the total weight to maintain a fare game:\\
+If particles have too high a weight or are moving into a more important region we can split them into more particles with lower weights. We preserve the total weight to maintain a fair game:\\
 \noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}
 if $w_i > w_{\max}$:
 \begin{itemize}
@@ -186,7 +188,7 @@ Thus, if we set the response that we are solving for to be the adjoint source, t
 These notes are derived from the SCALE manual descriptions. 
 
 Note that if we had an accurate representation of $\phi^{\dagger}$, we would then just have the answer. Solving for $\phi^{\dagger}$ is just as hard as solving for $\phi$. \\
-The idea motivating CADIS is to use an approximate version of $\phi^{\dagger}$ that was obtained quickly with a determinsitic solver to create VR parameters for MC. 
+The idea motivating CADIS is to use an approximate version of $\phi^{\dagger}$ that was obtained quickly with a deterministic solver to create VR parameters for MC. 
 
 We use the adjoint flux to bias the source distribution, set target weights, and choose particle birth weights:
 \begin{align*}
