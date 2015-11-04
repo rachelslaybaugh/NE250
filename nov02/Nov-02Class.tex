@@ -87,7 +87,7 @@ To perform that integral, we need to introduce an approximation. The one we will
 \[
 \psi(\vec{r}, \vOmega, E) \approx f(E)\psi_g(\vec{r}, \vOmega)\:, \quad E_g < E \leq E_{g-1}\:,
 \]
-where $f(E)$ is normalized such that $\int_g dE\: f(E) = 1$. We substitute and/or use this in the regular TE and integrate over energy. Here's how that works term by term.
+where $f(E)$ is normalized such that $\int_g dE\: f(E) = 1$ (note that this means $f$ has units of per eV). We substitute and/or use this in the regular TE and integrate over energy. Here's how that works term by term.
 %
 \begin{itemize}
 \item Streaming:
@@ -121,7 +121,7 @@ q_{s,gg'}(\vOmega) \equiv \int_{E_g}^{E_{g-1}} dE \int_{E_g'}^{E_{g'-1}} dE' \in
 If we generically define the scattering cross section this we, we can get this general scattering expression
 \begin{align*}
 \Sigma_{s,gg'}(\vOmega' \cdot \vOmega) & \equiv \int_{E_g}^{E_{g-1}} dE \int_{E_g'}^{E_{g'-1}} dE' \: \Sigma_s(E'\rightarrow E, \vOmega' \cdot \vOmega) f(E')\\
-q_{s,gg'}(\vOmega) &= \sum_{g'=1}^G \int_{4 \pi} d\vOmega' \Sigma_{s,gg'}(\vOmega' \cdot \vOmega) \psi_g(\vec{r}, \vOmega')
+q_{s,g}(\vOmega) &= \sum_{g'=1}^G \int_{4 \pi} d\vOmega' \Sigma_{s,gg'}(\vOmega' \cdot \vOmega) \psi_{g'}(\vec{r}, \vOmega')
 \end{align*}
 
 \item Total interaction:
@@ -134,7 +134,7 @@ q_{s,gg'}(\vOmega) &= \sum_{g'=1}^G \int_{4 \pi} d\vOmega' \Sigma_{s,gg'}(\vOmeg
 %
 We can combine all of this to get a conventional, general expression for the \textbf{multigroup TE}.
 \begin{align*}
-[\vOmega \cdot \nabla + \Sigma_{tg}(\vec{r})]\psi_g(\vec{r}, \vOmega) =&  \sum_{g'=1}^G \int_{4 \pi} d\vOmega'\: \Sigma_{s,gg'}(\vecr, \vOmega' \cdot \vOmega) \psi_g(\vec{r}, \vOmega')\\
+[\vOmega \cdot \nabla + \Sigma_{tg}(\vec{r})]\psi_g(\vec{r}, \vOmega) =&  \sum_{g'=1}^G \int_{4 \pi} d\vOmega'\: \Sigma_{s,gg'}(\vecr, \vOmega' \cdot \vOmega) \psi_{g'}(\vec{r}, \vOmega')\\
 &+\frac{\chi_g}{4 \pi}\sum_{g'=1}^G \nu\Sigma_{fg'}(\vec{r}) \phi_{g'}(\vec{r}) + q_g(\vec{r}, \vOmega)
 \end{align*}
 If we want, we can integrate this equation over angle to get a balance equation and from there derive the multigroup diffusion equation.
@@ -155,9 +155,9 @@ We will take, e.g.\ an assembly from the middle of the core and put reflecting b
 \item Finally, we do a core level calculation with diffusion theory. 
 \end{enumerate}
 
-Collapsing in energy with fine groups $j$ into coarse group $h$:
+Collapsing in energy with fine groups (indexed $j$) into coarse group (indexed $h$):
 \[
-\Sigma_{j,h} \equiv \frac{\sum_{g \in h} \Sigma_{j,g} \phi_g(\vec{r})}{\sum_{g\in h} \phi_g(\vec{r})}
+\Sigma_{h} \equiv \frac{\sum_{j \in h} \Sigma_{j} \phi_j(\vec{r})}{\sum_{j\in h} \phi_j(\vec{r})}
 \]
 and you would replace $\phi_g$ with $\psi_g$ or $\phi_{l,g}^m$ if doing scattering. 
 
@@ -169,62 +169,6 @@ Homogenizing in space (flux-weighting):
 where $V$ is a region made up of different nuclides at each point. 
 
 
-
-
-----------------------------------------------\\
-\textbf{Alternative Derivation} 
-
-Instead of requiring the separation of energy , we can use the \textit{Legendre expansion technique} as we did before. This form is what we solve in many transport codes.\\
-The main motivation for doing this is to have better definitions of the multigroup cross sections. Recall the Legendre addition theorem and flux moment definition:
-\begin{align*}
-P_l(\vOmega' \cdot \vOmega) &= \frac{1}{2l+1}\sum_{m=-l}^l Y^*_{lm}(\vOmega)Y_{lm}(\vOmega')\\
-\phi_{l}^{m}(\vec{r},E') &= \int_{4 \pi} d\vOmega'\: Y_{lm}(\vOmega') \psi(\vec{r}, \vOmega', E') \\
-\psi(\vec{r}, \vOmega', E') &= \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\phi_{l}^{m}(\vec{r},E')
-\end{align*}
-
-Let's update several terms
-\begin{itemize}
-\item Scattering:
-\[
-\Sigma_s(E'\rightarrow E, \vOmega' \cdot \vOmega) = \sum_{l=0}^{\infty} (2l+1) \Sigma_{s,l}(E'\rightarrow E) P_l(\vOmega' \cdot \vOmega)
-\]
-Now, we can rewrite the scattering source term
-\[
-q_{s,gg'} = \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\int_{E_g}^{E_{g-1}} dE \int_{E_g'}^{E_{g'-1}} dE' \: \Sigma_{s,l}(E'\rightarrow E)\phi_{l}^{m}(\vec{r},E')
-\]
-We can use the angular flux moments to get a group scattering cross section moment:
-\[
-\Sigma_{sl,gg'} \approx \dfrac{\int_{E_g}^{E_{g-1}} dE \int_{E_g'}^{E_{g'-1}} dE' \: \Sigma_{s,l}(E'\rightarrow E)\phi_{l}^{m}(\vec{r},E')}{\phi_{l,g'}^{m}(\vec{r})}
-\]
-Finally
-\begin{align*}
-q_{s,gg'} &= \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\Sigma_{sl,gg'}\phi_{l,g'}^{m}(\vec{r})\\
-q_{s,g} &= \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\sum_{g'=1}^G \Sigma_{sl,gg'}\phi_{l,g'}^{m}(\vec{r})
-\end{align*}
-
-\item Total interaction:
-\[
-\Sigma_{tg}(\vec{r}) = \dfrac{\int_{E_g}^{E_{g-1}} dE\: \Sigma_t(\vec{r}, E) \psi(\vec{r}, \vOmega, E)}{\psi_g(\vec{r}, \vOmega)}
-\]
-\begin{align*}
-\int_{E_g}^{E_{g-1}} dE\: \Sigma_t(\vec{r}, E)\sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\phi_{l}^{m}(\vec{r},E) &= \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\int_{E_g}^{E_{g-1}} dE\: \Sigma_{t}(\vec{r},E)\phi_{l}^{m}(\vec{r},E) \\
-\text{where }&\Sigma_{tl,g}(\vec{r}) = \dfrac{\int_{E_g}^{E_{g-1}} dE\: \Sigma_t(\vec{r}, E) \phi_l^m(\vec{r}, \vOmega, E)}{\phi_{l,g}^m(\vec{r}, \vOmega)}\\
-&= \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\Sigma_{tl,g}(\vec{r})\phi_{l,g}^{m}(\vec{r})
-\end{align*}
-
-\item Fission
-\[
-\nu\Sigma_{fg'} = \dfrac{\int_{E_g'}^{E_{g'-1}} dE'\: \nu(E') \Sigma_f(E')\phi(\vec{r}, E')}{\phi_{g'}(\vec{r})}
-\]
-
-\end{itemize}
-
-
-We can plug these into the general form to get this
-\begin{align*}
-[\vOmega \cdot \nabla &+ \underbrace{\Sigma_{tg}(\vec{r})}_{\text{anisotropic}}]\psi_g(\vec{r}, \vOmega) =  \frac{\chi_g}{4 \pi}\sum_{g'=1}^G \nu\Sigma_{fg'}(\vec{r}) \phi_{g'}(\vec{r}) + q_g(\vec{r}, \vOmega)\\
-&= \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\sum_{g'=1}^G \bigl[\Sigma_{sl,gg'} + \bigl(\underbrace{\Sigma_{tg}(\vec{r})}_{\text{balances rhs}} - \Sigma_{tl,g}(\vec{r}) \bigr) \delta_{gg'}  \bigr]\phi_{l,g'}^{m}(\vec{r})
-\end{align*}
 
 
 

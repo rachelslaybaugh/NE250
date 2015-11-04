@@ -1,0 +1,150 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+\usepackage{tabu}
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% writing elements
+\usepackage{mhchem}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\vecr}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+\newcommand{\sigs}{\ensuremath{\Sigma_s(\rvec,E'\rightarrow E,\omvec'\rightarrow\omvec)}}
+\newcommand{\el}{\ensuremath{\ell}}
+\newcommand{\sigso}{\ensuremath{\Sigma_{s,0}}}
+\newcommand{\sigsi}{\ensuremath{\Sigma_{s,1}}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, F15\\
+November 4, 2015 
+}
+\end{center}
+
+Last time we derived the multigroup TE using a separability assumption and discussed some of the difficulties and procedures for obtaining group constants. We got this equation
+\begin{align*}
+[\vOmega \cdot \nabla + \Sigma_{tg}(\vec{r})]\psi_g(\vec{r}, \vOmega) =&  \sum_{g'=1}^G \int_{4 \pi} d\vOmega'\: \Sigma_{s,gg'}(\vecr, \vOmega' \cdot \vOmega) \psi_{g'}(\vec{r}, \vOmega')\\
+&+\frac{\chi_g}{4 \pi}\sum_{g'=1}^G \nu\Sigma_{fg'}(\vec{r}) \phi_{g'}(\vec{r}) + q_g(\vec{r}, \vOmega)
+\end{align*}
+Today we'll start with a different derivation of the MG equation.
+
+----------------------------------------------\\
+\textbf{Alternative Derivation} 
+
+We can remove the requirement of separability in energy, which allows us to define better multigroup constants (we don't need the energy weighting function). \\
+To facilitate this, we can use the \textit{Legendre expansion technique} as we did before, which allows for better weighting of the multigroup cross sections.
+
+Recall the Legendre addition theorem and flux moment definition:
+\begin{align*}
+P_l(\vOmega' \cdot \vOmega) &= \frac{1}{2l+1}\sum_{m=-l}^l Y^*_{lm}(\vOmega)Y_{lm}(\vOmega')\\
+\phi_{l}^{m}(\vec{r},E') &= \int_{4 \pi} d\vOmega'\: Y_{lm}(\vOmega') \psi(\vec{r}, \vOmega', E') \\
+\psi(\vec{r}, \vOmega', E') &= \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\phi_{l}^{m}(\vec{r},E')\\
+\Sigma_s(E'\rightarrow E, \vOmega' \cdot \vOmega) &= \sum_{l=0}^{\infty} (2l+1) \Sigma_{s,l}(E'\rightarrow E) P_l(\vOmega' \cdot \vOmega)
+\end{align*}
+We will apply this in our TE 
+%
+\begin{align*}
+\bigl[\vOmega \cdot \nabla + \Sigma_t\bigr] \psi(\vec{r}, E, \vOmega) &= \frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega') + q(\vec{r}, E, \vOmega)\\
+ &+\sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\int_0^{\infty} dE' \Sigma_{s,l}(E'\rightarrow E) \phi_{l}^{m}(\vec{r},E')
+\end{align*}
+%
+and integrate over energy to get groups (note that we don't change anything compared to before with the streaming term or the external source).
+%
+\begin{itemize}
+\item Scattering:\\
+We can rewrite the scattering source term
+\[
+q_{s,gg'} = \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\int_{E_g}^{E_{g-1}} dE \int_{E_g'}^{E_{g'-1}} dE' \: \Sigma_{s,l}(E'\rightarrow E)\phi_{l}^{m}(\vec{r},E')
+\]
+We can use the angular flux moments to define a group scattering cross section moment:
+\[
+\Sigma_{sl,gg'} \approx \dfrac{\int_{E_g}^{E_{g-1}} dE \int_{E_g'}^{E_{g'-1}} dE' \: \Sigma_{s,l}(E'\rightarrow E)\phi_{l}^{m}(\vec{r},E')}{\phi_{l,g'}^{m}(\vec{r})}
+\]
+Finally
+\begin{align*}
+q_{s,gg'} &= \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\Sigma_{sl,gg'}\phi_{l,g'}^{m}(\vec{r})\\
+q_{s,g} &= \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\sum_{g'=1}^G \Sigma_{sl,gg'}\phi_{l,g'}^{m}(\vec{r})
+\end{align*}
+
+\item Total interaction:\\
+Our first thought is to define the group total cross section this way
+\[
+\Sigma_{tg}(\vec{r}, \vOmega) = \dfrac{\int_{E_g}^{E_{g-1}} dE\: \Sigma_t(\vec{r}, E) \psi(\vec{r}, \vOmega, E)}{\psi_g(\vec{r}, \vOmega)}
+\]
+but this adds angular dependence to the total cross section, and most codes and data aren't set up to handle this. \\
+Instead, We can use the Legendre expansion of the flux and define total cross section moments as well.
+\[
+\int_{E_g}^{E_{g-1}} dE\: \Sigma_t(\vec{r}, E)\sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\phi_{l}^{m}(\vec{r},E) = \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\int_{E_g}^{E_{g-1}} dE\: \Sigma_{t}(\vec{r},E)\phi_{l}^{m}(\vec{r},E)
+\]
+Thus, we define a total cross section moment:
+\[
+\Sigma_{tl,g}(\vec{r}) = \dfrac{\int_{E_g}^{E_{g-1}} dE\: \Sigma_t(\vec{r}, E) \phi_l^m(\vec{r}, \vOmega, E)}{\phi_{l,g}^m(\vec{r}, \vOmega)}
+\]
+and the whole term becomes
+\[
+= \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\Sigma_{tl,g}(\vec{r})\phi_{l,g}^{m}(\vec{r})
+\]
+
+
+\item Fission remains pretty easy since it already only requires the scalar flux. 
+\[
+\nu\Sigma_{fg'} = \dfrac{\int_{E_g'}^{E_{g'-1}} dE'\: \nu(E') \Sigma_f(E')\phi(\vec{r}, E')}{\phi_{g'}(\vec{r})}
+\]
+
+\end{itemize}
+
+We can combine all of this, and we add another $\Sigma_g \psi_g$ to both sides:
+\begin{align*}
+[\vOmega \cdot \nabla &+ \Sigma_{tg}(\vec{r})]\psi_g(\vec{r}, \vOmega) =  \frac{\chi_g}{4 \pi}\sum_{g'=1}^G \nu\Sigma_{fg'}(\vec{r}) \phi_{g'}(\vec{r}) + q_g(\vec{r}, \vOmega)\\
+&+ \sum_{l=0}^{\infty} \sum_{m=-l}^l Y^*_{lm}(\vOmega)\sum_{g'=1}^G \bigl[\Sigma_{sl,gg'} + \bigl(\underbrace{\Sigma_{tg}(\vec{r})}_{\text{balances rhs}} - \Sigma_{tl,g}(\vec{r}) \bigr) \delta_{gg'}  \bigr]\phi_{l,g'}^{m}(\vec{r})
+\end{align*}
+%
+This form looks just like the first version we derived, but the scattering term is a little wonky. \\
+Note that we still have a problem. We added the $\Sigma_{tg}(\vec{r})$ to make the equation look right, but haven't explained what it is. \\
+If we just weight it with the scalar flux ($P_0$ version), we get
+\[
+\Sigma_{tg}(\vec{r}) = \Sigma_{tg,0}(\vec{r}) = \dfrac{\int_{E_g}^{E_{g-1}} dE\:\Sigma_{t}(\vec{r}, E) \phi(\vec{r}, E)}{\phi_g(\vec{r})}
+\]
+This is called the consistent $P_N$ approximation. 
+
+The ``extended transport approximation" is a more elegant technique. \\
+For scattering, we usually trucnate the expansion at some $l=L$. \\
+We can choose $\Sigma_{tg}(\vec{r})$ to make the $l=L+1$th component to be small. That is
+\[
+\sum_{m=-(L+1)}^{L+1} Y^*_{(L+1)m}(\vOmega)\sum_{g'=1}^G \bigl[\Sigma_{s(L+1),gg'} + \bigl(\Sigma_{tg}(\vec{r}) - \Sigma_{t(L+1),g}(\vec{r}) \bigr) \delta_{gg'}  \bigr]\phi_{(L+1),g'}^{m}(\vec{r}) \approx 0\:.
+\]
+
+\end{document}
