@@ -84,7 +84,7 @@ We started the idea of $P_N$ in our derivation of the diffusion equation (which 
 The basic idea is that we can expand the angular flux in the same manner we expanded the scattering kernels before. \\
 Note, however, that this is a different and distinct process. Now, we will use
 \[
-\psi(x, \mu) \approx \sum_{l=0}^N (2l+1)\phi_l(x)P_l(\mu)
+\psi(x, \mu) \approx \sum_{l=0}^{\infty} (2l+1)\phi_l(x)P_l(\mu)
 \]
 for the flux solution in total. This next part comes from Appendix D of L\&M. We again start with the within group, 1D TE
 \[
@@ -144,6 +144,69 @@ The $l=0$ equation is then
 \[
 \frac{-1}{3(\Sigma_t - \Sigma_{s1})}\frac{d^2 \phi_0}{dx^2} + \Sigma_a \phi_0(x) = s_0(x)\:.
 \]
+
+In practice, we only ever select $N$ to be odd. This allows us to use $(N+1)/2$ conditions for each of the left and right boundaries. \\
+This is much easier than having odd boundary conditions would end up introducing artificial asymmetry. \\
+Using $N$ = even doesn't provide more information either. Look at $N=2$ (recall $phi_3 = 0$:
+\begin{align*}
+\frac{2}{5}&\frac{d}{dx}\phi_1(x) +(\Sigma_t - \Sigma_{s2})\phi_2(x) = s_2(x)\\
+&\\
+\phi_2(x) &= \frac{s_2(x) - \frac{2}{5}(\overbrace{s_0(x) - \Sigma_a(x)\phi_0(x)}^{\text{from }l=0})}{\Sigma_t - \Sigma_{s2}}
+\end{align*}
+$\phi_0$ and $\phi_2$ are linearly dependent, which is not thought to give you better accuracy.\\
+When we use $N$ = odd, we don't have this dependence in our last equation. 
+
+We also need to actually set these \textbf{boundary conditions}.
+\begin{itemize}
+\item \underline{Interface}: $\psi(x,\mu)$ is continuous across every interface. Since
+\[
+\phi_l = \frac{1}{2}\int_{-1}^1 d\mu\: \mu P_{l}(\mu)\psi(x,\mu)
+\]
+this condition implies that each $\phi_l(x)$ must also be continuous across that interface. 
+
+\item \underline{Reflective} (extendable to periodic): for some reflecting surface $x_s$:
+\begin{align*}
+\psi(x_s,\mu) &= \psi(x_s,-\mu) \quad \mu \in [0,1]\\
+\sum_{l=0}^{\infty} (2l+1)\phi_l(x_s)P_l(\mu) &= \sum_{l=0}^{\infty} (2l+1)\phi_l(x_s)\underbrace{P_l(-\mu)}_{(-1)^l P_l(\mu)}\\
+\sum_{l=0}^{\infty} (2l+1)\phi_l(x_s)P_l(\mu)\bigl[1 - (-1)^l\bigr] &= \sum_{l=1}^{\infty} (2l+1)\phi_l(x_s)\underbrace{P_l(-\mu)}_{(-1)^l P_l(\mu)}\\
+&= 0 \quad \text{for odd }l
+\end{align*}
+Because $P_l(\mu)$ are mutually independent, 
+\[\boxed{\phi_l(x_s) =0\text{ for odd }l}\]
+
+\item \underline{Vacuum}: These are trickier in this approximation. If there are no neutrons entering from the right at a boundary $x_0$, the exact condition would be
+\[
+\psi(x_0, \mu) = 0\:, \quad -1 \leq \mu < 0\:.
+\]
+However, when we truncate the Legendre expansion we can't meet this exactly (because it implies a discontinuity in the flux at $\mu=0$).\\
+Instead, we need other conditions. There are two choices.\\
+(1) \textit{Mark BCs}: we set
+\[
+\psi(x_0, \mu_n) = 0\:, \quad n = 1, 2, \dots, \frac{N+1}{2}
+\]
+where 
+\[
+P_{N+1}(\mu_n) = 0\:.
+\]
+This is the analytical solution of our coupled equations in a source-free, pure absorber from $x_0 \leq x \leq \infty$.
+
+(2) \textit{Marshak BCs}: we simply set the odd angular moments to zero. 
+\[
+\int_{-1}^0 d\mu\: P_{l}(\mu)\psi(x_0,\mu) = 0\:, \quad n = 1, 3, 5, \dots, N
+\]
+This condition sets the net number of neutrons entering the solid identically to zero, which we can see from $l=1$:
+\[
+\int_{-1}^1 d\mu\: \mu \psi(x_0,\mu) = 0\:.
+\]
+This is the same as saying $J^-(x_0) = 0$ and thus this boundary condition holds even when only using $P_1$. \\
+We usually choose the Marshak as it generally introduces less error.  
+\end{itemize}
+
+There are some major \textit{deficiencies} of $P_N$. \\
+We get poor representation of $\psi$ near vacuum boundaries. We can use Double $P_N$ ($DP_N$) to deal with this.\\
+The extension to multi-D is very difficult, and we can use Simplified $P_N$ ($SP_N$) to deal with this.
+
+
 
 
 %For an expanded investigation of this and $DP_N$ see Appendix D of L\&M. \\
