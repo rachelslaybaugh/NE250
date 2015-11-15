@@ -111,7 +111,7 @@ Instead, We can use the Legendre expansion of the flux and define total cross se
 \]
 Thus, we define a total cross section moment:
 \[
-\Sigma_{tl,g}(\vec{r}) = \dfrac{\int_{E_g}^{E_{g-1}} dE\: \Sigma_t(\vec{r}, E) \phi_l^m(\vec{r}, \vOmega, E)}{\phi_{l,g}^m(\vec{r}, \vOmega)}
+\Sigma_{tl,g}(\vec{r}) = \dfrac{\int_{E_g}^{E_{g-1}} dE\: \Sigma_t(\vec{r}, E) \phi_l^m(\vec{r}, E)}{\phi_{l,g}^m(\vec{r})}
 \]
 and the whole term becomes
 \[
@@ -168,35 +168,6 @@ The idea of discrete ordinates approximation is that the TE is only valid along 
 \phi_l(x) &= \frac{1}{2}\sum_{n=1}^N w_n P_l(\mu_n)\psi_n(x)\\
 w_n > 0& \quad \sum_n w_n = 2
 \end{align*}
-The collection of $\mu_n, w_n$ is known as the angular quadrature set. \\
-We frequently select $N$ is even and $\mu_n$ are symmetric about $\mu=0$.
-%
-\begin{align*}
-\mu_{N+1-n} &= -\mu_n\:, \quad n = 1, 2, \dots, \frac{N}{2} \quad \mu_n > 0\\
-w_n &= w_{N+1-n}
-\end{align*}
-%
-If $N$ weren't even we would get $\mu_{(N+1)/2} = 0$, which makes the derivative term disappear. It can also make our BCs ambiguous.\\
-With these conditions we get advantages in the boundary conditions as well.
-%
-\begin{align*}
-\text{reflecting at } x=0 \quad &\psi_n(0) = \psi_{N+1-n}(0)\:, \quad n = 1, 2, \dots, \frac{N}{2}\\
-\text{vacuum on right at } x=a \quad &\psi_n(a) = 0\:, \quad n = \frac{N}{2}+1, \frac{N}{2}+2, \dots, N
-\end{align*}
-%
-We have a fair bit of freedom selecting an ordinate set. \\
-In slab, Legendre $P_N$ and Double Legendre $DP_N$ are the most popular (the most well known in 3D is the level symmetric). \\
-We started the idea of $P_N$ in our derivation of the diffusion equation. For an expanded investigation of this and $DP_N$ see Appendix D of L\&M. \\
-Another method of interest is Simplified $P_N$, $SP_N$. We won't cover this, but I'll post a resource about it on our website for anyone who is curious.
-
-This DO formulation
-\begin{itemize}
-\item gives us $N$ ODEs and $N$ BCs
-\item treats the BCs exactly as long as the direction is in the quadrature set
-\item the scattering term is an approximation. You have to interpolate if you need $\psi$ along a non-included angle.
-\end{itemize}
- 
-
-
+The collection of $\mu_n, w_n$ is known as the angular quadrature set.
 
 \end{document}
