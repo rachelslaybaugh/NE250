@@ -1,0 +1,97 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+\usepackage{tabu}
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% writing elements
+\usepackage{mhchem}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\vecr}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+\newcommand{\sigs}{\ensuremath{\Sigma_s(\rvec,E'\rightarrow E,\omvec'\rightarrow\omvec)}}
+\newcommand{\el}{\ensuremath{\ell}}
+\newcommand{\sigso}{\ensuremath{\Sigma_{s,0}}}
+\newcommand{\sigsi}{\ensuremath{\Sigma_{s,1}}}
+\newcommand{\ep}{\ensuremath{\varepsilon}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, F15\\
+November 18, 2015 
+}
+\end{center}
+
+We've talked about how to discretize energy using the multigroup approximation and angle using $S_N$, $P_N$, or $SP_N$ for the transport equation. \\
+This results in a set of ODEs and PDEs with space as the only variable.\\
+In this class we're going to talk about options for handling that.
+\begin{itemize}
+\item ray tracing: this is what we do in Monte Carlo and the integral form of the TE. This allows us to represent ``exact" geometry.
+\item There are two ways we can get equation sets with $\nabla^s$ operators: 
+  \begin{itemize}
+  \item the Diffusion equation. We can apply standard methods for this (learned in 150 I think) or we can apply spherical harmonics in space, which can be manipulated to look a like a bunch of diffusion equations and we handle these as the regular DE.
+  \item the even-odd parity TE (which we won't cover). This still has angular dependence but a diffusion-like operator so again we can use the same methods.
+  \end{itemize}
+\item We will look at the first order form ($\nabla$) here. 
+\end{itemize}
+
+\textbf{Spatial Discretization in Slab Geometry} (L\&M 3.3)\\
+We'll start by thinking about the 1D, 1-group TE equation that has $S_N$ applied:
+\begin{align*}
+\mu_n \frac{d \psi_n}{dx} &+ \Sigma_t(x) \psi_n(x) = \sum_{l=0}^L (2l+1) P_l(\mu_n) \Sigma_{s,l}(x) \phi_l(x) + s_n(x)\\
+\phi_l(x) &= \frac{1}{2}\sum_{n=1}^N w_n P_l(\mu_n) \psi_n(x)
+\end{align*}
+
+- discretization\\
+- boundary conditions and sweep pattern\\
+- local truncation error
+
+\textbf{Spatial Discretization in Multi-D} (L\&M 4.3)\\
+
+- discretization\\
+- boundary conditions and sweeping  pattern\\
+- quick mention of other spatial methods and their properties
+
+
+rest of course (3 classes left):\\
+- M, 11/23: equation solution procedures (inner iteration, outer iteration, eigenvalue iteration, convergence); one basic solver of each type (SI, GS, PI)\\ 
+- M, 11/30: example of research into a different solver for each type (block Krylov, RQI)
+- W, 12/02: choice preconditioners? computing architectures? some topic we skipped? Last half of class will be feedback and discussion of class.
+
+
+
+
+\end{document}
