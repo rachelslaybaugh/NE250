@@ -75,8 +75,7 @@ We'll start by thinking about the 1D, 1-group TE equation that has $S_N$ applied
 \phi_l(x) &= \frac{1}{2}\sum_{n=1}^N w_n P_l(\mu_n) \psi_n(x)
 \end{align*}
 %
-To deal with the spatial variable we divide space into a grid. The bins do not need to be evenly spaced.\\
-We treat cross sections to be constant within each cell, therefore we do well to align bin edges with material boundaries to the degree possible. 
+To deal with the spatial variable we divide space into a grid. The bins do not need to be evenly spaced.\\ 
 %
 \begin{center}
 \begin{tikzpicture}
@@ -110,31 +109,95 @@ We treat cross sections to be constant within each cell, therefore we do well to
 \end{tikzpicture}
 \end{center}
 %
-In our derivation we will use both whole points and half points, where half points are halfway between the whole points ($x_{i+1/2} = (1/2)(x_{i+1} - x_{i})$). \\
+In our derivation we will use both whole points (centers) and half points (edges), where whole points are halfway between the half points 
+\[
+x_{i} = \frac{x_{i+1/2} + x_{i-1/2}}{2} \:.
+\]
+We can think of these as computational cells, and the spatial values are centered around the whole points. Further, each cell is homogeneous. These two things mean
+\[
+\Sigma_{x,i} = \Sigma_x(x)\:, \quad x_{i-1/2} < x < x_{i+1/2} \:.
+\]
+Because we treat cross sections to be constant within each cell, we do well to align bin edges with material boundaries to the degree possible. We add cells where we need to in order to get the desired resolution.\\
 We also define
+\[
+\Delta_i = x_{i+1/2} - x_{i-1/2}
+\]
+We also want to assign boundary conditions at the edges. For example:
 \begin{align*}
-\Delta_i &= x_{i+1/2} - x_{i-1/2}\\
-\Delta_{i-1/2} &= x_{i} - x_{i-1}\\
-\Sigma_i &= \Sigma(x) \:, \quad x_{i-1/2} < x < x_{i+1/2}
+\psi_{1/2,n} &= \psi_n(a_0)\:, \quad \forall n \text{ such that } \mu_n > 0 \\
+\psi_{I+1/2,n} &= \psi_n(a_1)\:, \quad \forall n \text{ such that } \mu_n < 0 
 \end{align*}
+%
+Next, we integrate the TE over each cell $i$:
+\begin{align*}
+\mu_n\bigl(&\psi_{i+1/2,n} - \psi_{i-1/2,n} \bigr) + \Delta_i \Sigma_{t,i} \psi_{i,n} = \Delta_i q_{i,n}\\
+&\\
+\psi_{i,n} &= \frac{1}{\Delta_i}\int_{x_{i-1/2}}^{x_{i+1/2}} \psi_n(x) dx \approx \psi_n(x_i) \quad \text{average flux across the cell}\\
+q_{i,n} &\equiv \sum_{l=0}^L (2l+1) P_l(\mu_n) \Sigma_{s,l,i} \phi_{l,i} + s_{n,i}\:,
+\end{align*}
+where we used a midpoint rule for the integration.
 
-We now use this mesh to assign flux values and approximate the derivative term. 
-
+This equation relates the cell-edge values and the cell-centered values.\\
+To get an additional relationship between these values, we often use the ``diamond difference" relation.\\
+To do this, we use a Taylor series in expansion cell $i$ about $x_i$ and evaluate the expansion at the half points:
+\begin{align*}
+\psi_n &= \psi_n(x_i) + (x - x_i)\frac{d\psi_n}{dx}|_{x_i} + \frac{1}{2}(x - x_i)^2 \frac{d^2 \psi_n}{dx^2}|_{x_i} + O(\Delta^3)\\
+\psi_{n}(x_{i \pm 1/2}) &= \psi_n(x_i) + (x_{i \pm 1/2} - x_i) \frac{d\psi_n}{dx}|_{x_i} + \frac{(x_{i\pm 1/2} - x_i)^2}{2} \frac{d^2 \psi_n}{dx^2}|_{x_i} + O(\Delta^3)\\
+\end{align*}
+Next, we add the two half-point equations together:
+\begin{align*}
+\psi_{n, i+1/2} + \psi_{n, i-1/2} &= \psi_n(x_i) + \underbrace{(x_{i+1/2} + x_{i-1/2} - 2x_1)}_{0} \frac{d \psi_n}{dx}|_{x_i} + O(\Delta^2)\\
+\psi_{n, i} &= \frac{1}{2}\bigl(\psi_{n,i+1/2} + \psi_{n,i-1/2}\bigr) + O(\Delta^2)
+\end{align*}
+and get the diamond difference relation.
 
 \textbf{sweep pattern and boundary conditions}\\
-We solve these equation in the direction of neutron flow. \\
+We solve these equation in the direction of neutron flow by doing a mesh ``sweep". \\
 We march through $i = 0, 1, \dots, I$ when $\mu_n > 0$. This is the direction of information transfer and maintains stability of our solution.\\
 We march through $i = I, I-1, \dots, 0$ when $\mu_n < 0$ for the same reason.
 
-This marching strategy also informs our boundary conditions. \\
-A vacuum boundary condition means no incoming flux. This will be
-\begin{align*}
-\psi_{0,n}(x) &= 0\:, \quad \mu_n > 0 \quad \text{left vacuum}\\
-\psi_{I,n}(x) &= 0\:, \quad \mu_n < 0 \quad \text{right vacuum}
-\end{align*}
-%
-For reflecting, things are a little trickier. We need to map the outgoing flux moving one direction onto the incoming flux coming back the other direction. \\
+Let's consider $\mu_n > 0$; we assume that we know $\psi_{n,i-1/2}$ (which works easily for vacuum of fixed incoming bcs) and solve for $\psi_{n,i}$ and $\psi_{n,i+1/2}$:
+\[
+\psi_{n,i} = \dfrac{\psi_{n, i-1/2} + \frac{\Delta_i q_{n,i}}{2 \mu_n}}{1 + \frac{\Delta_i \Sigma_{t,i}}{2 \mu_n}}
+\]
+We start at the left edge with $i=1$: $\psi_{n,1/2} = \psi(a_0)$.\\
+Then we follow through $i>1$ using the continuity condition that  
+\[
+\psi_{n,i-1/2} = \psi_{n,(i-1)+1/2}\:.
+\]
+We get $\psi_{n,i+1/2}$ from the diamond difference relation:
+\[
+\psi_{n,i+1/2} = 2\psi_{n,i} - \psi_{n,i-1/2}\:.
+\]
+Note that we don't actually need $\psi_{n,i}$ after finding $\psi_{n,i+1/2}$ except for using it in computing the scattering and fission source, which actually requires the moments.  \\
+To avoid storing $\psi_{n,i}$ we just build up and store the moments:
+\[
+\phi_{l,i} = \phi_{l,i} + \frac{1}{2}w_nP_l(\mu_n) \psi_{n,i}\:, \quad n = 1, \dots, N\:.
+\]
+We continue this process until we reach the right boundary.
 
+Now let's consider coming back the other way, where $\psi_{n,i-1/2}$ is the outgoing flux. 
+\begin{align*}
+\psi_{n,I+1/2} &= \psi(a_1)\\
+\psi_{n,i} &= \dfrac{\psi_{n, i+1/2} + \frac{\Delta_i q_{n,i}}{2 |\mu_n|}}{1 + \frac{\Delta_i \Sigma_{t,i}}{2 |\mu_n|}}\\
+\psi_{n,i-1/2} &= 2\psi_{n,i} - \psi_{n,i+1/2}
+\end{align*}
+and we accumulate $\phi_{l,i}$ from the $\mu_n < 0$ contributions.
+
+For reflecting, things are a little trickier. We need to map the outgoing flux moving one direction onto the incoming flux coming back the other direction. \\
+If we assume that the right boundary is reflective and left is fixed, we
+%
+\begin{enumerate}
+\item sweep left to right for $\mu_n > 0$;
+\item use the previous process (determine $\psi_{n,i}$, accumulate $\phi_{l,i}$, compute $\psi_{n,i+1/2}$) until you reach the right boundary and solve for $\psi_{n,I+1/2}$;
+\item determine $n'$ such that $\mu_{n'} = -\mu_n$ and set $\psi_{n',I+1/2} = \psi_{n,I+1/2}$;
+\item sweep from right to left along $n'$.
+\end{enumerate}
+%
+If you have reflective boundaries on both edges, then we start iterating using an initial guess for one of the boundary conditions. 
+
+If we don't have secondary neutron production from fission or scattering (pure absorption and/or only downscattering), then one mesh sweep completely solves the problem. \\
+This is equivalent to solving a lower-triangular matrix equation. 
 
 \textbf{local truncation error}\\
 
