@@ -51,7 +51,7 @@
 \begin{document}
 \begin{center}
 {\bf NE 250, F15\\
-November 18, 2015 
+November 22, 2015 
 }
 \end{center}
 
@@ -59,10 +59,10 @@ We've talked about how to discretize energy using the multigroup approximation a
 This results in a set of ODEs and PDEs with space as the only variable.\\
 In this class we're going to talk about options for handling that.
 \begin{itemize}
-\item ray tracing: this is what we do in Monte Carlo and the integral form of the TE. This allows us to represent ``exact" geometry.
-\item There are two ways we can get equation sets with $\nabla^s$ operators: 
+\item Ray tracing: this is what we do in Monte Carlo and the integral form of the TE (solved with MOC). This allows us to represent ``exact" geometry.
+\item There are two ways we can get equation sets with $\nabla^2$ operators: 
   \begin{itemize}
-  \item the Diffusion equation. We can apply standard methods for this (learned in 150 I think) or we can apply spherical harmonics in space, which can be manipulated to look a like a bunch of diffusion equations and we handle these as the regular DE.
+  \item the Diffusion equation. We can apply standard methods for this (learned in 150 I think, and definitely 155) or we can apply spherical harmonics in space, which can be manipulated to look a like a bunch of diffusion equations and we handle these as the regular DE.
   \item the even-odd parity TE (which we won't cover). This still has angular dependence but a diffusion-like operator so again we can use the same methods.
   \end{itemize}
 \item We will look at the first order form ($\nabla$) here. 
@@ -85,28 +85,28 @@ We treat cross sections to be constant within each cell, therefore we do well to
 \draw (1.5,-.25)--(1.5,.25);
 \draw (0.75,-.1)--(0.75,.1);
 \draw[dotted] (1.75,0)--(2.75,0);
-\draw (2.75,0)--(6.25,0);
-\draw[dotted] (6.25,0)--(7.75,0);
+\draw (2.75,0)--(4.75,0);
+\draw[dotted] (4.75,0)--(5.75,0);
 \draw (3,-.25)--(3,.25);
 \draw (3.75,-.1)--(3.75,.1);
 \draw (4.5,-.25)--(4.5,.25);
-\draw (5.25,-.1)--(5.25,.1);
+%\draw (5.25,-.1)--(5.25,.1);
+%\draw (6,-.25)--(6,.25);
+\draw (5.75,0)--(7.5,0);
 \draw (6,-.25)--(6,.25);
-\draw (7.75,0)--(9.5,0);
-\draw (8,-.25)--(8,.25);
-\draw (8.75,-.1)--(8.75,.1);
-\draw (9.5, -.25)--(9.5,.25);
-\node[below] at (0,-.25) {$x_0$};
-\node[above] at (0.75, .25) {$x_{1/2}$};
-\node[below] at (1.5,-.25) {$x_1$};
-\node[below] at (3,-.25) {$x_{i-1}$};
-\node[below] at (4.5,-.25) {$x_i$};
-\node[below] at (6,-.25) {$x_{i+1}$};
-\node[above] at (3.75, 0.25) {$x_{i-1/2}$};
-\node[above] at (5.25, 0.25) {$x_{i+1/2}$};
-\node[below] at (8,-.25) {$x_{I-1}$};
-\node[above] at (8.75, .25) {$x_{I-1/2}$};
-\node[below] at (9.5,-.25) {$x_I$};
+\draw (6.75,-.1)--(6.75,.1);
+\draw (7.5, -.25)--(7.5,.25);
+\node[below] at (0,-.25) {$x_{1/2}$};
+\node[above] at (0.75, .25) {$x_{1}$};
+\node[below] at (1.5,-.25) {$x_{3/2}$};
+\node[below] at (3,-.25) {$x_{i-1/2}$};
+\node[below] at (4.5,-.25) {$x_{i+1/2}$};
+%\node[below] at (6,-.25) {$x_{i+1}$};
+\node[above] at (3.75, 0.25) {$x_{i}$};
+%\node[above] at (5.25, 0.25) {$x_{i+1/2}$};
+\node[below] at (6,-.25) {$x_{I-1/2}$};
+\node[above] at (6.75, .25) {$x_{I}$};
+\node[below] at (7.5,-.25) {$x_{I+1/2}$};
 \end{tikzpicture}
 \end{center}
 %
