@@ -197,9 +197,13 @@ If we assume that the right boundary is reflective and left is fixed, we
 If you have reflective boundaries on both edges, then we start iterating using an initial guess for one of the boundary conditions. 
 
 If we don't have secondary neutron production from fission or scattering (pure absorption and/or only downscattering), then one mesh sweep completely solves the problem. \\
-This is equivalent to solving a lower-triangular matrix equation. 
+This is equivalent to solving a lower-triangular matrix equation, $\mathbf{L}\mathbf{\psi} = \mathbf{q}$ (which we get by ordering the solve in the direction of neutron travel).
 
-\textbf{local truncation error}\\
+NOTE: we don't actually create and store this matrix, however. Because we only deal with the coefficients that couple the center and half points, we don't actually need the matrix.   This allows us to avoid memory restrictions for complex problems. \\
+When we have one reflecting boundary, we can write our matrix equations as $\mathbf{L}\mathbf{\psi}^{m+1} = \mathbf{q}^m$.\\
+When we have two reflecting boundaries, we get $\mathbf{L}\mathbf{\psi}^{m+1} = \mathbf{q}^m + \mathbf{U}\mathbf{\psi}^{m}$, where $\mathbf{U}$ is a strictly upper triangular matrix that operates on the flux from the previous iterate that has been ``reflected" off of the boundary.
+
+\textbf{Local Truncation Error}\\
 
 
 
