@@ -141,13 +141,13 @@ This equation relates the cell-edge values and the cell-centered values.\\
 To get an additional relationship between these values, we often use the ``diamond difference" relation.\\
 To do this, we use a Taylor series in expansion cell $i$ about $x_i$ and evaluate the expansion at the half points:
 \begin{align*}
-\psi_n &= \psi_n(x_i) + (x - x_i)\frac{d\psi_n}{dx}|_{x_i} + \frac{1}{2}(x - x_i)^2 \frac{d^2 \psi_n}{dx^2}|_{x_i} + O(\Delta^3)\\
-\psi_{n}(x_{i \pm 1/2}) &= \psi_n(x_i) + (x_{i \pm 1/2} - x_i) \frac{d\psi_n}{dx}|_{x_i} + \frac{(x_{i\pm 1/2} - x_i)^2}{2} \frac{d^2 \psi_n}{dx^2}|_{x_i} + O(\Delta^3)\\
+\psi_n &= \psi_n(x_i) + (x - x_i)\frac{d\psi_n}{dx}|_{x_i} + \frac{1}{2}(x - x_i)^2 \frac{d^2 \psi_n}{dx^2}|_{x_i} + O(\Delta_i^3)\\
+\psi_{n}(x_{i \pm 1/2}) &= \psi_n(x_i) + (x_{i \pm 1/2} - x_i) \frac{d\psi_n}{dx}|_{x_i} + \frac{(x_{i\pm 1/2} - x_i)^2}{2} \frac{d^2 \psi_n}{dx^2}|_{x_i} + O(\Delta_i^3)\\
 \end{align*}
 Next, we add the two half-point equations together:
 \begin{align*}
-\psi_{n, i+1/2} + \psi_{n, i-1/2} &= \psi_n(x_i) + \underbrace{(x_{i+1/2} + x_{i-1/2} - 2x_1)}_{0} \frac{d \psi_n}{dx}|_{x_i} + O(\Delta^2)\\
-\psi_{n, i} &= \frac{1}{2}\bigl(\psi_{n,i+1/2} + \psi_{n,i-1/2}\bigr) + O(\Delta^2)
+\psi_{n, i+1/2} + \psi_{n, i-1/2} &= 2\psi_n(x_i) + \underbrace{(x_{i+1/2} + x_{i-1/2} - 2x_i)}_{0} \frac{d \psi_n}{dx}|_{x_i} + O(\Delta_i^2)\\
+\psi_{n, i} &= \frac{1}{2}\bigl(\psi_{n,i+1/2} + \psi_{n,i-1/2}\bigr) + O(\Delta_i^2)
 \end{align*}
 and get the diamond difference relation.
 
@@ -204,17 +204,17 @@ When we have one reflecting boundary, we can write our matrix equations as $\mat
 When we have two reflecting boundaries, we get $\mathbf{L}\mathbf{\psi}^{m+1} = \mathbf{q}^m + \mathbf{U}\mathbf{\psi}^{m}$, where $\mathbf{U}$ is a strictly upper triangular matrix that operates on the flux from the previous iterate that has been ``reflected" off of the boundary.
 
 \textbf{Spatial Truncation Error}\\
-We can see the effect of the truncation error ir we look at uncollided neutrons with a zero group source:
+We can see the effect of the truncation error if we look at uncollided neutrons with a zero group source:
 \[
 \mu_n \frac{d \psi_n}{dx} + \Sigma_t \psi_n(x) = 0\:,
 \]
 where the cross section is taken as constant. For neutrons moving $\mu_n > 0$, the solution is
 \[
-\psi_n(x') = \psi_n(x)\exp\bigl(\frac{-\Sigma (x'-x)}{\mu_n}\bigr)\:, \quad x' > x \:.
+\psi_n(x') = \psi_n(x)\exp\bigl(\frac{-\Sigma_t (x'-x)}{\mu_n}\bigr)\:, \quad x' > x \:.
 \]
-For a uniform grid, the exact expression for $\psi_{n,i+1/2}$ is (the exponential behavior across the cell without a source)
+For a Cartesian grid, the exact expression for $\psi_{n,i+1/2}$ is (the exponential behavior across the cell without a source)
 \[
-\psi_{n,i+1/2} = e^{-2h} \psi_{n,i-1/2}\:, \qquad h \equiv \frac{\Sigma \Delta}{2|\mu_n|} \:.
+\psi_{n,i+1/2} = e^{-2h} \psi_{n,i-1/2}\:, \qquad h \equiv \frac{\Sigma_t \Delta_i}{2|\mu_n|} \:.
 \]
 To see the error, we figure out how this exact expression translates into the diamond difference approximation:
 \[
@@ -222,8 +222,8 @@ To see the error, we figure out how this exact expression translates into the di
 \]
 which approximates the power series expansion of the exponential exactly through the $h^2$ term (consistent with our original flux expansion). 
 
-Now we can see where DD limits us. If $h < 1$, we can get non-physical negative flux values. \\
-We would like to use space-angle meshes that keep $h<<1$, but that can be prohibitively expensive. \\
+Now we can see where DD limits us. If $h > 1$, we can get non-physical negative flux values\textemdash thus we would like $h < 1$. \\
+In fact, we would like to use space-angle meshes that keep $h<<1$ to avoid any rounding or precision issues, but that can be prohibitively expensive. \\
 We can get a condition for positivity (recognizing that $\mu_1$ is ordered as the smallest angle) that is 
 \[
 \frac{\Sigma \Delta}{2|\mu_n|} < 1 \:, \quad \rightarrow \quad \Sigma \Delta = \frac{\Delta}{\lambda} < 2 \mu_1\:.
@@ -234,7 +234,7 @@ Fortunately, there are other spatial solution methods and/or negative flux ``fix
 \textbf{Spatial Discretization in Multi-D} (L\&M 4.3)\\
 In multiple dimensions, we'll working with
 \[
-\vOmega_n \cdot \nabla \psi_n(\vec{r}) + \Sigma_t(\vec{r})\psi_n(\vec{r}) = q_n(\vec{t})\:,
+\vOmega_n \cdot \nabla \psi_n(\vec{r}) + \Sigma_t(\vec{r})\psi_n(\vec{r}) = q_n(\vec{r})\:,
 \]
 where $q_n$ includes scattering, fixed source, and/or fission. We will next discretize the space:
 
@@ -307,13 +307,13 @@ This equation, as the previous balance one, contains no approximations yet.
 We've not got 3 sets of variables: 1 set of x-averaged, 1 set of y-averaged, and one set of cell-averaged; but we only have one set of equations.\\
 We do a 2-D Taylor series expansion to define our cell-centered flux, which causes us not to be exact:
 \begin{align*}
-\psi_n(x,y) &= \psi_n(x_i,y_j) + (x-x_i)\frac{d\psi_n}{dx}|_{x_i,y_j} + (y-y_j)\frac{d\psi_n}{dy}|_{x_i,y_j} + O(\Delta_{i,j})^2\\
-\psi_{n,i,j} &= \psi_n(x_i,y_j) + O(\Delta_{i,j})^2
+\psi_n(x,y) &= \psi_n(x_i,y_j) + (x-x_i)\frac{d\psi_n}{dx}|_{x_i,y_j} + (y-y_j)\frac{d\psi_n}{dy}|_{x_i,y_j} + O(\Delta_{i/j}^2)\\
+\psi_{n,i,j} &= \psi_n(x_i,y_j) + O(\Delta_{i/j}^2)
 \end{align*}
 We now need two diamond-difference relations, which we obtain the same way we did before, giving:
 \begin{align*}
-\psi_{n,i+1/2,j} + \psi_{n,i-1/2,j} &= 2\psi_{n,i,j} + O(\Delta_{i,j})^2\\
-\psi_{n,i,j+1/2} + \psi_{n,i,j-1/2} &= 2\psi_{n,i,j} + O(\Delta_{i,j})^2
+\psi_{n,i+1/2,j} + \psi_{n,i-1/2,j} &= 2\psi_{n,i,j} + O(\Delta_{i/j}^2)\\
+\psi_{n,i,j+1/2} + \psi_{n,i,j-1/2} &= 2\psi_{n,i,j} + O(\Delta_{i/j}^2)
 \end{align*}
 
 \textbf{Sweep pattern and boundary conditions}\\
@@ -333,7 +333,7 @@ We can write the mesh sweep procedure generically using out and in designators, 
 \psi_{n,i,out} &= 2\psi_{n,i,j} - \psi_{n,i,in}\:; \qquad \eta_n > 0\:\:\psi_{n,i,out} = \psi_{n,i,j+1/2}\\
 \frac{|\mu_n|}{\Delta x_i}\bigl(\psi_{n,out,j} &- \psi_{n,in,j}\bigr) + \frac{|\eta_n|}{\Delta y_i}\bigl(\psi_{n,i,out} - \psi_{n,i,in}\bigr) + \Sigma_{t,i,j} \psi_{n,i,j} = q_{n,i,j}\\
 &\\
-\psi_{n,i,j} &= \frac{q_{n,i,j} + (2|\mu_n| / \Delta x_i) \psi_{n,in,j} + (2|\eta_n| / \Delta y_j) \psi_{n,in,j}}{\Sigma_{t,i,j} + (2|\mu_n| / \Delta x_i) + (2|\eta_n| / \Delta y_j)}\\
+\psi_{n,i,j} &= \frac{q_{n,i,j} + (2|\mu_n| / \Delta x_i) \psi_{n,in,j} + (2|\eta_n| / \Delta y_j) \psi_{n,i,in}}{\Sigma_{t,i,j} + (2|\mu_n| / \Delta x_i) + (2|\eta_n| / \Delta y_j)}\\
 \phi_{l,i,j}^m &= \frac{1}{4}\sum_{n=1}^{N(N+2)/2} w_n Y_{lm}^e(\vOmega_n) \psi_{n,i,j}
 \end{align*}
 We know the incoming flux; we rearrange our balance equation, sub in our difference relations, and solve for $\psi_{n,i,j}$; accumulate our flux moments; and then we get the new outgoing fluxes that become the next incoming fluxes.\\
