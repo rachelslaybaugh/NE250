@@ -1,0 +1,118 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+\usepackage{tabu}
+
+% Draw figures yourself
+\usepackage{tikz} 
+\usetikzlibrary{shapes,arrows}
+
+% writing elements
+\usepackage{mhchem}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\vecr}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+\newcommand{\sigs}{\ensuremath{\Sigma_s(\rvec,E'\rightarrow E,\omvec'\rightarrow\omvec)}}
+\newcommand{\el}{\ensuremath{\ell}}
+\newcommand{\sigso}{\ensuremath{\Sigma_{s,0}}}
+\newcommand{\sigsi}{\ensuremath{\Sigma_{s,1}}}
+\newcommand{\ep}{\ensuremath{\varepsilon}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, F15\\
+November 30, 2015 
+}
+\end{center}
+
+We've talked about how to discretize the transport equation in energy using the \textit{multigroup approximation,} in angle using $S_N$, $P_N$, or $SP_N$, and in space using \textit{diamond difference} or an equivalent spatial scheme. \\
+If we're solving an eigenvalue problem, we also need to deal with that.\\
+Great. Now how to we actually solve it all? 
+
+Well, we break this into two iteration levels if there isn't fission and three iteration levels if there is fission:
+\begin{enumerate}
+\item \textbf{inner iterations}: solve the space-angle component for each energy group. This uses the sweeps that we talked about last time. \\
+We get to choose what kind of solver we would like to use. \\
+The most basic and traditional is source iteration; a more advanced choice is a Krylov solver.
+
+\item \textbf{outer iterations}: solve the energy component; after we've dealt with space and angle in each group, we iterate on energy if necessary. \\
+The most common solver is Gauss Seidel, with Jacobi or block Jacobi being simpler and multigroup Krylov solves being a new option.
+
+\item \textbf{eigenvalue iterations}: after the space, angle, and energy has been converged, we update the eigenvalue and eigenvector until they converge.\\
+The historic solver is Power Iteration.\\
+Other choices are shifted inverse iteration (Weilandt's method and Rayleigh Quotient Iteration are extensions of this), Arnoldi, and Davidson.
+\end{enumerate}
+At each step each solver has pros and cons. We think about things like convergence rate, ability to parallelize, and ability to precondition/accelerate.\\
+Each iteration level often comes with its own set of preconditioners and/or acceleration strategies.
+
+\textit{Inner Iterations:}\\
+Inner iteration index is $p$: we need to know $\phi_{l,i}^{(p-1)}$, so for $p=1$ we have an initial guess for $\phi_{l,i}^{(0)}$. We use this strategy:
+
+% Define block styles
+\tikzstyle{decision} = [diamond, draw,% fill=blue!20, 
+    text width=5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw,% fill=blue!20, 
+    text width=10em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse, node distance=3cm, %fill=red!20, 
+    minimum height=2em]
+%
+\begin{center}
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    \node [block] (init) {Angular\\moments, $\phi_{l,i}^{(p-1)}$};   
+    \node [cloud, right of=init, node distance=5cm] (input) {$\phi_{l,i}^{(0)}$};
+    \node [block, below of=init, node distance=2.5cm] (source) {scattering formula + external source: $q_{n,1}^{(p-1)}$};
+    \node [block, below of=source, node distance=3cm] (sweep) {angular flux, $\psi_{n,i}^{(p)}$};
+        \node [block, below of=sweep, node distance=2.5cm] (moments) {update angular flux moments, $\phi_{l,i}^{(p)}$};
+    \node [decision, below of=moments, node distance=3cm] (converged) {$\phi_{0,i}$ converged?};
+    \node [block, right of=converged, node distance=5cm] (stop) {terminate successfully:\\ solution is $\phi_{l,i}^{(p)}$};
+    \node [decision, left of=converged, node distance=5cm] (max) {$p \geq p_{\max}$?};
+    \node [block, left of=sweep, node distance=5cm] (update) {$\phi_{l,i}^{(p-1)}= \phi_{l,i}^{(p)}$\\$p = p+1$};
+    \node [block, below of=max, node distance=3cm] (end) {terminate unsuccessfully};
+    % Draw edges
+    \path [line] (init) -- (source);
+    \path [line] (source) -- node {perform mesh sweep}(sweep);
+    \path [line] (sweep) -- (moments);    
+    \path [line] (moments) -- (converged);
+    \path [line] (converged) -- node {no}(max);
+    \path [line] (converged) -- node {yes}(stop);    
+    \path [line] (max) -- node {yes}(end);    
+    \path [line] (max) -- node {no}(update);    
+    \path [line] (update) |- (init);
+    \path [line,dashed] (input) -- (init);
+\end{tikzpicture}
+\end{center}
+
+\end{document}
