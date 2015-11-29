@@ -77,7 +77,9 @@ At each step each solver has pros and cons. We think about things like convergen
 Each iteration level often comes with its own set of preconditioners and/or acceleration strategies.
 
 \textit{Inner Iterations:}\\
-Inner iteration index is $p$: we need to know $\phi_{l,i}^{(p-1)}$, so for $p=1$ we have an initial guess for $\phi_{l,i}^{(0)}$. We use this strategy:
+Inner iteration index is $p$, we've suppressed the energy index for now.\\
+We need to know $\phi_{l,i}^{(p-1)}$, so for $p=1$ we have an initial guess for $\phi_{l,i}^{(0)}$. \\
+For each energy group, this is basically the source iteration method, but can be readily adapted to other strategies:
 
 % Define block styles
 \tikzstyle{decision} = [diamond, draw,% fill=blue!20, 
@@ -94,13 +96,13 @@ Inner iteration index is $p$: we need to know $\phi_{l,i}^{(p-1)}$, so for $p=1$
     \node [block] (init) {Angular\\moments, $\phi_{l,i}^{(p-1)}$};   
     \node [cloud, right of=init, node distance=5cm] (input) {$\phi_{l,i}^{(0)}$};
     \node [block, below of=init, node distance=2.5cm] (source) {scattering formula + external source: $q_{n,1}^{(p-1)}$};
-    \node [block, below of=source, node distance=3cm] (sweep) {angular flux, $\psi_{n,i}^{(p)}$};
-        \node [block, below of=sweep, node distance=2.5cm] (moments) {update angular flux moments, $\phi_{l,i}^{(p)}$};
+    \node [block, below of=source, node distance=3cm] (sweep) {angular flux: $\psi_{n,i}^{(p)}$};
+        \node [block, below of=sweep, node distance=2.5cm] (moments) {update angular flux moments: $\phi_{l,i}^{(p)}$};
     \node [decision, below of=moments, node distance=3cm] (converged) {$\phi_{0,i}$ converged?};
     \node [block, right of=converged, node distance=5cm] (stop) {terminate successfully:\\ solution is $\phi_{l,i}^{(p)}$};
     \node [decision, left of=converged, node distance=5cm] (max) {$p \geq p_{\max}$?};
     \node [block, left of=sweep, node distance=5cm] (update) {$\phi_{l,i}^{(p-1)}= \phi_{l,i}^{(p)}$\\$p = p+1$};
-    \node [block, below of=max, node distance=3cm] (end) {terminate unsuccessfully};
+    \node [block, below of=max, node distance=3cm] (end) {terminate \textit{un}successfully};
     % Draw edges
     \path [line] (init) -- (source);
     \path [line] (source) -- node {perform mesh sweep}(sweep);
@@ -114,5 +116,113 @@ Inner iteration index is $p$: we need to know $\phi_{l,i}^{(p-1)}$, so for $p=1$
     \path [line,dashed] (input) -- (init);
 \end{tikzpicture}
 \end{center}
+We can think through convergence by thinking of the physical interpretation of $\psi_n^{(p)}$ with $p=0$ having an initial guess for $\psi$ and $q_n^{(0)} = s_n$.
+\begin{itemize}
+\item $p=1$: $\psi_n^{(1)} = \ve{A} s_n$ is the uncollided flux. We plug this into the moment formula and that into the formula for $q_n$, the rhs:
+\[
+q_{n,i}^{(1)} = \underbrace{\sum_{l=0}^L (2l+1) P_l(\mu_n) \Sigma_{sl,i} \phi_{l,i}^{(1)}}_{b_{n,i}^{(1)}} + s_{n,i}
+\]
+
+\item  $p=2$: $\psi_n^{(2)}$ is the flux of neutrons that have had \textit{up to} 1 collision
+\[
+\psi_n^{(2)} = \ve{A} q_{n}^{(1)} = \underbrace{\ve{A} b_n^{(1)}}_{\tilde{\psi}_n^{(2)}} + \underbrace{\ve{A}s_n}_{\psi_n^{(1)}}
+\]
+$\psi_n^{(1)}$ is the uncollided flux, therefore $\tilde{\psi}_n^{(2)}$ is the flux of neutrons with \textit{exactly} 1 collision.
+
+\item For a general $p$: the flux of neutrons with up to $p-1$ collisions
+\begin{align*}
+\psi_n^{(p)} &= \ve{A} q_{n}^{(p-1)} = \ve{A} b_n^{(p-1)} + \ve{A} b_n^{(p-2)} + \dots \ve{A}s_n\\
+&= \tilde{\psi}_n^{(p)} + \tilde{\psi}_n^{(p-1)} + \dots + \psi_n^{(1)}
+\end{align*}
+
+\item Convergence requires $|\phi_0^{(p)} - \phi_0^{(p-1)}|$ be small where
+\[
+\phi_0^{(p)} - \phi_0^{(p-1)} = \frac{1}{2} \sum_{n=0}^N w_n[\underbrace{\psi_n^{(p)} - \psi_n^{(p-1)}}_{\tilde{\psi}_n^{(p)}}] \:.
+\]
+This means the we need $\tilde{\psi}_n^{(p)}$, the flux of neutrons with exactly $p-1$ collisions to be small.
+
+\item Thus, inner iteration convergence will be rapid if few neutrons survive many collisions: large leakage, large removal (absorption and/or large up or downscattering within a group).
+\end{itemize}
+%
+Okay, but what about dealing with groups? We need to think of it from an inner iteration and outer iteration standpoint.\\
+If we have only downscattering, $\Sigma_{s,l,gg'}=0$ when $g' > g$, we only need one set of inner iterations (ii) and we are finished:
+% 
+\begin{itemize}
+\item We solve group 1 using the external source for group 1; $\psi_{n,g=1}$ is the final solution in that group. 
+\item Next we compute the distributed source in $g=2$ from the external source plus the downscattering source from group 1. 
+\item We solve $g=2$ with ii, $\psi_{n,g=2}$ is the final solution in that group.
+\item And so on through $g=G$, then we are completely solved for all groups.
+\end{itemize}
+%
+However, we often have upscattering, where lower groups contribute back to higher groups, as well as neutrons coming from fission. One set of inner iterations won't do that for us, so we need outer iterations. \\
+We will write this in words for Gauss Seidel for outer iteration index $J$:
+%
+\begin{itemize}
+\item Construct the source for group 1 as the external source + upscattering from $g>1$ and fission using $J-1$ flux values.
+\item Apply ii, now we have a new outer iterate for $\psi_{n,g=1}$.
+\item The $g=2$ source is the external source + downscattering from $g=1$ using the $J$ iterate flux + upscattering from $g>2$ and fission from the $J-1$ iterate flux. 
+\item At $g=G$, test convergence for each group:
+\[
+|\phi_{0,g}^{(J)} - \phi_{0,g}^{(J-1)}| < \epsilon \quad \text{or} \quad |\frac{\phi_{0,g}^{(J)}}{\phi_{0,g}^{(J-1)}} - 1| < \epsilon \quad \forall g \:.
+\]
+\end{itemize}
+I had mentioned outer iteration solution options. to consider these, we will think of our problem as looking like $\ve{A} \psi = b$ (which we won't talk about much further today).\\
+\textbf{Jacobi}, probably the simplest method, 
+%Let $\ve{D} = \text{diag}(\ve{A})$, then
+%\begin{align}
+%\ve{D} \vec{x}^{k+1} &= (\ve{D} - \ve{A})\vec{x}^{(k)} + \vec{b} \nonumber \\
+%%
+%\vec{x}^{k+1} &= \ve{D}^{-1}(\ve{D} - \ve{A})\vec{x}^{(k)} + \ve{D}^{-1}\vec{b} \nonumber
+%\end{align}
+%%
+%Now, $\ve{P}_J = \ve{I} -  \ve{D}^{-1}\ve{A}$ and $\tilde{\vec{b}} =\ve{D}^{-1}\vec{b}$.
+%
+has the algorithm, for $g = 1, \dots, G$:
+\[\phi^{(J)}_g = \frac{1}{a_{gg}}(b_g - \sum_{t=1}^{g-1} a_{gg'} \phi_t^{(J-1)} - \sum_{j=g+1}^{n} a_{gg'} \phi_t^{(J-1)})\:.\]
+
+Jacobi is unconditionally stable and linearly convergent, but may converge very slowly in some situations. (we will leave detailed analysis of this to another class). \\
+%Jacobi will converge (perhaps quite slowly) if $\ve{P}_J$'s spectral radius is $<$ 1, but that's often difficult to estimate \cite{LeVeque2007}. 
+%
+%A \underline{sufficient} but not necessary condition for convergence is that $\ve{A}$ or $\ve{A}^T$ is \textbf{diagonally dominant}:
+%%
+%\[|a_{ii}| \geq \sum_{j \neq i} |a_{ij}| \qquad \forall i \:.\]
+%
+Jacobi isn't a very sophisticated method, but it's easy to parallelize. Why might that be? \\The Jacobi method is order independent since all terms on the right are at the old iteration level. 
+
+\textbf{Gauss Seidel Iteration} is a simple modification of Jacobi, but becomes a bit more complicated. (How can you think of changing Jacobi than might incorporate more information that we already have?)\\
+The algorithm for this method is, for $i = 1, \dots, n$:
+\[ \phi^{(J)}_g = \frac{1}{a_{gg}}(b_g - \sum_{t=1}^{g-1} a_{gg'} \phi_t^{(J)} - \sum_{j=g+1}^{n} a_{gg'} \phi_t^{(J-1)}) \:.\]
+%
+%In matrix notation, this looks like:
+%\[(\ve{D} + \ve{L})\vec{x}^{k+1} = -\ve{U} \vec{x}^{(k)} + \vec{b}\:, \]
+%where we have separated $\ve{A}$ as $\ve{L} + \ve{D} + \ve{U}$. This makes $\ve{P}_{GS} = (\ve{D} + \ve{L})^{-1}\ve{U}$. 
+Gauss Seidel is also unconditionally stable and linearly convergent, and 
+converges twice as fast as Jacobi (not proven here). \\
+However, both methods may converge very slowly - especially in highly scattering systems.% \cite{LeVeque2007}. 
+%
+%The spectral radii for some materials of practical interest determined using cross sections with 41 thermal upscattering groups are: graphite = 0.9984, heavy water = 0.9998, and iron = 0.6120 \cite{Adams2002}, \cite{Evans2009d}.
+%
+%A \underline{sufficient} but not necessary condition to converge is that $\ve{A}$ be \textbf{symmetric} and \textbf{positive definite}.
+%
+%An $n \times n$ Hermitian matrix $\ve{A}$ is said to be positive definite if $\vec{z}^H \ve{A} \vec{z}$ is real and positive for all non-zero complex vectors $\vec{z}$. This also simplifies to the pure-real case.
+\\
+Gauss Seidel is not so easy to parallelize. Why not? \\The GS method is order dependent, containing terms on the right hand side at both the new and old iterates.
+
+For completeness, \textbf{Richardson/Source Iteration} is given as well.\\ There are two very similar versions. In \textit{non-stationary}, Richardson iteration that uses some scalar $\omega$ that gets updated.\\
+If $\omega^{(p-1)}$ is constant, then this is the \textit{stationary} Richardson method. \\ 
+If $\omega = 1$ this is source iteration.\\
+%%
+%\begin{align*}
+%  \vec{x}^{(k+1)} &= (\ve{I} - \omega^{(k)}\ve{A})\vec{x}^{(k)} + \omega^{(k)}\vec{b} \:, \quad\ \text{which gives} \\
+%  \ve{P}_R &= (\ve{I} - \omega^{(k)}\ve{A})\:.
+%\end{align*}
+%%
+%If $\omega^{(p-1)}$ is constant, then this is the \textit{stationary} Richardson method. 
+%
+The algorithm for this method, which is within each group, is:
+\[\phi_{0,i}^{(p)} =  \phi^{(p-1)}_{0,i} - \omega^{(p-1)} \sum_{j=1}^{n} a_{ij}x_j^{(p-1)} + \omega^{(p-1)} b_i \:.\]
+%
+%People still use these methods. I've written a preconditioner that uses Richardson Iteration. 
+The speed of convergence and is determined by $c = \Sigma_s / \Sigma$. For problems dominated by scattering, this method will converge very slowly. 
 
 \end{document}
