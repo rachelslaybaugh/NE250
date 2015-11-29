@@ -71,7 +71,7 @@ The most common solver is Gauss Seidel, with Jacobi or block Jacobi being simple
 
 \item \textbf{eigenvalue iterations}: after the space, angle, and energy has been converged, we update the eigenvalue and eigenvector until they converge.\\
 The historic solver is Power Iteration.\\
-Other choices are shifted inverse iteration (Weilandt's method and Rayleigh Quotient Iteration are extensions of this), Arnoldi, and Davidson.
+Other choices are shifted inverse iteration (Wielandt's method and Rayleigh Quotient Iteration are extensions of this), Arnoldi, and Davidson.
 \end{enumerate}
 At each step each solver has pros and cons. We think about things like convergence rate, ability to parallelize, and ability to precondition/accelerate.\\
 Each iteration level often comes with its own set of preconditioners and/or acceleration strategies.
@@ -82,7 +82,7 @@ Each iteration level often comes with its own set of preconditioners and/or acce
 \textit{Inner Iterations:}\\
 Inner iteration index is $p$, we've suppressed the energy index for now.\\
 We need to know $\phi_{l,i}^{(p-1)}$, so for $p=1$ we have an initial guess for $\phi_{l,i}^{(0)}$. \\
-For each energy group, this is basically the source iteration method, but can be readily adapted to other strategies:
+This is basically the source iteration method, but can be readily adapted to other strategies; for each energy group:
 
 % Define block styles
 \tikzstyle{decision} = [diamond, draw,% fill=blue!20, 
@@ -157,7 +157,7 @@ If we have only downscattering, $\Sigma_{s,l,gg'}=0$ when $g' > g$, we only need
 \item And so on through $g=G$, then we are completely solved for all groups.
 \end{itemize}
 %
-However, we often have upscattering, where lower groups contribute back to higher groups, as well as neutrons coming from fission. One set of inner iterations won't do that for us, so we need 
+However, we often have upscattering (where lower groups contribute back to higher groups) as well as neutrons coming from fission (which depends on the flux in other groups). One set of inner iterations won't do that for us, so we need 
 
 
 %-------------------------------------------------------------------
@@ -174,77 +174,44 @@ We will write this in words for Gauss Seidel for outer iteration index $J$:
 |\phi_{0,g}^{(J)} - \phi_{0,g}^{(J-1)}| < \epsilon \quad \text{or} \quad |\frac{\phi_{0,g}^{(J)}}{\phi_{0,g}^{(J-1)}} - 1| < \epsilon \quad \forall g \:.
 \]
 \end{itemize}
-I had mentioned outer iteration solution options. to consider these, we will think of our problem as looking like $\ve{A} \psi = b$ (which we won't talk about much further today).\\
-\textbf{Jacobi}, probably the simplest method, 
-%Let $\ve{D} = \text{diag}(\ve{A})$, then
-%\begin{align}
-%\ve{D} \vec{x}^{k+1} &= (\ve{D} - \ve{A})\vec{x}^{(k)} + \vec{b} \nonumber \\
-%%
-%\vec{x}^{k+1} &= \ve{D}^{-1}(\ve{D} - \ve{A})\vec{x}^{(k)} + \ve{D}^{-1}\vec{b} \nonumber
-%\end{align}
-%%
-%Now, $\ve{P}_J = \ve{I} -  \ve{D}^{-1}\ve{A}$ and $\tilde{\vec{b}} =\ve{D}^{-1}\vec{b}$.
-%
-has the algorithm, for $g = 1, \dots, G$:
+I had mentioned outer iteration solution options. To consider these, we will think of our problem as looking like $\ve{A} \phi = b$ (which we won't talk about much further today).
+
+\textbf{Jacobi}, probably the simplest method, has the algorithm, for $g = 1, \dots, G$:
 \[\phi^{(J)}_g = \frac{1}{a_{gg}}(b_g - \sum_{g'=1}^{g-1} a_{gg'} \phi_{g'}^{(J-1)} - \sum_{g'=g+1}^{n} a_{gg'} \phi_{g'}^{(J-1)})\:.\]
 
-Jacobi is unconditionally stable and linearly convergent, but may converge very slowly in some situations. (we will leave detailed analysis of this to another class). \\
-%Jacobi will converge (perhaps quite slowly) if $\ve{P}_J$'s spectral radius is $<$ 1, but that's often difficult to estimate \cite{LeVeque2007}. 
-%
-%A \underline{sufficient} but not necessary condition for convergence is that $\ve{A}$ or $\ve{A}^T$ is \textbf{diagonally dominant}:
-%%
-%\[|a_{ii}| \geq \sum_{j \neq i} |a_{ij}| \qquad \forall i \:.\]
-%
+Jacobi is unconditionally stable and linearly convergent, but may converge very slowly in some situations (we leave detailed analysis of this to another class). \\
 Jacobi isn't a very sophisticated method, but it's easy to parallelize. Why might that be? \\The Jacobi method is order independent since all terms on the right are at the old iteration level. 
 
 \textbf{Gauss Seidel Iteration} is a simple modification of Jacobi, but becomes a bit more complicated. (How can you think of changing Jacobi than might incorporate more information that we already have?)\\
 The algorithm for this method is, for $i = 1, \dots, n$:
 \[ \phi^{(J)}_g = \frac{1}{a_{gg}}(b_g - \sum_{g'=1}^{g-1} a_{gg'} \phi_{g'}^{(J)} - \sum_{g'=g+1}^{n} a_{gg'} \phi_{g'}^{(J-1)}) \:.\]
 %
-%In matrix notation, this looks like:
-%\[(\ve{D} + \ve{L})\vec{x}^{k+1} = -\ve{U} \vec{x}^{(k)} + \vec{b}\:, \]
-%where we have separated $\ve{A}$ as $\ve{L} + \ve{D} + \ve{U}$. This makes $\ve{P}_{GS} = (\ve{D} + \ve{L})^{-1}\ve{U}$. 
 Gauss Seidel is also unconditionally stable and linearly convergent, and 
 converges twice as fast as Jacobi (not proven here). \\
-However, both methods may converge very slowly - especially in highly scattering systems.% \cite{LeVeque2007}. 
-%
-%The spectral radii for some materials of practical interest determined using cross sections with 41 thermal upscattering groups are: graphite = 0.9984, heavy water = 0.9998, and iron = 0.6120 \cite{Adams2002}, \cite{Evans2009d}.
-%
-%A \underline{sufficient} but not necessary condition to converge is that $\ve{A}$ be \textbf{symmetric} and \textbf{positive definite}.
-%
-%An $n \times n$ Hermitian matrix $\ve{A}$ is said to be positive definite if $\vec{z}^H \ve{A} \vec{z}$ is real and positive for all non-zero complex vectors $\vec{z}$. This also simplifies to the pure-real case.
-\\
+However, both methods may converge very slowly\textemdash especially in highly scattering systems.\\
 Gauss Seidel is not so easy to parallelize. Why not? \\The GS method is order dependent, containing terms on the right hand side at both the new and old iterates.
 
-For completeness, \textbf{Richardson/Source Iteration} is given as well.\\ There are two very similar versions. In \textit{non-stationary}, Richardson iteration that uses some scalar $\omega$ that gets updated.\\
+For completeness, \textbf{Richardson/Source Iteration}, which we used for our inner iterations, is given as well.\\ 
+There are two very similar versions. In \textit{non-stationary}, Richardson iteration that uses some scalar $\omega$ that gets updated.\\
 If $\omega^{(p-1)}$ is constant, then this is the \textit{stationary} Richardson method. \\ 
 If $\omega = 1$ this is source iteration.\\
-%%
-%\begin{align*}
-%  \vec{x}^{(k+1)} &= (\ve{I} - \omega^{(k)}\ve{A})\vec{x}^{(k)} + \omega^{(k)}\vec{b} \:, \quad\ \text{which gives} \\
-%  \ve{P}_R &= (\ve{I} - \omega^{(k)}\ve{A})\:.
-%\end{align*}
-%%
-%If $\omega^{(p-1)}$ is constant, then this is the \textit{stationary} Richardson method. 
-%
 The algorithm for this method, which is within each group, is:
-\[\phi_{0,i}^{(p)} =  \phi^{(p-1)}_{0,i} - \omega^{(p-1)} \sum_{i'=1}^{I} a_{ii'}\phi_{0,i'}^{(p-1)} + \omega^{(p-1)} b_i \:.\]
+\[\phi_{i}^{(p)} =  \phi^{(p-1)}_{i} - \omega^{(p-1)} \sum_{i'=1}^{I} a_{ii'}\phi_{i'}^{(p-1)} + \omega^{(p-1)} b_i \:.\]
 %
-%People still use these methods. I've written a preconditioner that uses Richardson Iteration. 
-The speed of convergence and is determined by $c = \Sigma_s / \Sigma$. For problems dominated by scattering, this method will converge very slowly. 
+The speed of convergence and is determined by $c = \Sigma_s / \Sigma_t$. For problems dominated by scattering, this method will converge very slowly. 
 
 
 %-------------------------------------------------------------------
 %-------------------------------------------------------------------
 \textit{Eigenvalue Iterations:}\\
-The generalized eigenvalue problem takes the form $\ve{B}x = \mu \ve{C}x$ and can be transformed into an ordinary eigenvalue problem, $\ve{A}x= \lambda x_i$. Both forms have the same right eigenvectors. If $\ve{C}$ is non-singular, then $\ve{A} = \ve{C}^{-1}\ve{B}$.
+The generalized eigenvalue problem takes the form $\ve{B}x = \mu \ve{C}x$ and can be transformed into an ordinary eigenvalue problem, $\ve{A}x= \lambda x$. Both forms have the same right eigenvectors. If $\ve{C}$ is non-singular, then $\ve{A} = \ve{C}^{-1}\ve{B}$.
 
 Let $\sigma(\ve{A}) \equiv \{\lambda \in \mathbb{C} : rank(\ve{A} - \lambda \ve{I}) \le n\}$ be the spectrum of $\ve{A}$, where the elements in the set are the eigenvalues and $\mathbb{C}$ is the set of complex numbers.\\ %The eigenvalues can be characterized as the $n$ roots of the polynomial $p_{\ve{A}}(\lambda) \equiv det(\lambda \ve{I} - \ve{A})$. 
 Each distinct eigenvalue in $\sigma(\ve{A})$ has a corresponding nonzero vector $x$ such that $\ve{A}x_{i} = \lambda_{i} x_{i}$ for $i = 1,...,n$.\\
 It will be assumed that the eigenvalues are ordered as $|\lambda_{1}| > |\lambda_{2}| \ge \dots \ge |\lambda_{n}| \ge 0$. 
 
 Power iteration (PI) is an old and straightforward algorithm for finding an eigenvalue/vector pair. \\
-The basic idea is that any nonzero vector can be written as a linear combination of the eigenvectors of $\ve{A}$ because the eigenvectors are linearly independent, namely $v_0 = \gamma_1 x_1 + \gamma_2 x_2 + \cdots + \gamma_n x_n$ where $x_{j}$ is the $j$th eigenvector and $\gamma_{j}$ is some constant.% This specific expression assumes a non-defective $\ve{A}$, though this assumption is not necessary for the method to work. 
+The basic idea is that any nonzero vector can be written as a linear combination of the eigenvectors of $\ve{A}$ because the eigenvectors are linearly independent, namely $v_0 = \gamma_1 x_1 + \gamma_2 x_2 + \cdots + \gamma_n x_n$ where $x_{j}$ is the $j$th eigenvector and $\gamma_{j}$ is some constant.
 
 Another fact that is used to understand power iteration is that $\ve{A}^k x_i = \lambda_i^k x_i$. Thus
 %
@@ -283,8 +250,8 @@ and
 \[
 \phi_{l,i,j}^{m,g} \equiv \frac{1}{4}\sum_{n=1}^{(N+2)N/2} w_n Y_{lm}^e(\mu_n, \eta_n) \psi_{n,i,j}^g\:.
 \]
-%
-The \textit{Power Iteration} algorithm built into GS:
+
+The \textit{Power Iteration} algorithm built into GS is:
 \begin{itemize}
 \item start with the previous iterate: $F_{ij}^{(J-1)}$ and $k^{(J-1)}$
 \item compute $q_{F,i,j}^{g,(J-1)} = \chi_g / k^(J-1) * F_{ij}^{(J-1)}$
@@ -316,7 +283,7 @@ We can now update our picture to include all of this:
     \node [block, left of=lg, node distance=9.5cm] (next) {Next Group Source\\ 1. downscatter:\\this outer \\ 2. upscatter: prev outer \\ 3. fission density};
     \path [line] (lg) -- node{no}(next);
     \path [line] (next) |- (sweep);
-    \node [decision, below of=lg, node distance=3.5cm] (conv) {all groups converged?};
+    \node [decision, below of=lg, node distance=3.5cm] (conv) {$\phi_0^g \forall g$ and $k$ converged?};
     \node [block, left of=conv,  node distance=7cm] (fsource) {compute new \\fission source $F_{ij}$};
     \node [block, below of=conv, node distance=3cm] (term) {terminate successfully};
     \path [line] (lg) -- node{yes}(conv);
