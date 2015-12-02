@@ -275,9 +275,9 @@ We can now update our picture to include all of this:
     \node [below of=sweep] (hold) {};
     \node [decision, right of=hold] (gconv) {group fluxes converged?};
     \node [block, left of=hold, node distance=4cm] (gscattering) {compute group self-scattering};
-    \path [line] (init) -| node{group flux angular moments}(gconv);
+    \path [line] (sweep) -| node{group flux angular moments}(gconv);
     \path [line] (gconv) -- node {no}(gscattering);
-    \path [line] (gscattering) |- node {1-speed fixed src}(init);
+    \path [line] (gscattering) |- node {1-speed fixed src}(sweep);
     \node [decision, below of=gconv, node distance=3.5cm] (lg) {last group?};
     \path [line] (gconv) -- node{yes}(lg);
     \node [block, left of=lg, node distance=9.5cm] (next) {Next Group Source\\ 1. downscatter:\\this outer \\ 2. upscatter: prev outer \\ 3. fission density};
