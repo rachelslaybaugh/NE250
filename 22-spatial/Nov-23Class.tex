@@ -1,0 +1,359 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+\usepackage{tabu}
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% writing elements
+\usepackage{mhchem}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\vecr}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+\newcommand{\sigs}{\ensuremath{\Sigma_s(\rvec,E'\rightarrow E,\omvec'\rightarrow\omvec)}}
+\newcommand{\el}{\ensuremath{\ell}}
+\newcommand{\sigso}{\ensuremath{\Sigma_{s,0}}}
+\newcommand{\sigsi}{\ensuremath{\Sigma_{s,1}}}
+\newcommand{\ep}{\ensuremath{\varepsilon}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, F15\\
+November 23, 2015 
+}
+\end{center}
+
+We've talked about how to discretize energy using the multigroup approximation and angle using $S_N$, $P_N$, or $SP_N$ for the transport equation. \\
+This results in a set of ODEs and PDEs with space as the only variable.\\
+In this class we're going to talk about options for handling that.
+\begin{itemize}
+\item Ray tracing: this is what we do in Monte Carlo and the integral form of the TE (solved with MOC). This allows us to represent ``exact" geometry.
+\item There are two ways we can get equation sets with $\nabla^2$ operators: 
+  \begin{itemize}
+  \item the Diffusion equation. We can apply standard methods for this (learned in 150 I think, and definitely 155) or we can apply spherical harmonics in space, which can be manipulated to look a like a bunch of diffusion equations and we handle these as the regular DE.
+  \item the even-odd parity TE (which we won't cover). This still has angular dependence but a diffusion-like operator so again we can use the same methods.
+  \end{itemize}
+\item We will look at the first order form ($\nabla$) here. 
+\end{itemize}
+
+\textbf{Spatial Discretization in Slab Geometry} (L\&M 3.3)\\
+We'll start by thinking about the 1D, 1-group TE equation that has $S_N$ applied:
+\begin{align*}
+\mu_n \frac{d \psi_n}{dx} &+ \Sigma_t(x) \psi_n(x) = \sum_{l=0}^L (2l+1) P_l(\mu_n) \Sigma_{s,l}(x) \phi_l(x) + s_n(x)\\
+\phi_l(x) &= \frac{1}{2}\sum_{n=1}^N w_n P_l(\mu_n) \psi_n(x)
+\end{align*}
+%
+To deal with the spatial variable we divide space into a grid. The bins do not need to be evenly spaced.\\ 
+%
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0)--(1.75,0);
+\draw (0,-.25)--(0,.25);
+\draw (1.5,-.25)--(1.5,.25);
+\draw (0.75,-.1)--(0.75,.1);
+\draw[dotted] (1.75,0)--(2.75,0);
+\draw (2.75,0)--(4.75,0);
+\draw[dotted] (4.75,0)--(5.75,0);
+\draw (3,-.25)--(3,.25);
+\draw (3.75,-.1)--(3.75,.1);
+\draw (4.5,-.25)--(4.5,.25);
+%\draw (5.25,-.1)--(5.25,.1);
+%\draw (6,-.25)--(6,.25);
+\draw (5.75,0)--(7.5,0);
+\draw (6,-.25)--(6,.25);
+\draw (6.75,-.1)--(6.75,.1);
+\draw (7.5, -.25)--(7.5,.25);
+\node[below] at (0,-.25) {$x_{1/2}$};
+\node[above] at (0.75, .25) {$x_{1}$};
+\node[below] at (1.5,-.25) {$x_{3/2}$};
+\node[below] at (3,-.25) {$x_{i-1/2}$};
+\node[below] at (4.5,-.25) {$x_{i+1/2}$};
+%\node[below] at (6,-.25) {$x_{i+1}$};
+\node[above] at (3.75, 0.25) {$x_{i}$};
+%\node[above] at (5.25, 0.25) {$x_{i+1/2}$};
+\node[below] at (6,-.25) {$x_{I-1/2}$};
+\node[above] at (6.75, .25) {$x_{I}$};
+\node[below] at (7.5,-.25) {$x_{I+1/2}$};
+\end{tikzpicture}
+\end{center}
+%
+In our derivation we will use both whole points (centers) and half points (edges), where whole points are halfway between the half points 
+\[
+x_{i} = \frac{x_{i+1/2} + x_{i-1/2}}{2} \:.
+\]
+We can think of these as computational cells, and the spatial values are centered around the whole points. Further, each cell is homogeneous. These two things mean
+\[
+\Sigma_{x,i} = \Sigma_x(x)\:, \quad x_{i-1/2} < x < x_{i+1/2} \:.
+\]
+Because we treat cross sections to be constant within each cell, we do well to align bin edges with material boundaries to the degree possible. We add cells where we need to in order to get the desired resolution.\\
+We also define
+\[
+\Delta_i = x_{i+1/2} - x_{i-1/2}
+\]
+We also want to assign boundary conditions at the edges. For example:
+\begin{align*}
+\psi_{1/2,n} &= \psi_n(a_0)\:, \quad \forall n \text{ such that } \mu_n > 0 \\
+\psi_{I+1/2,n} &= \psi_n(a_1)\:, \quad \forall n \text{ such that } \mu_n < 0 
+\end{align*}
+%
+Next, we integrate the TE over each cell $i$:
+\begin{align*}
+\mu_n\bigl(&\psi_{i+1/2,n} - \psi_{i-1/2,n} \bigr) + \Delta_i \Sigma_{t,i} \psi_{i,n} = \Delta_i q_{i,n}\\
+&\\
+\psi_{i,n} &= \frac{1}{\Delta_i}\int_{x_{i-1/2}}^{x_{i+1/2}} \psi_n(x) dx \approx \psi_n(x_i) \quad \text{average flux across the cell}\\
+q_{i,n} &\equiv \sum_{l=0}^L (2l+1) P_l(\mu_n) \Sigma_{s,l,i} \phi_{l,i} + s_{n,i}\:,
+\end{align*}
+where we used a midpoint rule for the integration.
+
+This equation relates the cell-edge values and the cell-centered values.\\
+To get an additional relationship between these values, we often use the ``diamond difference" relation.\\
+To do this, we use a Taylor series in expansion cell $i$ about $x_i$ and evaluate the expansion at the half points:
+\begin{align*}
+\psi_n &= \psi_n(x_i) + (x - x_i)\frac{d\psi_n}{dx}|_{x_i} + \frac{1}{2}(x - x_i)^2 \frac{d^2 \psi_n}{dx^2}|_{x_i} + O(\Delta_i^3)\\
+\psi_{n}(x_{i \pm 1/2}) &= \psi_n(x_i) + (x_{i \pm 1/2} - x_i) \frac{d\psi_n}{dx}|_{x_i} + \frac{(x_{i\pm 1/2} - x_i)^2}{2} \frac{d^2 \psi_n}{dx^2}|_{x_i} + O(\Delta_i^3)\\
+\end{align*}
+Next, we add the two half-point equations together:
+\begin{align*}
+\psi_{n, i+1/2} + \psi_{n, i-1/2} &= 2\psi_n(x_i) + \underbrace{(x_{i+1/2} + x_{i-1/2} - 2x_i)}_{0} \frac{d \psi_n}{dx}|_{x_i} + O(\Delta_i^2)\\
+\psi_{n, i} &= \frac{1}{2}\bigl(\psi_{n,i+1/2} + \psi_{n,i-1/2}\bigr) + O(\Delta_i^2)
+\end{align*}
+and get the diamond difference relation.
+
+\textbf{Sweep pattern and boundary conditions}\\
+We solve these equation in the direction of neutron flow by doing a mesh ``sweep". \\
+We march through $i = 0, 1, \dots, I$ when $\mu_n > 0$. This is the direction of information transfer and maintains stability of our solution.\\
+We march through $i = I, I-1, \dots, 0$ when $\mu_n < 0$ for the same reason.
+
+Let's consider $\mu_n > 0$; we assume that we know $\psi_{n,i-1/2}$ (which works easily for vacuum of fixed incoming bcs) and solve for $\psi_{n,i}$ and $\psi_{n,i+1/2}$:
+\[
+\psi_{n,i} = \dfrac{\psi_{n, i-1/2} + \frac{\Delta_i q_{n,i}}{2 \mu_n}}{1 + \frac{\Delta_i \Sigma_{t,i}}{2 \mu_n}}
+\]
+We start at the left edge with $i=1$: $\psi_{n,1/2} = \psi(a_0)$.\\
+Then we follow through $i>1$ using the continuity condition that  
+\[
+\psi_{n,i-1/2} = \psi_{n,(i-1)+1/2}\:.
+\]
+We get $\psi_{n,i+1/2}$ from the diamond difference relation:
+\[
+\psi_{n,i+1/2} = 2\psi_{n,i} - \psi_{n,i-1/2}\:.
+\]
+Note that we don't actually need $\psi_{n,i}$ after finding $\psi_{n,i+1/2}$ except for using it in computing the scattering and fission source, which actually requires the moments.  \\
+To avoid storing $\psi_{n,i}$ we just build up and store the moments:
+\[
+\phi_{l,i} = \phi_{l,i} + \frac{1}{2}w_nP_l(\mu_n) \psi_{n,i}\:, \quad n = 1, \dots, N\:.
+\]
+We continue this process until we reach the right boundary.
+
+Now let's consider coming back the other way, where $\psi_{n,i-1/2}$ is the outgoing flux. 
+\begin{align*}
+\psi_{n,I+1/2} &= \psi(a_1)\\
+\psi_{n,i} &= \dfrac{\psi_{n, i+1/2} + \frac{\Delta_i q_{n,i}}{2 |\mu_n|}}{1 + \frac{\Delta_i \Sigma_{t,i}}{2 |\mu_n|}}\\
+\psi_{n,i-1/2} &= 2\psi_{n,i} - \psi_{n,i+1/2}
+\end{align*}
+and we accumulate $\phi_{l,i}$ from the $\mu_n < 0$ contributions.
+
+For reflecting, things are a little trickier. We need to map the outgoing flux moving one direction onto the incoming flux coming back the other direction. \\
+If we assume that the right boundary is reflective and left is fixed, we
+%
+\begin{enumerate}
+\item sweep left to right for $\mu_n > 0$;
+\item use the previous process (determine $\psi_{n,i}$, accumulate $\phi_{l,i}$, compute $\psi_{n,i+1/2}$) until you reach the right boundary and solve for $\psi_{n,I+1/2}$;
+\item determine $n'$ such that $\mu_{n'} = -\mu_n$ and set $\psi_{n',I+1/2} = \psi_{n,I+1/2}$;
+\item sweep from right to left along $n'$.
+\end{enumerate}
+%
+If you have reflective boundaries on both edges, then we start iterating using an initial guess for one of the boundary conditions. 
+
+If we don't have secondary neutron production from fission or scattering (pure absorption and/or only downscattering), then one mesh sweep completely solves the problem. \\
+This is equivalent to solving a lower-triangular matrix equation, $\mathbf{L}\mathbf{\psi} = \mathbf{q}$ (which we get by ordering the solve in the direction of neutron travel).
+
+NOTE: we don't actually create and store this matrix, however. Because we only deal with the coefficients that couple the center and half points, we don't actually need the matrix.   This allows us to avoid memory restrictions for complex problems. \\
+When we have one reflecting boundary, we can write our matrix equations as $\mathbf{L}\mathbf{\psi}^{m+1} = \mathbf{q}^m$.\\
+When we have two reflecting boundaries, we get $\mathbf{L}\mathbf{\psi}^{m+1} = \mathbf{q}^m + \mathbf{U}\mathbf{\psi}^{m}$, where $\mathbf{U}$ is a strictly upper triangular matrix that operates on the flux from the previous iterate that has been ``reflected" off of the boundary.
+
+\textbf{Spatial Truncation Error}\\
+We can see the effect of the truncation error if we look at uncollided neutrons with a zero group source:
+\[
+\mu_n \frac{d \psi_n}{dx} + \Sigma_t \psi_n(x) = 0\:,
+\]
+where the cross section is taken as constant. For neutrons moving $\mu_n > 0$, the solution is
+\[
+\psi_n(x') = \psi_n(x)\exp\bigl(\frac{-\Sigma_t (x'-x)}{\mu_n}\bigr)\:, \quad x' > x \:.
+\]
+For a Cartesian grid, the exact expression for $\psi_{n,i+1/2}$ is (the exponential behavior across the cell without a source)
+\[
+\psi_{n,i+1/2} = e^{-2h} \psi_{n,i-1/2}\:, \qquad h \equiv \frac{\Sigma_t \Delta_i}{2|\mu_n|} \:.
+\]
+To see the error, we figure out how this exact expression translates into the diamond difference approximation:
+\[
+\psi_{n,i+1/2} = \frac{1 - h}{1 + h}\psi_{n,i-1/2}\:,
+\]
+which approximates the power series expansion of the exponential exactly through the $h^2$ term (consistent with our original flux expansion). 
+
+Now we can see where DD limits us. If $h > 1$, we can get non-physical negative flux values\textemdash thus we would like $h < 1$. \\
+In fact, we would like to use space-angle meshes that keep $h<<1$ to avoid any rounding or precision issues, but that can be prohibitively expensive. \\
+We can get a condition for positivity (recognizing that $\mu_1$ is ordered as the smallest angle) that is 
+\[
+\frac{\Sigma \Delta}{2|\mu_n|} < 1 \:, \quad \rightarrow \quad \Sigma \Delta = \frac{\Delta}{\lambda} < 2 \mu_1\:.
+\]
+As we refine our angle set we must correspondingly choose smaller meshes to keep this condition of positivity.\\
+Fortunately, there are other spatial solution methods and/or negative flux ``fixups" we can use to deal with this, but we're going to talk about other dimensions first. 
+
+\textbf{Spatial Discretization in Multi-D} (L\&M 4.3)\\
+In multiple dimensions, we'll working with
+\[
+\vOmega_n \cdot \nabla \psi_n(\vec{r}) + \Sigma_t(\vec{r})\psi_n(\vec{r}) = q_n(\vec{r})\:,
+\]
+where $q_n$ includes scattering, fixed source, and/or fission. We will next discretize the space:
+
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0)--(0,9);
+\draw (.75,-.1)--(.75,.1);
+\draw (1.5,0)--(1.5,9);
+\draw (3,0)--(3,9);
+\draw (4.5,0)--(4.5,9);
+\draw (5.25,-.1)--(5.25,.1);
+\draw (6,0)--(6,9);
+\draw (7.5,0)--(7.5,9);
+\draw (8.25,-.1)--(8.25,.1);
+\draw (9,0)--(9,9);
+\node[below] at (0,-.25) {$x_{1/2}$};
+\node[above] at (.75,.25) {$x_1$};
+\node[below] at (1.5,-.25) {$x_{3/2}$};
+\node[below] at (3,-.25) {$\dots$};
+\node[below] at (4.5,-.25) {$x_{i-1/2}$};
+\node[above] at (5.25,.25) {$x_{i}$};
+\node[below] at (6,-.25) {$x_{i+1/2}$};
+\node[above] at (8.25,.25) {$x_{I}$};
+\node[below] at (9,-.25) {$x_{I+1/2}$};
+\node at (5.25, 2.25) {$\Delta x_i$};
+% begin y
+\draw (0,0)--(9,0);
+\draw (-.1,.75)--(.1,.75);
+\draw (0,1.5)--(9,1.5);
+\draw (0,3)--(9,3);
+\draw (0,4.5)--(9,4.5);
+\draw (-.1,5.25)--(.1,5.25);
+\draw (0,6)--(9,6);
+\draw (0,7.5)--(9,7.5);
+\draw (-.1,8.25)--(.1,8.25);
+\draw (0,9)--(9,9);
+\node[left] at (-.25, 0) {$y_{1/2}$};
+\node[left] at (-.25,.75) {$y_1$};
+\node[left] at (-.25,1.5) {$y_{1+1/2}$};
+\node[left] at (-.25,3) {$\vdots$};
+\node[left] at (-.25,4.5) {$y_{j-1/2}$};
+\node[left] at (-.25,5.25) {$y_{j}$};
+\node[left] at (-.25,6) {$y_{j+1/2}$};
+\node[left] at (-.25,8.25) {$y_J$};
+\node[left] at (-.25,9) {$y_{J+1/2}$};
+\node at (2.25,5.25) {$\Delta y_j$};
+\end{tikzpicture}
+\end{center}
+We try to match up material boundaries as best we can, and then we have to homogenize and make approximations in places where that doesn't work.
+
+We need to define edge-averaged and cell-averaged fluxes as well as boundary conditions:
+\begin{align*}
+\psi_{n,i\pm1/2,j} &\equiv \frac{1}{\Delta y_{j}} \int_{y_{j-1/2}}^{y_{j+1/2}} dy\: \psi_n(x_{i\pm1/2}, y) \quad \text{left or right face}\\
+\psi_{n,i,j\pm1/2} &\equiv \frac{1}{\Delta x_{i}} \int_{x_{i-1/2}}^{x_{i+1/2}} dx\: \psi_n(x, y_{j\pm1/2}) \quad \text{top or bottom face}\\
+\psi_{n,i,j} &= \frac{1}{\Delta x_i \Delta y_j} \int_{x_{i-1/2}}^{x_{i+1/2}} dx \int_{y_{j-1/2}}^{y_{j+1/2}} dy\: \psi_n(x,y)
+&\\
+\text{left: }\:&\psi_{n,1/2,j} = \psi_{n,j}(a_0)\:, \quad \mu_n > 0\:, \quad j = 1, 2, \dots, J \\
+\text{right: }\:&\psi_{n,I+1/2,j} = \psi_{n,j}(a_1)\:, \quad \mu_n < 0\:, \quad j = 1, 2, \dots, J \\
+\text{bottom: }\:&\psi_{n,i,1/2} = \psi_{n,i}(b_0)\:, \quad \eta_n > 0\:, \quad i = 1, 2, \dots, I \\
+\text{right: }\:&\psi_{n,i,J+1/2} = \psi_{n,i}(b_1)\:, \quad \eta_n < 0\:, \quad i = 1, 2, \dots, I 
+\end{align*}
+%
+We then derive the balance relation by integrating the TE over the xy-cell:
+\[
+\frac{\mu_n}{\Delta x_i}\bigl(\psi_{n,i+1/2,j} - \psi_{n,i-1/2,j}\bigr) + \frac{\eta_n}{\Delta y_i}\bigl(\psi_{n,i,j+1/2} - \psi_{n,i,j-1/2}\bigr) + \Sigma_{t,i,j} \psi_{n,i,j} = q_{n,i,j} 
+\]
+This equation, as the previous balance one, contains no approximations yet. 
+
+
+We've not got 3 sets of variables: 1 set of x-averaged, 1 set of y-averaged, and one set of cell-averaged; but we only have one set of equations.\\
+We do a 2-D Taylor series expansion to define our cell-centered flux, which causes us not to be exact:
+\begin{align*}
+\psi_n(x,y) &= \psi_n(x_i,y_j) + (x-x_i)\frac{d\psi_n}{dx}|_{x_i,y_j} + (y-y_j)\frac{d\psi_n}{dy}|_{x_i,y_j} + O(\Delta_{i/j}^2)\\
+\psi_{n,i,j} &= \psi_n(x_i,y_j) + O(\Delta_{i/j}^2)
+\end{align*}
+We now need two diamond-difference relations, which we obtain the same way we did before, giving:
+\begin{align*}
+\psi_{n,i+1/2,j} + \psi_{n,i-1/2,j} &= 2\psi_{n,i,j} + O(\Delta_{i/j}^2)\\
+\psi_{n,i,j+1/2} + \psi_{n,i,j-1/2} &= 2\psi_{n,i,j} + O(\Delta_{i/j}^2)
+\end{align*}
+
+\textbf{Sweep pattern and boundary conditions}\\
+To conduct the sweep we have to sweep through each octant. We often go
+\begin{enumerate}
+\item left-to-right, bottom-to-top: $\mu_n > 0\:, \:\: \eta_n > 0$
+\item right-to-left, bottom-to-top: $\mu_n < 0\:, \:\: \eta_n > 0$
+\item left-to-right, top-to-bottom: $\mu_n > 0\:, \:\: \eta_n < 0$
+\item right-to-left, top-to-bottom: $\mu_n < 0\:, \:\: \eta_n < 0$
+\end{enumerate}
+One mesh sweep constitutes all angles, all cells, all quadrants. 
+
+We can write the mesh sweep procedure generically using out and in designators, and then you can figure out which you need depending on which angle you are using:
+
+\begin{align*}
+\psi_{n,out,j} &= 2\psi_{n,i,j} - \psi_{n,in,j}\:; \qquad \mu_n > 0\:\:\psi_{n,out,j} = \psi_{n,i+1/2,j} \\
+\psi_{n,i,out} &= 2\psi_{n,i,j} - \psi_{n,i,in}\:; \qquad \eta_n > 0\:\:\psi_{n,i,out} = \psi_{n,i,j+1/2}\\
+\frac{|\mu_n|}{\Delta x_i}\bigl(\psi_{n,out,j} &- \psi_{n,in,j}\bigr) + \frac{|\eta_n|}{\Delta y_i}\bigl(\psi_{n,i,out} - \psi_{n,i,in}\bigr) + \Sigma_{t,i,j} \psi_{n,i,j} = q_{n,i,j}\\
+&\\
+\psi_{n,i,j} &= \frac{q_{n,i,j} + (2|\mu_n| / \Delta x_i) \psi_{n,in,j} + (2|\eta_n| / \Delta y_j) \psi_{n,i,in}}{\Sigma_{t,i,j} + (2|\mu_n| / \Delta x_i) + (2|\eta_n| / \Delta y_j)}\\
+\phi_{l,i,j}^m &= \frac{1}{4}\sum_{n=1}^{N(N+2)/2} w_n Y_{lm}^e(\vOmega_n) \psi_{n,i,j}
+\end{align*}
+We know the incoming flux; we rearrange our balance equation, sub in our difference relations, and solve for $\psi_{n,i,j}$; accumulate our flux moments; and then we get the new outgoing fluxes that become the next incoming fluxes.\\
+
+When we have reflecting boundary conditions, we now have to find the index $n'$ such taht $\mu_{n'} = -\mu_n$ and/or $\eta_{n'} = -\eta_n$. \\
+If it's reflecting on the right face, we switch angles and sweep right to left for that row before going to the next row; conversely for any other reflecting boundary. 
+
+As before, we can get negative fluxes with certain mesh spacings.\\
+Step Characteristic is one way to ensure positivity, but at the loss of one order of convergence (becomes $O(\Delta_{ij})$).\\
+In this case we set the outgoing flux to be the cell-centered flux. \\
+Negative flux fixups, such as setting negative values to zero, have also been used. \\
+This has it's own hazards. \\
+There are a variety of spatial methods out there with different properties (linear discontinuous, tri-linear discontinuous, weighted and adaptive-weighted diamond difference, top name a few common ones). 
+
+
+Rest of course (2 classes left):\\
+- M, 11/30 (prom dress day): equation solution procedures (inner iteration, outer iteration, eigenvalue iteration, convergence); one basic solver of each type (SI, GS, PI)\\ 
+- W, 12/02: example of research into a different solver for each type (block Krylov, RQI). Last half of class will be feedback and discussion of class.
+
+
+
+
+\end{document}
