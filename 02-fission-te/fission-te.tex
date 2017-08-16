@@ -58,12 +58,12 @@ August 25, 2017}
 %---------------------------------------------------------------------------
 \section*{Fission}
 
-The main goal is the utilization of the energy released by a controlled chain reaction of nuclear fission events. An example of fission reaction:
+The main goal of nuclear reactor theory is the utilization of the energy released by a controlled chain reaction of nuclear fission events. An example of fission reaction:
  \[
  n+^{235}\text{U} \rightarrow \text{fission products + more neutrons +} \approx 200MeV
 \]
 
-The kinetic energy is then converted into heat as they slow down by bouncing around in the reactor. (Note: 1eV = 1.602$\times 10^{-19}$J)
+The kinetic energy is then converted into heat as the released particles slow down by bouncing around in the reactor. (Note: 1eV = 1.602$\times 10^{-19}$J)
 
 Just as important is the fact that the fission reaction produces a few neutrons that will induce other fission reactions, creating a chain reaction.
 
@@ -71,34 +71,42 @@ Fission is a threshold reaction; in the process of $^{236}$U splitting, there ar
 
 $n+^{235}$U$\rightarrow ^{236}$U$^* \rightarrow A_1+A_2$, where $A_1 \approx A_2\approx$ half of 236
 
-The stability of heavy nuclei against spontaneous fission is due to the potential energy barrier that must be overcome before the nucleus will fission. The size of this fission barrier is usually 6-9MeV in most heavy nuclei of interest. The critical energy is the threshold necessary to be overcome in order for fission to occur.
+The stability of heavy nuclei against spontaneous fission is due to the potential energy barrier that must be overcome before the nucleus will fission. The size of this fission barrier is usually 6-9 MeV in most heavy nuclei of interest. The critical energy is the threshold necessary to be overcome in order for fission to occur.
 
-Fissile isotopes are those wich can fission from a neutron with low (in theory, zero) kinetic energy: $^{233}$U, $^{235}$U, $^{239}$Pu, $^{241}$Pu. [It is relevant to mention thermal neutrons, with very small kinetic energies.] Fissile nuclides represent the principal fuels used in fission chain-reaction systems. 
+\textit{Fissile isotopes} are those that can fission from a neutron with low (in theory, zero) kinetic energy: $^{233}$U, $^{235}$U, $^{239}$Pu, and $^{241}$Pu. [It is relevant to mention thermal neutrons, with very small kinetic energies.] Fissile nuclides represent the principal fuels used in fission chain-reaction systems. 
 
-Fissionable isotopes can undergo fission from high-energy neutrons; their critical energies are higher than those of fissile isotopes: $^{232}$Th, $^{238}$U, $^{240}$Pu. Fissionable nuclides are unable to sustain by themselves a stable fission reaction.
-\begin{center}
-\includegraphics[scale=0.6]{../figs/nucleonbinding}
-\end{center}
+\textit{Fissionable isotopes} can undergo fission from high-energy neutrons; their critical energies are higher than those of fissile isotopes: $^{232}$Th, $^{238}$U, $^{240}$Pu. Fissionable nuclides are unable to sustain by themselves a stable fission reaction.
 
-Fertile isotopes are those which create fissile isotopes upon neutron capture. Two examples:
+\textit{Fertile isotopes} are those that create fissile isotopes upon neutron capture. Two examples:
 
 $^{238}\text{U}+n \stackrel{\gamma}{\rightarrow} \, ^{239}\text{U}\stackrel{\beta^-}{\rightarrow} \, ^{239}\text{Np}\stackrel{\beta^-}{\rightarrow} \, ^{239}\text{Pu}$
 
 $^{232}\text{Th}+n \stackrel{\gamma}{\rightarrow} \,^{233}\text{Th}\stackrel{\beta^-}{\rightarrow}\, ^{233}\text{Pa}\stackrel{\beta^-}{\rightarrow} \, ^{233}\text{U}$
 
-Each fission of a parent atom produces a different set of fission product atoms. However, while an individual fission is not predictable, the fission products are statistically predictable. The amount of any particular isotope produced per fission is called its yield, typically expressed as percent per parent fission.
-\begin{center}
-\includegraphics[scale=0.6]{../figs/fissionproductyield}
-\end{center}
+Each fission of a parent atom produces a different set of fission product atoms, which also varies according the to energy of neutron inducing fission -- see \autoref{fig:fp-e} and \autoref{fig:fp-i}. However, while an individual fission is not predictable, the fission products are statistically predictable. The amount of any particular isotope produced per fission is called its yield, typically expressed as percent per parent fission.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{../figs/FP_energy}
+\caption{Fission product distribution from U-238 as a function of energy (MeV)}
+\label{fig:fp-e}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{../figs/FP_Isotope}
+\caption{Fission product distribution from different isotopes}
+\label{fig:fp-i}
+\end{figure}
+
 
 Most fission is asymmetric, with one fission product more massive than the other. In general the higher the energy of the state that undergoes nuclear fission, the more likely that the two fission products have similar mass. Hence as the neutron energy increases and/or the energy of the fissile atom increases, the valley between the two peaks becomes more shallow.
 
-$\nu=$average number of neutrons per fission
+$\nu=$average number of neutrons per fission. See \autoref{fig:nu} for examples, where $\nu^{49}$ is for $^{239}$Pu, $\nu^{25}$ is for $^{235}$U, $\nu^{23}$ is for $^{233}$U.
 \begin{center}
 \includegraphics[scale=0.6]{../figs/nu}
+\caption{average \# of neutrons release per fission as a function of energy}
+\label{fig:nu}
 \end{center}
-$\nu^{49}$ is for $^{239}$Pu, $\nu^{25}$ is for $^{235}$U, $\nu^{23}$ is for $^{233}$U.
-
 
 $\alpha = \frac{\sigma_\gamma}{\sigma_f}$ is the capture-to-fission ratio
 
