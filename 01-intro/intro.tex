@@ -4,6 +4,9 @@
 \usepackage{setspace}
 \onehalfspacing
 
+\newif\ifeqns
+%\eqnstrue
+
 \usepackage{amssymb}
 %% The amsthm package provides extended theorem environments
 \usepackage{amsthm}
@@ -40,8 +43,8 @@
 %---------------------------------------------------------------------------
 \begin{document}
 \begin{center}
-{\bf NE 250, F15 \\
-Introduction and Background \\ August 26, 2015}
+{\bf NE 250, F17 \\
+Introduction and Background \\ August 24, 2017}
 \end{center}
 
 \setlength{\unitlength}{1in}
@@ -58,12 +61,16 @@ Fission releases a great deal of energy, which can be captured and used to produ
 The neutrons can also cause reactions other than fission.
 
 The neutron balance, or neutron ``economy", is what we're interested in learning how to monitor and control. 
-We must design reactors to balance production and loss.
-(1) Determining the probabilities of neutron-nuclear reactions and (2) the derivation and solution of an equation that uses these probabilities is the focus of this course.
+We must design reactors to balance production and loss.\\
+(1) Determining the probabilities of neutron-nuclear reactions, \\
+(2) the derivation and solution of an equation that uses these probabilities, and \\
+(3) how you solve that equation for simplified problems
+are what we study in this class
 
 How you use the liberated energy to produce electricity is beyond this course: heat transfer, fluid flow, structural and materials analysis, and power systems. 
 All of this affects the neutronics (and incorporating these components is a large area of research), but will generally be out of scope for this class.
 
+\ifeqns
 To discover for yourselves what is the science of neutronics...
 
 Go through syllabus in detail.
@@ -74,13 +81,14 @@ Cover topics and talk about why we care about learning any of that stuff.
 
 Show bCourses and resources page; explain how I'll use the page.
 
-Chapters 1-3 of Duderstadt and Hamilton should be known or reviewed.
+Travel discussion
+\fi
 
 Next week I will be out of town. 
-Monday and you will have a literature review class at the engineering library with Lisa Ngo. 
+You will have a literature review class at the engineering library with Lisa Ngo. 
 Engineering Library Training Room at 10.  
 
-Researcher Richard Vasques will lecture on Wednesday, 9/2.
+Chapters 1-3 of Duderstadt and Hamilton should be known or reviewed.
 
 \clearpage
 %---------------------------------------------------------------------------
@@ -103,18 +111,31 @@ These are probabilistic events that depend only on the type of nucleus.
 
 $\lambda$ is the decay constant. If $N(t)$ is the number of nuclei at $t$ and $N_0$ is the original number of nuclei, then
 %
+\ifeqns
 \begin{align*}
 N(t + dt) - N(t) &= -\lambda N(t) dt = dN(t)\\
 -\frac{dN}{dt} &= \lambda N(t)\\
 N(t) &= N_0 e^{-\lambda t}
 \end{align*}
+\else
+\vspace*{4em}
+\fi
 
 The rate of decay is\[\lambda N_0 e^{-\lambda t} \:.\]
 
-The probability that a given nucleus will decay in a given time interval is \[p(t) dt = \lambda e^{-\lambda t} dt \:.\]
+The probability that a given nucleus will decay in a given time interval is \\
+\ifeqns
+\[p(t) dt = \lambda e^{-\lambda t} dt \:.\]
+\else
+\vspace*{1 em}
+\fi
 
-We are interested in the mean lifetime of nuclei (predicting the decay of a particular nucleus doesn't really work)
+We are interested in the mean lifetime of nuclei (predicting the decay of a particular nucleus doesn't really work)\\
+\ifeqns
 \[\bar{t} \equiv \int_0^\infty dt \: t \: p(t) = \lambda \int_0^\infty dt \: t \: e^{-\lambda t} = \frac{1}{\lambda} \:. \]
+\else
+\vspace*{2em}\\
+\fi
 We very often use the related quantity of half-life (time it takes for half of the original nuclei to decay) 
 \[t_{\frac{1}{2}} = \frac{\ln(2)}{\lambda} \:. \]
 
@@ -142,7 +163,7 @@ We will use $\sigma$ for microscopic and $\Sigma$ as macroscopic.\\
 The reaction rate [\# / cm$^2$ s] = $\phi \sigma N$ = $nv \sigma N$.
 
 A cross section is a physical quantity that can be measured (caveat about the data we actually have).\\
-The value depends on the nuclide, the reaction, neutron energy, and temperature of the target. \\
+The value depends on the nuclide, the reaction, neutron energy, the angle of incoming neutron, and temperature of the target. \\
 Cross sections are measured in barns, $10^{-24}$ cm$^2$.
 
 Cross sections have features that can be difficult to calculate or model accurately, for example, resonances.\\
