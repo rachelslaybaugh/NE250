@@ -4,6 +4,9 @@
 \usepackage{setspace}
 \onehalfspacing
 
+\newif\ifeqns
+%\eqnstrue
+
 \usepackage[hang,flushmargin]{footmisc} 
 % 'hang' flushes the footnote marker to the left,  'flushmargin'  flushes the text as well.
 
@@ -48,8 +51,9 @@
 
 \begin{document}
 \begin{center}
-{\bf NE 155, Classes 4-5, S17 \\
-TE \\ January 25 -- 27, 2017}
+{\bf NE 250, F17 \\
+Transport Equation\\
+August 25 \& September 1, 2017}
 \end{center}
 
 \setlength{\unitlength}{1in}
@@ -66,7 +70,7 @@ Largely from Lewis and Miller Chp.\ 1 \cite{Lewis1993} and Duderstadt and Hamilt
 
 \begin{figure}[h!]
     \begin{center}
-    \includegraphics[keepaspectratio, width = 2.7 in]{../figs/phase_space}
+    \includegraphics[keepaspectratio, width = 2.7 in]{../figs/phase-space}
     \end{center}
     \caption{Schematic of Phase Space}
     \label{fig:phase_space}
@@ -478,6 +482,6 @@ $\Omega_x = \cos(\theta) = \mu$
 
 %--------------------------------------------------------------------
 \bibliographystyle{plain}
-\bibliography{../05-de/te-de} 
+\bibliography{te-de} 
 
 \end{document}
