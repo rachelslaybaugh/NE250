@@ -94,7 +94,7 @@ These are the possible reactions we're generally going to worry about:
 
 \hspace*{1em}total (t): all interactions. We can break total into:
 \begin{itemize}
-\item scattering (s): a neutron interacts with an atom and bounces off either elastically or inelastically.
+\item scattering (s): a neutron interacts with an atom and bounces off either elastically or inelastically, possibly causing it to change direction, energy, or both.
 \item absorption (a): a neutron is absorbed by a nucleus. If this happens it might
 \item fission (f): cause the nucleus to split into two pieces, releasing more neutrons.
 \end{itemize}
@@ -117,31 +117,51 @@ where N is the atomic density of the target.
 \item \textbf{particle angular density} ($n(\vec{r}, E, \vOmega, t)d\vec{r} d\vOmega dE$): expected number of particles in volume element $d^3r$ at $\vec{r}$ whose energies are in $[E, E + dE]$ and direction of motion is in $[\vOmega, \vOmega + d\vOmega]$ at time $t$.
 
 Note:
+\ifeqns
 \begin{align*}
 n(\vec{r}, E, \vOmega, t) &= \frac{1}{mv}n(\vec{r}, v, \vOmega, t) \\
 n(\vec{r}, v, \vOmega, t) &= v^2 n(\vec{r}, \vec{v}, t) \\
 n(\vec{r}, \vec{v}, t) &= \frac{m}{v}n(\vec{r}, E, \vOmega, t)
 \end{align*}
+\else
+\vspace*{3em}
+\fi
 
 \item \textbf{particle density}: ($N(\vec{r},E,t)d^3r dE$): expected number of particles in $d^3r$ at $\vec{r}$ whose energies are in $[E, E + dE]$ at time $t$.
+\ifeqns
 \[N(\vec{r},E,t)d^3r dE = \int_{4\pi} d\vOmega\: n(\vec{r}, E, \vOmega, t)d^3r dE \]
+\else
+\vspace*{2em}
+\fi
 
 \item \textbf{angular flux}: $\psi(\vec{r}, E, \vOmega, t) \equiv v n(\vec{r}, E, \vOmega, t)$.
 
 \item \textbf{scalar flux}: $\phi(\vec{r},E,t) \equiv v N(\vec{r},E,t)$.
 %
+\ifeqns
 \[= \int_{4\pi} d\vOmega\: \psi(\vec{r}, E, \vOmega, t) \]
+\else
+\vspace*{2em}
+\fi
 
 \item \textbf{interaction rate density}: expected number of $j$ reactions per volume per energy at time $t$.
 %
+\ifeqns
 \[\int_{4\pi} d\vOmega \:\Sigma_j v n(\vec{r}, E, \vOmega, t) = \Sigma_j \phi(\vec{r},E,t)\]
+\else
+\vspace*{2em}
+\fi
 
 \item \textbf{angular current density} or partial current: $\vec{j}(\vec{r}, E, \vOmega, t) = \vec{v} n(\vec{r}, E, \vOmega, t)$; 
 
 $\vec{j}(\vec{r}, E, \vOmega, t) \cdot \hat{e}\: dA\: dE\: d\vOmega$ is the expected number of particles crossing $dA$ along unit direction $\hat{e}$ with energy in $[E, E + dE]$ and direction in $[\vOmega, \vOmega + d\vOmega]$ at time $t$.
 
 \item \textbf{net current}: $\vec{J}(\vec{r}, E, t) $ is the net \# of particles crossing a unit area per second along a direction normal to that area with energies in $[E, E + dE]$ at time $t$.
+\ifeqns
 \[\vec{J}(\vec{r}, E, t) = \int_{4\pi} d\vOmega\: \vOmega \psi(\vec{r}, E, \vOmega, t)\]
+\else
+\vspace*{2em}
+\fi
 
 \end{enumerate}
 
@@ -182,9 +202,12 @@ Then, for this volume $V$ for a fixed $E$ and $\vOmega$, the general rate equati
 Recall the definition of $n$: expected number of particles in volume element $d^3r$ at $\vec{r}$ whose energies are in $[E, E + dE]$ and direction of motion is in $[\vOmega, \vOmega + d\vOmega]$ at time $t$.
 
 To get the rate of change of particles within the volume, we need to integrate over volume and take the derivative with respect to time:
-
+%
+\ifeqns
 \[\boxed{\Bigl[ \int_V \frac{\partial}{\partial t} n(\vec{r}, E, \vOmega, t) d\vec{r} \Bigr] dE d\vOmega }\]
-
+\else
+\vspace*{2.5em}
+\fi
 
 %--------------
 \subsection*{Production Mechanisms}
@@ -199,7 +222,11 @@ How can we produce neutrons in volume element $d^3r$ at $\vec{r}$ whose energies
 1) Scattering into $[E, E + dE]$ and $[\vOmega, \vOmega + d\vOmega]$
 
 This is the definition of the double differential scattering cross section:
+\ifeqns
 \[\boxed{\Bigl[\int_V d^3r \int_{4\pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) v' n(\vec{r}, E', \vOmega', t) \Bigr] dE d\vOmega}\]
+\else
+\vspace*{3em}
+\fi
 
 2) Expected rate of neutron production by fission
 
@@ -207,14 +234,22 @@ Note: fission neutrons are isotropic, thus they are produced at $\frac{1}{4\pi}$
 
 Also, recall that $\chi(E)dE$ is the fraction of neutrons born into $[E, E + dE]$. Thus
 %
+\ifeqns
 \[\boxed{\frac{\chi(E)}{4\pi}\Bigl[\int_V d^3r \int_{4\pi} d\vOmega' \int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') v' n(\vec{r}, E', \vOmega', t) \Bigr] dE d\vOmega}\]
+\else
+\vspace*{3em}
+\fi
 
 3) Production from a fixed source
 
 Sources are fully specified by a function reminiscent of the $n$ definition: $s(\vec{r}, E, \vOmega, t)$ s.t.\ \\$s(\vec{r}, E, \vOmega, t)d^3rdEd\vOmega \equiv$ the expected number of particles that are produced at time $t$ inside volume $d^3r$ at $\vec{r}$ with energy $[E, E + dE]$ and direction $[\vOmega, \vOmega + d\vOmega]$.
 
 Rate of production of such particles in $V$ is
+\ifeqns
 \[\boxed{\Bigl[\int_V d^3r \:s(\vec{r}, E, \vOmega, t) \Bigr] dE d\vOmega }\]
+\else
+\vspace*{2.5em}
+\fi
 
 %--------------
 \subsection*{Loss Mechanisms}
@@ -227,8 +262,11 @@ How can we lose neutrons from volume element $d^3r$ at $\vec{r}$ whose energies 
 \end{enumerate}
 
 4) Total interaction: any collision can lead to (a) absorption or (b) a change in $E$ or $\vOmega$ or both.
-
+\ifeqns
 \[\boxed{\Bigl[\int_V d^3r \Sigma_t(E) v n(\vec{r}, E, \vOmega, t) \Bigr] dE d\vOmega }\]
+\else
+\vspace*{3em}
+\fi
 
 5) Net leakage out of phase space
 
@@ -239,25 +277,38 @@ How can we lose neutrons from volume element $d^3r$ at $\vec{r}$ whose energies 
 \end{center}
 \end{figure}
 
-Use the definition of $\vec{j} \rightarrow$ the expected number of particles crossing $dS$ along $\hat{e}_S$ with energy $[E, E + dE]$ and direction $[\vOmega, \vOmega + d\vOmega]$ at time $t$  
+Use the definition of $\vec{j}$: the expected number of particles crossing $dS$ along $\hat{e}_S$ with energy $[E, E + dE]$ and direction $[\vOmega, \vOmega + d\vOmega]$ at time $t$  
 %
 \[= \vec{j}(\vec{r}_s, E, \vOmega, t) \cdot d\vec{S} dE d\vOmega\:,\]
 %
 where $\vec{r}_s$ is a point on the surface and $d\vec{S} = \hat{e}_S dS$.
 
 Thus, the total leakage out of $V$ is
+\ifeqns
 \[\Bigl[\int_S \vec{j}(\vec{r}_s, E, \vOmega, t) \cdot d\vec{S} \Bigr] dE d\vOmega\:. \]
+\else
+\vspace*{3em}
+\fi
 
 We can use divergence theorem to rewrite this w.r.t.\ $V$ (rather than $S$):
+\ifeqns
 \[\int_S \hat{e}_S \cdot \vec{F} (\vec{r}) dS = \int_V \nabla \cdot \vec{F} (\vec{r}) dV\]
+\else
+\vspace*{3em}
+\fi
 %where
 %\[\nabla = \vec{i}\frac{d}{dx} + \vec{j}\frac{d}{dy} + \vec{k}\frac{d}{dz}\]
 %is the gradient operator.
 
 This gives
+\ifeqns
 \[\Bigl[\int_V d^3r \: \nabla \cdot \bigl( \underbrace{\vec{j}(\vec{r}_s, E, \vOmega, t)}_{=\vec{v}n = v \vOmega n} \bigr) \Bigr] dE d\vOmega \]
+\else
+\vspace*{3em}
+\fi
 %
 And we can use this identity:
+\ifeqns
 \begin{align}
 %
 \vOmega \cdot (\nabla f) &= \nabla \cdot \vOmega f \text{ because }\vOmega\text{ is not a function.} \nonumber\\
@@ -265,6 +316,9 @@ And we can use this identity:
 \end{align}
 %
 \[\therefore \:\: \boxed{\Bigl[\int_V d^3r \: \vOmega \cdot \nabla \bigl(v n(\vec{r}_s, E, \vOmega, t) \bigr) \Bigr] dE d\vOmega }\]
+\else
+\vspace*{5em}
+\fi
 
 Note: $\vOmega \cdot \nabla$ represents the derivative along the direction of motion.
 
@@ -315,10 +369,14 @@ for the problem domain. Note, the initial flux can be a functional expression.
 \end{figure}
 \end{minipage} \hfill
 \begin{minipage}{0.45\textwidth}
+\ifeqns
 $\psi_1(\vec{r}_S, E, \vOmega, t) = \psi_2(\vec{r}_S, E, \vOmega, t)$
 
 \vspace*{1 em}
 $\forall E$ and $\vOmega$.
+\else
+\vspace*{3em}
+\fi
 \end{minipage}
 
 \item \underline{Fixed Condition}: you can specify incoming flux
@@ -339,17 +397,25 @@ This is equivalent to specifying the incoming partial current, $$\vec{j}^-(\vec{
 \[\psi(\vOmega_{IN}) = \psi(\vOmega_{OUT})\:.\]
 
 \item \underline{Periodic Condition}: you know there is a repetition in the system
+\ifeqns
 \[\psi(\vec{r}_S, E, \vOmega, t) = \psi(\vec{r}_S \pm \vec{p}, E, \vOmega, t)\:.\]
+\else
+\vspace*{3em}
+\fi
 
-\item \underline{Finiteness Condition}: to by physically valid we need to meet the condition \\$0 < \psi(\vec{r}, E, \vOmega, t) < \infty$, with the possible exception of point sources,
+\item \underline{Finiteness Condition}: to by physically valid we need to meet the condition \\$0 < \psi(\vec{r}, E, \vOmega, t) < \infty$, with the possible exception of point sources\dots
 
 \item which we handle with the \underline{Source Condition}: localized sources are introduced as mathematical singularities at the location of the source.
 
 For a source $s(\vec{r}_0, E, \vOmega, t)$:
+\ifeqns
 \begin{align*}
 &\lim_{\vec{r} \rightarrow \vec{r}_0} \int_S dS\: \vec{e} \cdot \vOmega \psi(\vec{r}, E, \vOmega, t) = s(\vec{r}_0, E, \vOmega, t)\:, \\
 &s(\vec{r}, E, \vOmega, t) = s(\vec{r}_0, E, \vOmega, t)\delta(\vec{r} - \vec{r}_0)\:.
 \end{align*}
+\else
+\vspace*{5em}
+\fi
 \end{enumerate}
 
 
@@ -358,9 +424,7 @@ For a source $s(\vec{r}_0, E, \vOmega, t)$:
 \section*{Simplified Forms}
 
 \subsection*{One Speed}
-Assume all particles are at the same speed, so we no longer need energy dependence.
-
-%We assume all particles have the same speed, $\vec{v} = v_0 \cdot \vOmega$. Thus
+Assume all particles are at the same speed, so we no longer need energy dependence. To do this, we assume all particles have the same speed, $\vec{v} = v_0 \cdot \vOmega$. Thus
 %%
 %\begin{align}
 %n(\vec{r}, v, \vOmega, t) &= n(\vec{r}, \vOmega, t) \delta(v - v_0) \\
@@ -390,7 +454,7 @@ Assume all particles are at the same speed, so we no longer need energy dependen
 %---------------------------------------------
 \subsection*{One Speed, One Dimensional}
 
-We'd like to simplify even farther by only worrying about one dimension, so we'll get rid of $y$ and $z$.
+Another common simplification that can enable analytical solutions is to also reduce to one dimension (which can be done retaining energy dependence, we simply do not do that here), so we'll get rid of $y$ and $z$.
 
 %\begin{minipage}{0.5\textwidth}
 $\vec{r} = (x, y, z)$
