@@ -235,6 +235,7 @@ We will use the following identities in this part of the derivation:
 %We will multiply the TE by each component separately to make things a little easier for ourselves. Looking first at $\Omega_x$ 
 Multiplying by $\vOmega$ and dropping dependencies when appropriate:
 %
+\ifeqns
 \begin{align*}
 \int_{4\pi} d\vOmega\: \vOmega \frac{1}{v}\frac{\partial \psi}{\partial t} &+ 
 \int_{4\pi} d\vOmega\: \vOmega \vOmega \cdot \nabla \psi + 
@@ -242,23 +243,38 @@ Multiplying by $\vOmega$ and dropping dependencies when appropriate:
 &\int_{4\pi} d\vOmega\: \vOmega \int_{4\pi} d\vOmega'\: \Sigma_s(\vOmega' \cdot \vOmega) \psi(\vec{r}, \vOmega', t) +
 \int_{4\pi} d\vOmega\: \vOmega s(\vec{r}, \vOmega, t)\:.
 \end{align*}
+\else
+\vspace*{7em}
+\fi
 
 Now we can go through term by term, just like how we did to obtain the continuity equation.
 
 \textbf{1.}
+\ifeqns
 \begin{equation}
 \frac{1}{v}\frac{\partial}{\partial t} \int_{4\pi} d\vOmega\: \vOmega \psi(\vec{r}, \vOmega, t) = \boxed{\frac{1}{v}\frac{\partial \vec{J}}{\partial t}} \nonumber
 \end{equation}
+\else
+\vspace*{3em}\\
+\fi
 %%%%
 \textbf{3.} 
+\ifeqns
 \begin{equation}
 \Sigma_t \int_{4\pi} d\vOmega\: \vOmega \psi(\vec{r}, \vOmega, t) = \boxed{\Sigma_t  \vec{J}(\vec{r}, t)} \nonumber
 \end{equation}
+\else
+\vspace*{3em}\\
+\fi
 %%%%
 \textbf{5.} (was 6)
+\ifeqns
 \begin{equation}
 \int_{4\pi} d\vOmega\: \vOmega s(\vec{r}, \vOmega, t) \equiv \boxed{S_{1}(\vec{r}, t)}  \nonumber
 \end{equation}
+\else
+\vspace*{3em}\\
+\fi
 This is the definition of the first angular moment of the source term. 
 
 %%%%
@@ -294,6 +310,7 @@ We're going to \textbf{assume that scattering is at most linearly anisotropic}, 
 
 Substitute the $l=1$ linearly anisotropic truncation into the equation and use some of our identities:
 %
+\ifeqns
 \begin{align*}
 \frac{1}{4\pi} \int_{4\pi}  &d\vOmega
 \: \vOmega  \int_{4\pi} d\vOmega'\: \bigl[\Sigma_{s0} + 3\vOmega' \vOmega \Sigma_{s1} \bigr] \psi(\vec{r}, \vOmega', t) = \nonumber\\
@@ -304,13 +321,21 @@ Substitute the $l=1$ linearly anisotropic truncation into the equation and use s
 %
 &= \boxed{\Sigma_{s1} \vec{J}(\vec{r},t)}
 \end{align*}
+\else
+\vspace*{10em}\\
+\fi
 %%%%%%%%
 \textbf{2.} And once again, the trouble term: streaming
 %
+\ifeqns
 \[\int_{4\pi} d\vOmega \:\vOmega \vOmega \cdot \nabla \psi(\vec{r}, \vOmega, t) = \nabla \cdot \int_{4\pi} d\vOmega \:\vOmega \vOmega \psi(\vec{r}, \vOmega, t) \]
+\else
+\vspace*{3em}
+\fi
 
 \vspace*{2em}
 All together this is the \textbf{current continuity equation}:
+\ifeqns
 \begin{equation}
 \frac{1}{v}\frac{\partial \vec{J}}{\partial t} 
 + \nabla \cdot \int_{4\pi} d\vOmega \:\vOmega \vOmega \psi(\vec{r}, \vOmega, t) +
@@ -319,6 +344,9 @@ All together this is the \textbf{current continuity equation}:
 + S_{1}(\vec{r}, t) \:.
 \label{eq:currentcont}
 \end{equation}
+\else
+\vspace*{3em}
+\fi
 
 Now we have 2 moment equations that give us 4 total equations (neutron continuity and 3 tensor equations) and 10 unknowns ($\phi$ = 1, $\vec{J}$ = 3, and the new tensor term = 6). 
 
@@ -339,6 +367,7 @@ To implement this assumption, the angular flux is expanded in angle and only the
 \end{align*}
 The truncated angular flux expansion is then inserted into the streaming term in the current continuity equation, Eqn.\ \eqref{eq:currentcont}, giving 
 %
+\ifeqns
 \begin{align*}
   \nabla \cdot \frac{1}{4\pi} \int d \vOmega \:\vOmega \vOmega  \bigl(\psi_{0} + 3\vOmega \cdot \vec{\psi_{1}}\bigr) &=  
 %
@@ -350,8 +379,12 @@ The truncated angular flux expansion is then inserted into the streaming term in
 %
   &= \frac{1}{3} \nabla \phi(\vec{r}, t) \:.
 \end{align*}
+\else
+\vspace*{10em}
+\fi
 
 With this approximation, the current continuity equation becomes:
+\ifeqns
 \begin{equation}
 \frac{1}{v}\frac{\partial \vec{J}}{\partial t} 
 + \frac{1}{3} \nabla \phi(\vec{r}, t) +
@@ -359,6 +392,9 @@ With this approximation, the current continuity equation becomes:
 \Sigma_{s1} \vec{J}(\vec{r},t)
 + S_{1}(\vec{r}, t) \nonumber
 \end{equation}
+\else
+\vspace*{3em}\\
+\fi
 %
 Next we'll define:
 \begin{align*}
@@ -386,11 +422,15 @@ These are the $P_1$ equations because they are derived from the 0th and 1st Lege
 \subsection*{Fick's Law}
 If we also assume \underline{steady state} (or weak temporal dependence) and \underline{an isotropic source} ($S_1 = 0$), the current continuity equation becomes
 %
+\ifeqns
 \begin{align*}
 \frac{1}{3} \nabla \phi(\vec{r}, t) +
 \Sigma_{tr}  &\vec{J}(\vec{r}) = 0 \\
 &\boxed{\vec{J}(\vec{r}) = -\frac{1}{3\Sigma_{tr}} \nabla \phi(\vec{r}) = -D\nabla \phi(\vec{r}) } \qquad \text{Fick's Law}
 \end{align*}
+\else
+\vspace*{7em}\\
+\fi
 %
 where
 \[D = \frac{1}{3\Macro_{tr}} = \frac{1}{3(\Macro_t(\vec{r}) - \Macro_{s1}(\vec{r}))}\] 
@@ -410,6 +450,7 @@ With all of this, $\Sigma_{tr} = \Sigma_t - \bar{\mu}_0 \Sigma_s$.
 
 \underline{Punchline:} Fick's Law gives us a clear relationship between current and scalar flux. Now we can write the diffusion equation in terms of only $\phi$!
 %
+\ifeqns
 \begin{equation}
 \boxed{\frac{1}{v}\frac{\partial}{\partial t}\phi(\vec{r}, t) 
 -\nabla \cdot D\nabla \phi(\vec{r}, t) + 
@@ -417,6 +458,9 @@ With all of this, $\Sigma_{tr} = \Sigma_t - \bar{\mu}_0 \Sigma_s$.
 \nu \Sigma_f \phi(\vec{r}, t) +
 S(\vec{r}, t)} \:. \nonumber
 \end{equation}
+\else
+\vspace*{3em}\\
+\fi
 
 This equation \textit{now includes several assumptions} that are \textbf{valid} when the solution is \textbf{not} near
 %
