@@ -491,7 +491,11 @@ The physical interpretation of the diffusion process is that the ``flow" of neut
 We now need one initial condition and two boundary conditions. We will also use some other information.
 
 \underline{Mean free path} is the mean distance from the last collision.
+\ifeqns
 \[\lambda_{t} = \frac{1}{\Sigma_t} \qquad \lambda_{tr} = \frac{1}{\Sigma_{tr}}\]
+\else
+\vspace*{3em}\\
+\fi
 %
 If scattering is 
 \begin{itemize}
@@ -510,12 +514,20 @@ If scattering is
 
 \subsubsection*{Interface Conditions}
 These are also fairly straightforward. With the transport equation, we require that the angular flux be continuous across interfaces: 
+\ifeqns
 \[\psi_1(\vec{r}_S, \vOmega, t) = \psi_2(\vec{r}_S,\vOmega, t)\qquad \forall \vOmega\:.\]
+\else
+\vspace*{3em}\\
+\fi
 For diffusion, we take the 0th and 1st moments of our TE condition and get two equations rather than one. Now
+\ifeqns
 \begin{align*}
 \phi_1(\vec{r}, t) &= \phi_2(\vec{r}, t) \\
 \vec{J}_1(\vec{r}, t) &= \vec{J}_2(\vec{r}, t)
 \end{align*}
+\else
+\vspace*{4em}\\
+\fi
 
 \subsubsection*{Vacuum Boundary Condition}
 These aren't quite so simple. We start by thinking about a non-reentrant condition for the TE where $\vec{r}_s$ is the outside boundary and $\hat{e}_s$ is the unit normal pointing outward: 
@@ -524,10 +536,14 @@ These aren't quite so simple. We start by thinking about a non-reentrant conditi
 which is a mathematical statement that there are no neutrons entering our volume. 
 
 To translate this into a diffusion equation statement, we will use \textit{partial currents}: the number of neutrons crossing either inward ($J_{-}$) or outward ($J_{+}$) across a surface:
+\ifeqns
 \begin{align*}
 J_{-}(\vec{r},t) &= \int_{\vOmega \cdot \hat{e} < 0} d\vOmega \: \vOmega \cdot \hat{e}_s \psi(\vec{r}, \vOmega, t) \\
 J_{+}(\vec{r},t) &= \int_{\vOmega \cdot \hat{e} > 0} d\vOmega \: \vOmega \cdot \hat{e}_s \psi(\vec{r}, \vOmega, t)\:.
 \end{align*}
+\else
+\vspace*{6em}\\
+\fi
 We will also say $\int_{\vOmega \cdot \hat{e} < 0} = \int_{2\pi^{-}}$ and  $\int_{\vOmega \cdot \hat{e} > 0} = \int_{2\pi^{+}}$. 
 
 With this notation we can re-write our boundary condition:
@@ -537,10 +553,14 @@ note that in diffusion theory
 %
 and then our partial currents become (note that which of +/- you choose depends on which edge of the problem you are on)
 %
+\ifeqns
 \begin{align*}
 J_{-} &= \int_{2\pi^{-}} d\vOmega \: \vOmega \cdot \hat{e}_s \psi(\vec{r}_s, \vOmega, t) =\\
 &\cong \frac{1}{4} \phi(\vec{r}_s, t) \mp \frac{D}{2} \hat{e}_s \cdot \nabla \phi(\vec{r}_s, t) = 0\:.
 \end{align*} 
+\else
+\vspace*{6em}\\
+\fi
 %
 For a 1-D slab with a vacuum boundary at $x=x_s$:
 %
@@ -569,6 +589,7 @@ In reality, though, $\lambda_{tr} \sim 0$ [cm] compared to the size of a reactor
 \subsection*{Helmholtz Form}
 In steady state, we can write the diffusion equation this way:
 %
+\ifeqns
 \begin{align*}
 -\nabla \cdot D\nabla \phi(\vec{r}) + 
 \Sigma_a \phi(\vec{r}) &= Q(\vec{r})\:, \\
@@ -577,6 +598,9 @@ In steady state, we can write the diffusion equation this way:
 \nu \Sigma_f \phi(\vec{r}) +
 S(\vec{r})\:,
 \end{align*}
+\else
+\vspace*{4em}\\
+\fi
 %
 which can be written as the Helmholtz equation of applied mathematics:
 %http://en.wikipedia.org/wiki/Helmholtz_equation
@@ -613,10 +637,14 @@ Unless we have the proper combination of core composition ($\Sigma_a$, $\Sigma_f
 
 To deal with this, we introduce a parameter $k$ into the equation:
 %
+\ifeqns
 \begin{equation}
 -\nabla \cdot D\nabla \phi(\vec{r}) + 
 \Sigma_a \phi(\vec{r}) = \frac{1}{k}\nu \Sigma_f \phi(\vec{r})\:. \nonumber
 \end{equation}
+\else
+\vspace*{3em}\\
+\fi
 %
 Then, for any value of $k$ we assert that there is always a solution. We use an iterative process to find the condition when $k=1$, called ``critical''.
 
