@@ -33,7 +33,7 @@
 \usepackage[parfill]{parskip}
 
 \newif\ifeqns
-\eqnstrue
+%\eqnstrue
 
 % math syntax
 \newcommand{\nth}{n\ensuremath{^{\text{th}}} }
@@ -154,7 +154,7 @@ entire equation over all energy space $[\int_0^{\infty}dE(\cdot)]$; we will ofte
 \phi_1(\rvec,t) &= \int_0^{\infty}dE\:\phi(\rvec,E,t) = \text{group flux}
 \end{align*}
 \else
-\vspace*{6em}\\
+\vspace*{6em}
 \fi
 
 Thus, $\int_0^{\infty}dE\:\Sigma_t(\rvec,E)\phi(\rvec,E,t) = \Sigma_{t,1}(\rvec)\phi_1(\rvec,t)$.
@@ -198,28 +198,33 @@ have
 which is the \emph{one-group} diffusion equation.
 
 --------------------------------------------------------------\\
-We were talking about currents and boundary conditions at the end of class, so let's quickly revisit that. 
+We were talking about currents and boundary conditions at the end of last class, so let's quickly revisit that. 
 
-For the TE, the one-group vacuum boundary condition is $\varphi_1 (\vec{r}_s, \omvec, t) = 0 \quad \text{for }\omvec \cdot d\vec{S} < 0\:, \forall \rvec_s \text{ on } \vec{S}$.
+For the TE, the one-group vacuum boundary condition is $\psi_1 (\vec{r}_s, \omvec, t) = 0 \quad \text{for }\omvec \cdot d\vec{S} < 0\:, \forall \rvec_s \text{ on } \vec{S}$.
 
 We will seek to satisfy this in an integral sense for the diffusion equation, remembering that
 \begin{equation*}
-J_{\pm,1} = \int_{2\pi^{\pm}}d\omvec\:\omvec\cdot\hat{e}_s\varphi_1(\rvec,E,\omvec,t)\:.
+J_{\pm,1} = \int_{2\pi^{\pm}}d\omvec\:\omvec\cdot\hat{e}_s\psi_1(\rvec,E,\omvec,t)\:.
 \end{equation*}
 Therefore, $J_{-,1}(\rvec_s,t) = 0$.
 
 Using the $P_1$ approximation for this, then
-\[J_{-,1} = \int_{2\pi^{-}}d\omvec\:\omvec\cdot\hat{e}_s\varphi_1(\rvec,E,\omvec,t) \approx \frac{1}{4}\phi_1(\rvec, t) + \frac{D_1(\rvec)}{2}\hat{e}_s \cdot \nabla \phi_1(\rvec, t) = 0\:.\]
-
+\ifeqns
+\[J_{-,1} = \int_{2\pi^{-}}d\omvec\:\omvec\cdot\hat{e}_s\psi_1(\rvec,E,\omvec,t) \approx \frac{1}{4}\phi_1(\rvec, t) + \frac{D_1(\rvec)}{2}\hat{e}_s \cdot \nabla \phi_1(\rvec, t) = 0\:.\]
+\else
+\vspace*{3em}\\
+\fi
 
 In 1D,
-\begin{equation*}
-J_{-,1}(z_s,t) = \frac{1}{4}\phi_1(z_s,t) + \frac{D_1(z_s)}{2}\frac{d\phi_1(z_s,t)}{dz}\Bigr|_{z_s} = 0
-\end{equation*}
-
-\begin{equation*}
-\frac{d\phi_1(z_s,t)}{dz}\Bigr|_{z_s} = \frac{-\phi_1(z_s,t)}{2D_1(z_s)}
-\end{equation*}
+\ifeqns
+\begin{align*}
+J_{-,1}(z_s,t) &= \frac{1}{4}\phi_1(z_s,t) + \frac{D_1(z_s)}{2}\frac{d\phi_1(z_s,t)}{dz}\Bigr|_{z_s} = 0\\
+%
+&\frac{d\phi_1(z_s,t)}{dz}\Bigr|_{z_s} = \frac{-\phi_1(z_s,t)}{2D_1(z_s)}
+\end{align*}
+\else
+\vspace*{7em}\\
+\fi
 
 In order to use the diffusion approximation, we must accept that the above solution at the vacuum is wrong, necessitating the introduction of an extrapolation distance:
 
@@ -228,16 +233,16 @@ In order to use the diffusion approximation, we must accept that the above solut
 \end{equation*}
 
 We therefore typically use the boundary condition $\phi(\tilde{z}_s) = 0$. 
-Note that that a more accurate extrapolation distance that is obtained from transport theory is $\tilde{z}_s = z_s + z_0; z_0 = 0.7104 \lambda_{tr}$.
+Note again that a more accurate extrapolation distance that is obtained from transport theory is $\tilde{z}_s = z_s + z_0; z_0 = 0.7104 \lambda_{tr}$.
 
 \begin{figure}
     \begin{center}
-    \includegraphics[keepaspectratio, width = 3 in]{extrapolation}
+    \includegraphics[keepaspectratio, width = 3 in]{../figs/extrapolation}
     \end{center}
     \label{fig:phase_space}
 \end{figure}
 
-There are a few other types of conditions we might encounter or apply:
+There are a few other types of conditions we might encounter or apply (the same as before; taking the $P_1$ approach more explicitly combined with the one-group assumption doesn't change the conditions):
 \begin{itemize}
 \item We know that the flux must be nonnegative, finite, and real. 
 \item Symmetry often lets us eliminate solutions that don't make physical sense (e.g.\ at the centerline of a slab we know that $\phi(-x) \neq - \phi(x)$). 
@@ -249,16 +254,15 @@ One can argue that there should be no net transfer of neutrons between cells, so
 
 \begin{figure}
     \begin{center}
-    \includegraphics[keepaspectratio, width = 5 in]{unit-cell}
+    \includegraphics[keepaspectratio, width = 5 in]{../figs/unit-cell}
     \end{center}
     \label{fig:phase_space}
 \end{figure}
 
 -------------------------------------\\
 A quick one-speed diffusion summary:
-\[\frac{1}{v} \frac{\partial \phi}{\partial t} = S(\rvec, t) + \Sigma_a(\rvec) ]\phi(\rvec, t) + \nabla \cdot D(\rvec) \nabla \phi(\rvec, t)\:.\]
-
-Where
+\[\frac{1}{v} \frac{\partial \phi}{\partial t} = S(\rvec, t) + \Sigma_a(\rvec) \phi(\rvec, t) + \nabla \cdot D(\rvec) \nabla \phi(\rvec, t)\:,\]
+where
 \begin{itemize}
 \item $\phi(\rvec, 0) = \phi_0(\rvec) \: \forall \: \rvec$
 \item $\phi(\tilde{\rvec_s}, t) = 0$ or $J_-(\rvec_s, t) = 0$; (free surface)
