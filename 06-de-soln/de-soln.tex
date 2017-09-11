@@ -4,6 +4,9 @@
 \usepackage{setspace}
 \onehalfspacing
 
+\newif\ifeqns
+\eqnstrue
+
 \usepackage{amssymb}
 %% The amsthm package provides extended theorem environments
 \usepackage{amsthm}
@@ -47,12 +50,10 @@
 %---------------------------------------------------------------------------
 \begin{document}
 \begin{center}
-{\bf NE 250, F15\\
-September 23, 2015 
+{\bf NE 250, F17\\
+September 15, 2017 
 }
 \end{center}
-
-% 2013-10-01
 
 Recall the one-group diffusion equation:
 
@@ -61,14 +62,17 @@ Recall the one-group diffusion equation:
 \Sigma_{a,1}(\rvec)\phi_1(\rvec,t) + \nabla\cdot[D_1(\rvec)\nabla\phi_1(\rvec,t)]
 \end{equation*}
 
-Now, assume that space and energy dependence of the flux can be separated:
-
+Now, \textit{assume that space and energy dependence of the flux can be separated}:
+\ifeqns
 \begin{equation*}
-\phi(\vecr,E,t) = \phi(\vecr,t)\psi(E), 
-\text{ where $\psi(E)$ is the neutron spectrum and $\int_0^{\infty}dE\psi(E) = 1$.}
+\phi(\vecr,E,t) = \phi(\vecr,t)\xi(E), 
+\text{ where $\xi(E)$ is the neutron spectrum and $\int_0^{\infty}dE\:\psi(E) = 1$.}
 \end{equation*}
+\else
+\vspace*{3em}
+\fi
 
-Focusing on the spatial dependence of the flux, we'll assume a homogeneous, steady-state, one-group system.
+Focusing on the \textit{spatial dependence} of the flux, we'll assume a homogeneous, steady-state, one-group system.
 
 \begin{equation*}
 \frac{1}{v}\frac{\partial\phi(\rvec,t)}{\partial t} = S(\rvec,t) - \Sigma_s(\rvec)\phi(\rvec,t)
@@ -77,10 +81,8 @@ Focusing on the spatial dependence of the flux, we'll assume a homogeneous, stea
 
 Steady-state: $\frac{1}{v}\frac{\partial\phi(\rvec,t)}{\partial t} = 0$
 
-
 Homogeneous: no material dependence on position; 
 $\Sigma_a(\rvec)\rightarrow\Sigma_a, D(\rvec)\rightarrow D$
-
 
 This gives us
 %
@@ -90,10 +92,14 @@ This gives us
 %
 %which can be rewritten as
 %
+\ifeqns
 \begin{equation*}
 \nabla^2\phi(\vecr) - \frac{1}{L^2}\phi(\rvec) = -\frac{S(\rvec)}{D},
 \text{ where $L = \sqrt{\frac{D}{\Sigma_a}} =$ diffusion length.}
 \end{equation*}
+\else
+\vspace*{3em}
+\fi
 
 %\begin{equation*}
 %L = \sqrt{\frac{\langle r^2\rangle}{6}}, \langle r^2\rangle 
@@ -101,90 +107,137 @@ This gives us
 %\end{equation*}
 
 Now, consider a plane source of strength $S_0$ in an infinitely absorbing medium.
-
-\begin{equation*}
-\phi(\rvec) = \phi(x)
-\end{equation*}
-
-\begin{equation*}
-\frac{d^2\phi(x)}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S_0\delta(x)}{D}
-\end{equation*}
+\ifeqns
+\begin{align*}
+\phi(\rvec) &= \phi(x)\\
+%
+\frac{d^2\phi(x)}{dx^2} &- \frac{1}{L^2}\phi(x) = -\frac{S_0\delta(x)}{D}
+\end{align*}
+\else
+\vspace*{6em}\\
+\fi
 The boundary conditions we'd like to enforce are that the source is zero other than at the plane, so within $\epsilon \rightarrow 0$:
 %
+\ifeqns
 \[-D \frac{d \phi}{dx}|_{+\epsilon} + D \frac{d \phi}{dx}|_{-\epsilon} = 
 J_x(0^+) - J_x(0^-) = S_0\:.\]
+\else
+\vspace*{3em}\\
+\fi
 %
 We can use this to examine two sets of equations and boundary conditions.
 
 
-For $x < 0$, $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.
-
+(1) For $x < 0$, $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.\\
+%
 Boundary conditions: 
-$\lim\limits_{x\rightarrow 0^+}\vec{J}(x) = \frac{S_0}{2}, \: \lim\limits_{x\rightarrow +\infty}|\phi(x)|<\infty, \: \phi(x) \geq 0$
+\ifeqns
+\begin{align*}
+&\lim\limits_{x\rightarrow 0^+}\vec{J}(x) = \frac{S_0}{2}, \: \\
+%
+&\lim\limits_{x\rightarrow +\infty}|\phi(x)|<\infty, \: \phi(x) \geq 0
+\end{align*}
+\else
+\vspace*{5em}
+\fi
 
-For $x > 0$, \: $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.
-
+(2) For $x > 0$, \: $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.\\
+%
 Boundary conditions: 
-$\lim\limits_{x\rightarrow 0^-}\vec{J}(x) = -\frac{S_0}{2}, \lim\limits_{x\rightarrow -\infty}|\phi(x)|<\infty, \phi(x) \geq 0$
+\ifeqns
+\begin{align*}
+&\lim\limits_{x\rightarrow 0^-}\vec{J}(x) = -\frac{S_0}{2}\:, \\
+%
+&\lim\limits_{x\rightarrow -\infty}|\phi(x)|<\infty, \phi(x) \geq 0
+\end{align*}
+\else
+\vspace*{5em}
+\fi
 
-With the above equations and boundary conditions, we have a general solution form of
 
+With the above equations and boundary conditions, we have a general solution form of (which you'll recall from your differential equations class):
+%
+\ifeqns
 \begin{equation*}
 \phi(x) = c_1e^{-x/L} + c_2e^{x/L}.
 \end{equation*}
+\else
+\vspace*{3em}
+\fi
 
 From the finite flux condition, $c_2 = 0$. Then, $\phi(x) = c_1e^{-x/L}$.
-
-\begin{equation*}
-\lim\limits_{x\to 0^+} \vec{J}(x) = \lim\limits_{x\to 0^+}\left(\frac{D}{L}c_1e^{-x/L}\right) = 
-\frac{D}{L}c_1 = \frac{S_0}{2}
-\end{equation*}
-
-\begin{equation*}
-c_1 = \frac{S_0 L}{2D}
-\end{equation*}
-
-\begin{equation*}
-\phi(x) = \frac{S_0L}{2D}e^{-x/L}
-\end{equation*}
+\ifeqns
+\begin{align*}
+\lim\limits_{x\to 0^+} \vec{J}(x) &= \lim\limits_{x\to 0^+}\left(\frac{D}{L}c_1e^{-x/L}\right) = 
+\frac{D}{L}c_1 = \frac{S_0}{2}\\
+%
+c_1 &= \frac{S_0 L}{2D}\\
+%
+\phi(x) &= \boxed{\frac{S_0L}{2D}e^{-x/L}}
+\end{align*}
+\else
+\vspace*{9em}\\
+\fi
 The neutron flux falls off exponentially as one moves away from the source plane with a characteristic decay length of $L$. This holds fairly well as long as we're not too near the source and the medium is not too strongly absorbing.
 
 ------------------------------------\\
 Now, consider an infinite plane centered in a slab of finite thickness $a$, surrounded by a vacuum.
 
 
-For $x > 0$, $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.
-
-
+(1) For $x > 0$, $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.\\
+%
 Boundary conditions: 
-$\lim\limits_{x\rightarrow 0^+}\vec{J}(x) = \frac{S_0}{2}, \: \phi(\tfrac{\tilde{a}}{2}) = 0$
+\ifeqns
+\begin{align*}
+\lim\limits_{x\rightarrow 0^+}\vec{J}(x) &= \frac{S_0}{2}\:,\\
+%
+\phi(\tfrac{\tilde{a}}{2}) &= 0
+\end{align*}
+\else
+\vspace*{6em}
+\fi
 
-For $x < 0$, $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.
 
+(2) For $x < 0$, $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.\\
+%
 Boundary conditions: 
-$\lim\limits_{x\rightarrow 0^-}\vec{J}(x) = -\frac{S_0}{2}, \: \phi(-\tfrac{\tilde{a}}{2}) = 0$
+\ifeqns
+\begin{align*}
+{x\rightarrow 0^-}\vec{J}(x) &= -\frac{S_0}{2} \:,\\
+%
+ \phi(-\tfrac{\tilde{a}}{2}) &= 0
+\end{align*}
+\else
+\vspace*{6em}
+\fi
 
-\begin{gather*}
-\phi(x) = c_1e^{-x/L} + c_2e^{x/L} \\
-\text{or (which we could have also done before)} \\
-\phi(x) = c_1\cosh(\tfrac{x}{L}) + c_2\sinh(\tfrac{x}{L})
-\end{gather*}
+Now, we can again write the equations as
+\[\phi(x) = c_1e^{-x/L} + c_2e^{x/L}\]
+Or, with equal validity  (which we could have also done before)
+\ifeqns
+\[\phi(x) = c_1\cosh(\tfrac{x}{L}) + c_2\sinh(\tfrac{x}{L})\]
+\else
+\vspace*{3em}\\
+\fi
 %
 You can use the boundary conditions to reach the full solution.
 
 
-% 2013-10-03
+
 -------------------\\
 Now, consider a uniformly distributed source of strength $S_0 \tfrac{n}{cm^3s}$ within a finite slab of
 width $a$ with vacuum boundaries.
-
+%
 \begin{equation*}
 \frac{d^2\phi(x)}{dx^2} - \frac{1}{L^2}\phi(x) = -\frac{S_0}{D}
 \end{equation*}
-
+\ifeqns
 \begin{equation*}
 \phi(x) = c_1e^{-x/L} + c_2e^{x/L} + \frac{S_0L^2}{D}
 \end{equation*}
+\else
+\vspace*{3em}
+\fi
 
 Boundary conditions: $\phi(\pm\tfrac{\tilde{a}}{2}) = 0$
 
@@ -192,45 +245,54 @@ Boundary conditions: $\phi(\pm\tfrac{\tilde{a}}{2}) = 0$
 Alternative boundary condition: $\frac{d\phi(x)}{dx}\Bigr|_{x = 0} = 0$ (symmetry)
 
 
-Now, consider a uniform source in a reflected slab, where region 2 contains the source and 1 and 3 are reflectors (high scattering compared to absorption):
+Now, consider a uniform source in a reflected slab, where region 2 contains the source and 1 and 3 are reflectors (high scattering compared to absorption). The center of region 2 is located at $x=0$ and the edges of region two are at $x=\pm \frac{a}{2}$.
 
 \begin{center}
 \includegraphics[height=2.5 in]{../figs/ref_slab}
 \end{center}
 
+We start by using an equation containing the source in region 2, designating the solution $\phi_2$:
+\ifeqns
 \begin{equation*}
 \frac{d^2\phi_2(x)}{dx_2^2} - \frac{1}{L_2^2}\phi_2(x) = -\frac{S_0}{D_2}, \quad -\tfrac{a}{2}<x<\tfrac{a}{2}
 \end{equation*}
+\else
+\vspace*{3em}
+\fi
 
-Boundary conditions (where subscript indicates region number):
-
+We need a collection of boundary conditions (where subscript indicates region number) that relate region 2 to the other regions:
+\ifeqns
 \begin{gather*}
 \phi_2(\tfrac{a}{2}) = \phi_3(\tfrac{a}{2}) \\
 \vec{J}_2(\tfrac{a}{2}) = \vec{J}_3(\tfrac{a}{2}) \\
 \phi_1(-\tfrac{a}{2}) = \phi_2(-\tfrac{a}{2}) \\
 \vec{J}_1(-\tfrac{a}{2}) = \vec{J}_3(-\tfrac{a}{2}) 
 \end{gather*}
+\else
+\vspace*{12em}\\
+\fi
+We also need equations for regions 1 and 3, which do not have sources:
+\ifeqns
+\begin{align*}
+\frac{d^2\phi_1(x)}{dx_1^2} &- \frac{1}{L_1^2}\phi_1(x) = 0, \quad -\infty<x<-\tfrac{a}{2}\\
+%
+\frac{d^2\phi_3(x)}{dx_3^2} &- \frac{1}{L_3^2}\phi_3(x) = 0, \quad \tfrac{a}{2}<x<\infty
+\end{align*}
+\else
+\vspace*{8em}
+\fi
 
-\begin{equation*}
-\frac{d^2\phi_1(x)}{dx_1^2} - \frac{1}{L_1^2}\phi_1(x) = 0, \quad -\infty<x<-\tfrac{a}{2}
-\end{equation*}
-
-\begin{equation*}
-\frac{d^2\phi_3(x)}{dx_3^2} - \frac{1}{L_3^2}\phi_3(x) = 0, \quad \tfrac{a}{2}<x<\infty
-\end{equation*}
-
-Boundary conditions: 
+These regions have boundary conditions as well: 
 $\lim\limits_{x\to-\infty}|\phi_1(x)| <\infty, \quad \lim\limits_{x\to\infty}|\phi_3(x)| < \infty$
 
 ----------------------\\
 What if we want to solve a \textbf{generic diffusion problem}?
-
+%
 \begin{equation*}
 D\nabla^2\phi(\rvec) - \Sigma_a\phi(\rvec) = -S(\rvec)
 \end{equation*}
 
 Working in 1D:
-
 \begin{equation*}
 M\phi(x) = f(x)
 \end{equation*}
