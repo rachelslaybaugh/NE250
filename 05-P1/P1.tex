@@ -32,6 +32,9 @@
 \usepackage[pdftex]{hyperref}
 \usepackage[parfill]{parskip}
 
+\newif\ifeqns
+\eqnstrue
+
 % math syntax
 \newcommand{\nth}{n\ensuremath{^{\text{th}}} }
 \newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
@@ -46,22 +49,25 @@
 %---------------------------------------------------------------------------
 \begin{document}
 \begin{center}
-{\bf NE 250, F15 \\
-September 21, 2015}
+{\bf NE 250, F17 \\
+September 14, 2017}
 \end{center}
 
-Please note: I posted a fairly different derivation of the TE and DE on the class page (called 15-19-te-de). This is how I taught it in NE 155 and I think it's both clearer and more thorough. This could be useful as you sort through things. 
 
-Last class we started with the two equations we had arrived at using the $P_1$ approximation: one for scalar flux and one for current. We then made a few simplifications / assumptions:
+During the diffusion equation derivation we obtained two equations using the $P_1$ approximation: one for scalar flux and one for current. We then made a few simplifications / assumptions (full list of assumptions in the DE derivation):
 \begin{itemize}
 \item The angular flux can be represented by \textbf{linearly anisotropic} angular dependence (that is the $P_1$ expansion). 
 The approximation is valid away from boundaries, away from neutron sources and sinks, and in media that are not highly absorbing.
-\item one speed.
-\item isotropic source.
-\item neutron current density changes slowly on a time scale compared to the mean collision time:
+\item one speed (not essential to the derivation).
+\item isotropic source, azimuthally symmetric scattering, and scattering is at most linearly anisotropic.
+\item neutron current density changes slowly on a time scale compared to the mean collision time. Mathematically, this statement can be written as
+\ifeqns
 \begin{align*}
-\frac{1}{|\vec{J}(\rvec,t)|}&\frac{\partial\vec{J}(\rvec,t)}{\partial t} \ll v\Sigma_t \\ \frac{1}{|\vec{J}(\rvec,t)|}&\frac{\partial\vec{J}(\rvec,t)}{\partial t}\approx 0
+\frac{1}{|\vec{J}(\rvec,t)|}&\frac{\partial\vec{J}(\rvec,t)}{\partial t} \ll v\Sigma_t \:;\\ \frac{1}{|\vec{J}(\rvec,t)|}&\frac{\partial\vec{J}(\rvec,t)}{\partial t}\approx 0\:.
 \end{align*}
+\else
+\vspace*{7em}\\
+\fi
 The collision frequency $v\Sigma_t$ is typically on the order of $10^5$ sec$^{-1}$ or larger, so only an extremely rapid time variation of the current would invalidate this assumption (such rapid changes are very rarely encountered in reactor dynamics).
 \end{itemize}
 
@@ -76,16 +82,20 @@ We talked about the boundary conditions necessary to solve this equation last ti
 
 --------------------------------------------------------------\\
 Now, let's revisit the the energy-dependent $P_1$ equations:
-
-\begin{align*}
-\frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} &= S(\rvec,E,t) + 
-\int^{\infty}_0dE'\:\Sigma_s(\rvec, E'\rightarrow E)\phi(\rvec,E',t) - 
-\Sigma_t(\rvec,E)\phi(\rvec,E,t) - \nabla\cdot\vec{J}(\rvec,E,t)\\
 %
-\frac{1}{v}\frac{\partial \vec{J}(\rvec,E,t)}{\partial t} &= S_1(\rvec,E,t) + 
+\ifeqns
+\begin{align*}
+\frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} = &S(\rvec,E,t) + 
+\int^{\infty}_0dE'\:\Sigma_s(\rvec, E'\rightarrow E)\phi(\rvec,E',t) - 
+\Sigma_t(\rvec,E)\phi(\rvec,E,t) \\ &- \nabla\cdot\vec{J}(\rvec,E,t)\\
+%
+\frac{1}{v}\frac{\partial \vec{J}(\rvec,E,t)}{\partial t} = &S_1(\rvec,E,t) + 
 \int^{\infty}_0dE'\:\bar{\mu_0}\Sigma_s(\rvec,E'\rightarrow E)\vec{J}(\rvec,E',t) - 
-\Sigma_t(\rvec,E)\vec{J}(\rvec,E,t) - \frac{1}{3}\nabla\phi(\rvec,E,t)
+\Sigma_t(\rvec,E)\vec{J}(\rvec,E,t) \\&- \frac{1}{3}\nabla\phi(\rvec,E,t)
 \end{align*}
+\else
+\vspace*{7em}\\
+\fi
 
 From the $\frac{1}{|\vec{J}(\rvec,t)|}\frac{\partial\vec{J}(\rvec,t)}{\partial t}\ll v\Sigma_t$ 
 assumption, $\frac{1}{v}\frac{\partial\vec{J}(\rvec,t)}{\partial t} = 0$.
@@ -96,75 +106,96 @@ The assumption of isotripic scattering would give $\Sigma_{s1}(E' \rightarrow E)
 \[\vec{J}(\vec{r}, E, t) \approx - \frac{1}{3 \Sigma_t(\vec{r}, E)}\nabla \phi(\vec{r}, E, t)\:. \]
 However, the assumption of isotropic scattering is often too strong for most reactor calculations.
 
-Instead, we can simply define an energy-dependent diffusion coefficient as
+Instead, we can define an energy-dependent diffusion coefficient as
+\ifeqns
 \[D(\vec{r}, E) = \frac{1}{3} \biggl[ \Sigma_t(\vec{r}, E) - \frac{\int_0^{\infty} dE' \: \Sigma_{s1}(\vec{r},E' \rightarrow E)J_i(\vec{r}, E', t)}{J_i(\vec{r}, E', t)}\biggr]^{-1}\:,\]
+\else
+\vspace*{3em}\\
+\fi
 which would automatically yield
 \[\vec{J}(\vec{r}, E, t) = -D(\vec{r},E)\nabla \phi(\vec{r}, E, t)\:.\]
 [Note that $i = x,y,z$. We need to do each vector component separately since $D$ is a scalar, and then recombine to get $\vec{J} = J_x \Omega_x + J_y \Omega_y + J_z \Omega_z$.]\\
 This is artificial because $D$ actually depends on $\vec{J}$.
 
-One common way to avoid this is to neglect the anisotropic contribution to energy transfer in the scattering collision by saying
+One common way to avoid this issue is to neglect the anisotropic contribution to energy transfer in the scattering collision by saying
 \[\Sigma_{s1}(\vec{r},E' \rightarrow E) = \Sigma_{s1}(\vec{r},E) \delta(E' - E)\]
 such that
+\ifeqns
 \[\int_0^{\infty} dE' \: \Sigma_{s1}(\vec{r},E' \rightarrow E)J_i(\vec{r}, E', t) = \bar{\mu_0} \Sigma_s(\vec{r},E) J_i(\vec{r}, E, t)\:.\]
 And all of that gives
 \[D(\vec{r}, E) = \frac{1}{3} \bigl[\Sigma_t(\vec{r}, E) - \bar{\mu_0} \Sigma_s(\vec{r}, E) \bigr]^{-1}\:.\]
+\else
+\vspace*{7em}\\
+\fi
 
 Plugging this into the first $P_1$ equation gives
-
-\begin{equation*}
-\frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} = S(\rvec,E,t) + 
+\ifeqns
+\begin{align*}
+\frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} = &S(\rvec,E,t) + 
 \int^{\infty}_0dE'\:\Sigma_s(\rvec,E'\rightarrow E)\phi(\rvec,E',t) - 
-\Sigma_t(\rvec,E)\phi(\rvec,E,t) + \nabla\cdot[D(\rvec,E)\nabla\phi(\rvec,E,t)]
-\end{equation*}
+\Sigma_t(\rvec,E)\phi(\rvec,E,t) \\&+ \nabla\cdot[D(\rvec,E)\nabla\phi(\rvec,E,t)]\:.
+\end{align*}
+\else
+\vspace*{5em}\\
+\fi
 
 
 --------------------------------------------------------------\\
 Now, let's make the \emph{one-group} (not one-speed) assumption. This means that we will integrate the
-entire equation over all energy space $[\int_0^{\infty}dE(\cdot)]$; we will often weight this integration with the flux.
+entire equation over all energy space $[\int_0^{\infty}dE(\cdot)]$; we will often weight this integration with the flux (more discussion on this later).
 
-``Group constants" are defined as follows (note that subscripts are now group number, not expansion coefficient or time index):
+``Group constants" are defined as follows (note that subscripts are now group number, not expansion coefficient or  anything else):
+
+\ifeqns
+\begin{align*}
+\Sigma_{t,1}(\rvec)&=\frac{\int_0^{\infty}dE\:\Sigma_t(\rvec,E)\phi(\rvec,E,t)}{\int_0^{\infty}dE\phi(\rvec,E,t)}
+= \text{effective group cross section}\\
+%
+\phi_1(\rvec,t) &= \int_0^{\infty}dE\:\phi(\rvec,E,t) = \text{group flux}
+\end{align*}
+\else
+\vspace*{6em}\\
+\fi
+
+Thus, $\int_0^{\infty}dE\:\Sigma_t(\rvec,E)\phi(\rvec,E,t) = \Sigma_{t,1}(\rvec)\phi_1(\rvec,t)$.
+
+We can use the same process for the other terms:
+\ifeqns
+\begin{align*}
+\int_0^{\infty}dE\:\frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} &= 
+\frac{1}{v_1}\frac{\partial \phi_1(\rvec,t)}{\partial t}, \\
+%
+&\text{ where } \frac{1}{v_1} = \frac{\int_0^{\infty}dE\:\frac{1}{v}\phi(\rvec,E,t)}{\phi_1(\rvec,t)}
+\end{align*}
 
 \begin{equation*}
-\Sigma_{t,1}(\rvec)=\frac{\int_0^{\infty}dE\Sigma_t(\rvec,E)\phi(\rvec,E,t)}{\int_0^{\infty}dE\phi(\rvec,E,t)}
-= \text{effective cross section}
+\int_0^{\infty}dE\:S(\rvec,E,t) = S_1(\rvec,t)
 \end{equation*}
 
 \begin{equation*}
-\phi_1(\rvec,t) = \int_0^{\infty}dE\phi(\rvec,E,t) = \text{group flux}
-\end{equation*}
-
-Thus, $\int_0^{\infty}dE\Sigma_t(\rvec,E)\phi(\rvec,E,t) = \Sigma_{t,1}(\rvec)\phi_1(\rvec,t)$.
-
-\begin{equation*}
-\int_0^{\infty}dE\frac{1}{v}\frac{\partial\phi(\rvec,E,t)}{\partial t} = 
-\frac{1}{v_1}\frac{\partial \phi_1(\rvec,t)}{\partial t}, 
-\text{ where } \frac{1}{v_1} = \frac{\int_0^{\infty}dE\frac{1}{v}\phi(\rvec,E,t)}{\phi_1(\rvec,t)}
+\int_0^{\infty}dE\int_0^{\infty}dE'\:\Sigma_s(\rvec,E'\rightarrow E)\phi(\rvec,E',t) =
+\int_0^{\infty}dE'\:\Sigma_s(\rvec,E')\phi(\rvec,E',t) = \sigsi\phi_1
 \end{equation*}
 
 \begin{equation*}
-\int_0^{\infty}dES(\rvec,E,t) = S_1(\rvec,t)
+\int_0^{\infty}dE\:\nabla\cdot[D(\rvec,E)\nabla\phi(\rvec,E,t)]=\nabla\cdot[D_1(\rvec)\nabla\phi_1(\rvec,t)]
 \end{equation*}
+\else
+\vspace*{25em}\\
+\fi
 
-\begin{equation*}
-\int_0^{\infty}dE\int_0^{\infty}dE'\Sigma_s(\rvec,E'\rightarrow E)\phi(\rvec,E',t) =
-\int_0^{\infty}dE'\Sigma_s(\rvec,E')\phi(\rvec,E',t) = \sigsi\phi_1
-\end{equation*}
-
-\begin{equation*}
-\int_0^{\infty}dE\nabla\cdot[D(\rvec,E)\nabla\phi(\rvec,E,t)]=\nabla\cdot[D_1(\rvec)\nabla\phi_1(\rvec,t)]
-\end{equation*}
-
-Note that although the subscripts used here for the one-group approximation are the same as those used in
-the $P_1$ approximation derivation, the quantities are not the same. Combining all of the above terms, we
+Note again that although the subscripts used here for the one-group approximation look the same as those used in
+the $P_1$ approximation derivation, the quantities are not the same (group index vs.\ Legendre series expansion index). Combining all of the above terms, we
 have
-
+\ifeqns
 \begin{equation*}
 \frac{1}{v_1}\frac{\partial \phi_1(\rvec,t)}{\partial t} = S_1(\rvec,t) - 
-\Sigma_{a,1}(\rvec)\phi_1(\rvec,t) + \nabla\cdot[D_1(\rvec)\nabla\phi_1(\rvec,t)]
+\Sigma_{a,1}(\rvec)\phi_1(\rvec,t) + \nabla\cdot[D_1(\rvec)\nabla\phi_1(\rvec,t)]\:,
 \end{equation*}
-
-This is the \emph{one-group} diffusion equation.
+\else
+\vspace*{4em}\\
+\fi
+which is the \emph{one-group} diffusion equation.
 
 --------------------------------------------------------------\\
 We were talking about currents and boundary conditions at the end of class, so let's quickly revisit that. 
