@@ -1,0 +1,152 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+%\usepackage{setspace}
+%\onehalfspacing
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+%\usepackage{mathrsfs}
+%\usepackage[mathcal]{euscript}
+%\usepackage{color}
+%\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+
+%---------------------------------------------------------------------------
+\title{NE 250, F17 \\
+Prompt and Delayed Neutrons}
+\date{Sep 14, 2017}
+\begin{document}
+\author{content provided by: Kathryn Huff}
+\maketitle
+
+\hrulefill
+
+\section{Introduction}
+
+In reactors and other fission systems, neutron populations vary over time. We're not going to dive into this too much, but we will introduce some preliminary concepts that will set you up for a guest lecture next class.
+In particular, this lesson will 
+cover the concepts of prompt and delayed neutrons, as well as the importance of delayed neutrons for reactor control. 
+
+Note that much of this can be found in Duderstadt and Hamilton.
+
+\subsection{Transient Analysis}
+
+Transient analysis is necessary when the neutron flux varies with time.
+Commonly studied transient scenarios include normal startup and shutdown of a
+reactor as well as abnormal scenarios that cause reactivity increases and
+decreases during otherwise normal operation.
+
+%------------------------------------------------------------------------------
+\section{Delayed Neutrons}
+Reactor control relies on a balance of neutrons. When an isotope fissions, it 
+produces neutrons, energy, and fission products.  Most of the neutrons emitted 
+due to fission are \emph{prompt}, nearly all released within $10^{-10}s$ of the fission. 
+The average lifetime of prompt neutrons in a thermal reactor is $10^{-4}s$ and in a fast
+reactor is $10^{-7}s$. 
+
+\subsection{Delayed Neutron Emission}
+However, a fraction of the neutrons appear later. Some fission products are 
+unstable and decay within seconds or minutes of the fission. Among those, a few 
+decay by neutron emission. These particular fission products are called ``delayed 
+neutron precursors''.  $^{87}$Br, for example, has a half-life of 55.9 seconds 
+and tends to decay by neutron emission.
+
+\subsection{Delayed Neutron Precursor Data}
+Typically, we group delayed neutron precursors into 6 or 8 groups according to 
+their half-lives. Standardized data exist for these calculations, as in Table 
+\ref{tab:delayedneutrons}.
+
+\input{delayed_neutron_tab}
+
+In the above table:
+\begin{align*}
+j &= \mbox{group index}\\
+t_{1/2} &= \mbox{half life} [s]\\
+\lambda_j^d &= \mbox{decay constant} [1/s]\\
+\eta_j &= \mbox{fission factor} [neutrons/fisson]\\
+\beta_j &= \mbox{delayed neutron fraction} \\&\quad[\text{neutrons from delayed fission / neutrons from all fission}]\nonumber
+\end{align*}
+
+These parameters are used to incorporate the contributions of delayed neutrons 
+into transient calculations. Note that in this case the sum of the $\beta_{j}$ terms is 0.0065. That means 0.0065 of every 1.0 neutrons coming from fission is delayed.
+
+When we add in delayed neutrons, the average neutron lifetime because approximately 0.1 s, which is much higher than the prompt value of $10^{-6}s$ to $10^{-4}s$.
+
+\section{Delayed Neutrons and Reactor Control}
+These delayed neutrons are critical to controlling the reactor. 
+To capture the reasons why, we will need the following definitions.
+
+\begin{align*}
+\rho =& \mbox{reactivity}\\
+&= \frac{k-1}{k}\\
+k =& \mbox{multiplication factor}\\
+&(k < 1) \rightarrow \mbox{negative reactivity}\\
+&(k > 1) \rightarrow \mbox{positive reactivity}\\
+&(k = 1) \rightarrow \mbox{critical}\\
+\beta =& \mbox{delayed neutron fraction}\\
+&(\rho < \beta) \mbox{ delayed supercriticality}\\
+&(\rho > \beta) \mbox{ prompt supercriticality}\\
+l =& \mbox{mean neutron lifetime}
+\end{align*}
+
+\subsection{Units of Reactivity}
+Note that the units of $\rho$ can be confusing. 
+
+\input{./rho_units}
+
+\subsection{Thought Experiment}
+%If there were no delayed neutrons, then the time constant for power increase 
+%would be approximately  $l_p$, the prompt neutron lifetime. That isn't the 
+%case, but if it were, the reactor power would proceed thus:
+Reactor power behaves as:
+
+\begin{align}
+l &= \mbox{mean generation time}\\
+n(t+l) &= n(t) + l\frac{dn}{dt} = k n(t)
+\intertext{such that}
+\frac{dn}{dt} &= \left(\frac{k-1}{l}\right)n(t)
+\intertext{which gives}
+n(t) &= n_0e^{\frac{(k-1)t}{l}}
+\intertext{characterized by the time constant}
+T &= \mbox{reactor period}\\
+  &= \frac{l}{k-1}\:.
+\end{align}
+
+In a universe without delayed neutrons, the mean neutron lifetime ($l$) would be 
+the prompt neutron lifetime, $l_p$.  Noting that the prompt neutron lifetime is about 
+$2\times10^{-5}s$, take a moment to think about the implications of this.
+What would it be like to try to control a reactor like that?
+
+\paragraph{Exercise}
+\emph{If a control rod were moved to introduce an excess reactivity of }$0.0005\Delta 
+k$\emph{, what would the power be one second later?}\\
+\hspace*{2em}(a) with $l$ = 0.1s\\
+\hspace*{2em}(b) with $l$ = 1 $\times$ 10$^{-4}$s
+
+Here's what it looks like when something goes prompt supercritical on purpose: \url{https://www.youtube.com/watch?v=6I3JKYdGWTE}
+
+
+\end{document}
