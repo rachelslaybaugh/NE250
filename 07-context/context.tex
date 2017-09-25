@@ -1,0 +1,196 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+\usepackage{tabu}
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% writing elements
+\usepackage{mhchem}
+
+\usepackage{paralist}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, Fa17 \\
+Solution Context and Tools\\
+September 28, 2017}
+\end{center}
+
+\setlength{\unitlength}{1in}
+\begin{picture}(6,.1) 
+\put(0,0) {\line(1,0){6.25}}         
+\end{picture}
+
+We've derived the transport and diffusion equations and started looking at basic ways to solve the diffusion equation. However, I realized that it might be useful to take a step back and set a broader context before we move further. Many of you have nuclear engineering backgrounds, but connecting all of the math to what we're trying to accomplish will help motivate the math.  
+
+As mentioned, we'll mostly focus on reactors in this class. A nuclear reactor is a three-dimensional structure consisting of complicated geometrical shapes made of variety of materials.	 We have a set of geometric constructs that are commonly encountered in modeling reactors. 
+
+\begin{compactitem} 
+\item A unit cell usually consists of a fuel rod, gap, cladding and
+corresponding moderator. It is usually surrounded by similar
+cells. A fuel rod consists of fuel pellets.	
+
+\item A fuel assembly usually consists of several hundred fuel rods
+(fuel cells).	
+
+\item A reactor core consists of several hundred fuel assemblies.	
+
+\item Fuel assemblies and fuel rods are usually arranged in a square or
+hexagonal lattice.	
+
+\item Instead of fuel pellets, the fuel could be in the form of coated fuel
+particles (TRISO particles).	
+
+\item Coated fuel particles could be arranged into fuel compacts or
+pebbles (Pebble Bed Reactor).	
+
+\item There are also new designs that use liquid fuels. 
+\end{compactitem}
+%
+(switch to ppt for image examples)
+
+%-------------------------------------------------------------
+%-------------------------------------------------------------
+\vspace{-1 em}
+\subsection*{Solution Context}%
+\begin{figure}[h!]
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 4.5 in]{../figs/solver-map}
+    \end{center}
+    \caption{Neutronics Solution Process}
+    \label{fig:context}
+\end{figure}
+%
+We have many different types of geometries and physics going on with the systems we're interested in. However, we take the same fundamental approach no matter what. In this class we're looking at analytical methods. This is what you can do with theory, pen, and paper that form a foundation for computational methods (255). The foundation is important for thinking through ideas and gauging the validity of software output. 
+
+Inside the box of computational methods, we have two main categories: 
+\begin{compactitem}
+\item \textbf{Deterministic}: discretize all independent variables, obtain a set of coupled, linear, algebraic equations and develop a numerical method to solve them.
+\item \textbf{Probabilistic}: follow the history of each relevant particle based on the underlying probabilities for various types of interactions.
+\end{compactitem}
+%
+Everything we've done so far applies to both methods (we've only simplified the equation). Each method has its own benefits and challenges. We'll talk a bit about \textbf{deterministic first}. Here, the discretization methods are a big part of the strategy, followed by parallelization.
+
+The size of the problems (which impacts memory and parallelization performance) is governed by discretization. The quality and behavior of solutions is also governed by discretization. To get more accurate fluxes, typical transport problems today are three-dimensional, have up to thousands $\times$ thousands $\times$ thousands of mesh points, use up to $\sim$150 energy groups, include accurate expansions of scattering terms, and are solved over many directions. 
+%
+%\begin{table}[!h]
+%\caption{Meaning and Range of Indices Used in Transport Discretization}
+%\begin{center}
+%\begin{tabular}{l c c c c c c}
+%\hline
+%Variable & Symbol & First & Last & Low & High \\[0.5ex]
+%\hline
+%Energy & g & 1 & G & 2 & 100s \\
+%Solid Angle & a & 1 & n & $S_2$ & $S_{16}$ \\
+%Space & n/a & n/a & n/a & 1? & 1e9 \\
+%Legendre moment ($P_{N}$) & $l$ & 0 & N & 0 & 9 \\
+%%Spherical harmonic moment ($Y$) & m & 0 & $l$ \\
+%\hline
+%\end{tabular}
+%\end{center}
+%\label{table:index}
+%\end{table}
+
+E.g.\ In 2012, a Pressurized Water Reactor (PWR)-900 with 44 groups, a 578 $\times$ 578 $\times$ 700 mesh, using $S_{16}$ level-symmetric quadrature, and with $P_{0}$ scattering was solved: 1.7 trillion unknowns.
+
+With \textbf{Monte Carlo}, we sample the physics of every single interaction of every single particle until we have enough samples to assert that something is statistically valid. This requires lots and lots of samples, but is typically fairly easy to parallelize. Monte Carlo requires strategies and rules for sampling the physics--which can be complicated. See \autoref{fig:mc}.
+\begin{figure}[h!]
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 4 in]{../figs/MC}
+    \end{center}
+    \caption{Monte Carlo particle tracking}
+    \label{fig:mc}
+\end{figure}
+
+
+\subsection*{Comparison}
+In order of increasing accuracy\textit{ and} increasing runtime: 
+\begin{enumerate}
+\item Diffusion Theory
+  \begin{compactitem}
+  \item discretized and homogenized space
+  \item linearly anisotropic direction
+  \item discretized energy (few-group)
+  \end{compactitem}
+\item Deterministic
+  \begin{compactitem}
+  \item discretized space
+  \item discretized direction (discrete ordinates [$S_N$]) or 
+        functional expansion of direction (spherical harmonics)
+  \item discretized energy (multi-group)
+  \end{compactitem}
+\item Monte Carlo
+  \begin{compactitem}
+  \item continuous spatial resolution
+  \item continuous direction representation
+  \item continuous energy representation
+  \end{compactitem}
+\end{enumerate}
+
+See Table~\ref{tab:comparison} for a comparison between methods.
+
+\begin{center}
+\begin{table}
+\caption{Comparison of MC and Deterministic methods}
+\begin{tabu}{| l | X | X |}
+  \hline
+  & Monte Carlo         & Deterministic \\\hline
+    % -----------------------
+    Strengths & * General geometry    & * Fast \\
+              & * Continuous Energy   & * Global Solution\\
+              & * Continuous in Angle & * Solution is of same quality everywhere\\
+              & * Inherently 3-D      & * Inputs can be pretty simple \\
+              & * Easy to parallelize on CPUs & \\\hline
+    % -----------------------
+    Weaknesses & * Slow & * Variable discretization governs solution quality \\
+               & * Might be memory intensive & * Might be memory intensive \\
+               & * Solutions have statistical error & * Solution contains truncation error\\
+               & * Local solutions only & * Constrained by what you can mesh \\
+               & * Must adequately sample phase space & * Ray Effects \\
+               & * Need efficient VR & * Can be complicated to parallelize on CPUs \\
+               & * Input can be extremely complicated & \\\hline
+\end{tabu}
+\label{tab:comparison}
+\end{table}
+\end{center}
+%We tend to think of Monte Carlo as ``benchmark quality" and highly flexible. \\
+%What is one major hazard of Monte Carlo?\\
+%What is the biggest challenge of using MC for detailed design?
+
+
+\end{document}

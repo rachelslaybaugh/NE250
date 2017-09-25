@@ -1,0 +1,119 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+\usepackage{tabu}
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% writing elements
+\usepackage{mhchem}
+
+\usepackage{paralist}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, Fa17 \\
+Nuclear Data\\
+TBD, 2017}
+\end{center}
+
+\setlength{\unitlength}{1in}
+\begin{picture}(6,.1) 
+\put(0,0) {\line(1,0){6.25}}         
+\end{picture}
+
+ Each component is incredibly important, but let's take a moment to talk about \textbf{Nuclear Data}.
+
+We need a description of all of the physical interactions happening inside a nuclear reactor that we can use in our equation. An \textit{evaluated nuclear data file} is a collection of various data enabling to reconstruct, for each isotope, its cross-section's 
+\begin{compactitem}
+\item general information
+\item resonance parameters 
+\item angular distribution for emitted particles 
+\item energy distribution for emitted particles 
+\item energy-angle distribution for emitted particles 
+\item thermal neutron scattering law data 
+\item radioactivity and fission-product yield data 
+\item multiplicities for radioactive nuclide production 
+\item cross-sections for radioactive nuclide production
+\end{compactitem}
+
+There are many evaluations coming from various countries such as: USA, Europe, Japan, Russia, China, \dots Getting from experimental data (what we have of it) + theory (however accurate that is) to data that can actually be used in a code is no small feat. And, that process is sort of a mess...
+\begin{figure}[h!]
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 6 in]{figs/data-notes}
+    \end{center}
+    \caption{Notes from a meeting where someone tried to explain this to me}
+    \label{fig:datanotes}
+\end{figure}
+\begin{figure}[h!]
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 4.5 in]{figs/hurst-code-map}
+    \end{center}
+    \caption{A more coherent (but less comprehensive) set}
+    \label{fig:hurstfig}
+\end{figure}
+
+We won't go through all of this, but I think it's important to have context about what this is and how confusing it can be. There is a lot of data and many formats. In computation you will pretty much only need to interface with ENDF and its equivalents. 
+
+The data that we use is complicated, and can be quite different depending on the application we're interested in. Let's look at some (back to ppt).
+
+%-------------------------------------------------------------
+%-------------------------------------------------------------
+\subsection*{Physics Impacts}
+We are often able to use knowledge about the physics to inform method development or, at the very least, choose which methods are more appropriate given our physics. 
+
+For example, you may notice is how, in particular, Fast and Thermal reactor physics differ. We often need different codes to deal with LWRs and FRs (note: CASL and NEAMS are different initiatives...). 
+%
+Many of the assumptions employed in traditional LWR methods do not apply:
+\begin{compactitem}
+\item Lack of a 1/E energy spectrum as a basis for the calculation of resonance absorption.
+\item Upscattering resulting from the thermal motion of the scattering nuclei may be neglected.
+\item Inelastic, (n, 2n), and anisotropic scattering are quite important.
+\item Long mean free paths imply global coupling. That is, local reactivity effects impact the entire core.  
+\item The energy range where neutrons induce fission and the energy range where the fission neutrons appear strongly overlap.
+\end{compactitem}
+%
+Other physics considerations have high priority in FR methods
+\begin{compactitem}
+\item Detailed energy modeling for resonance structure (core/reflector).
+\item Transport and anisotropy effects are more important at high energy.
+\end{compactitem}
+%
+In general, a distinct set of physics analysis and core design tools with tailer assumptions have been and are being developed for FR analysis.
+
+
+\end{document}
