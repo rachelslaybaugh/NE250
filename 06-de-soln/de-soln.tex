@@ -51,7 +51,7 @@
 \begin{document}
 \begin{center}
 {\bf NE 250, F17\\
-September 15, 2017 
+September 22, 2017 
 }
 \end{center}
 
@@ -128,7 +128,7 @@ J_x(0^+) - J_x(0^-) = S_0\:.\]
 We can use this to examine two sets of equations and boundary conditions.
 
 
-(1) For $x < 0$, $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.\\
+(1) For $x > 0$, $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.\\
 %
 Boundary conditions: 
 \ifeqns
@@ -141,7 +141,7 @@ Boundary conditions:
 \vspace*{5em}
 \fi
 
-(2) For $x > 0$, \: $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.\\
+(2) For $x < 0$, \: $\frac{d^2\phi}{dx^2} - \frac{1}{L^2}\phi(x) = 0$.\\
 %
 Boundary conditions: 
 \ifeqns
@@ -159,21 +159,21 @@ With the above equations and boundary conditions, we have a general solution for
 %
 \ifeqns
 \begin{equation*}
-\phi(x) = c_1e^{-x/L} + c_2e^{x/L}.
+\phi(x) = c_1e^{-|x|/L} + c_2e^{|x|/L}.
 \end{equation*}
 \else
 \vspace*{3em}
 \fi
 
-From the finite flux condition, $c_2 = 0$. Then, $\phi(x) = c_1e^{-x/L}$.
+From the finite flux condition, $c_2 = 0$. Then, $\phi(x) = c_1e^{-|x|/L}$.
 \ifeqns
 \begin{align*}
-\lim\limits_{x\to 0^+} \vec{J}(x) &= \lim\limits_{x\to 0^+}\left(\frac{D}{L}c_1e^{-x/L}\right) = 
+\lim\limits_{x\to 0^+} \vec{J}(x) &= \lim\limits_{x\to 0^+}\left(\frac{D}{L}c_1e^{-|x|/L}\right) = 
 \frac{D}{L}c_1 = \frac{S_0}{2}\\
 %
 c_1 &= \frac{S_0 L}{2D}\\
 %
-\phi(x) &= \boxed{\frac{S_0L}{2D}e^{-x/L}}
+\phi(x) &= \boxed{\frac{S_0L}{2D}e^{-|x|/L}}
 \end{align*}
 \else
 \vspace*{9em}\\
@@ -203,7 +203,7 @@ Boundary conditions:
 Boundary conditions: 
 \ifeqns
 \begin{align*}
-{x\rightarrow 0^-}\vec{J}(x) &= -\frac{S_0}{2} \:,\\
+\lim\limits_{x\rightarrow 0^-}\vec{J}(x) &= -\frac{S_0}{2} \:,\\
 %
  \phi(-\tfrac{\tilde{a}}{2}) &= 0
 \end{align*}
@@ -212,10 +212,10 @@ Boundary conditions:
 \fi
 
 Now, we can again write the equations as
-\[\phi(x) = c_1e^{-x/L} + c_2e^{x/L}\]
+\[\phi(x) = c_1e^{-|x|/L} + c_2e^{|x|/L}\]
 Or, with equal validity  (which we could have also done before)
 \ifeqns
-\[\phi(x) = c_1\cosh(\tfrac{x}{L}) + c_2\sinh(\tfrac{x}{L})\]
+\[\phi(x) = c_1\cosh(\tfrac{|x|}{L}) + c_2\sinh(\tfrac{|x|}{L})\]
 \else
 \vspace*{3em}\\
 \fi
@@ -233,7 +233,7 @@ width $a$ with vacuum boundaries.
 \end{equation*}
 \ifeqns
 \begin{equation*}
-\phi(x) = c_1e^{-x/L} + c_2e^{x/L} + \frac{S_0L^2}{D}
+\phi(x) = c_1e^{-|x|/L} + c_2e^{|x|/L} + \frac{S_0L^2}{D}
 \end{equation*}
 \else
 \vspace*{3em}
@@ -266,7 +266,7 @@ We need a collection of boundary conditions (where subscript indicates region nu
 \phi_2(\tfrac{a}{2}) = \phi_3(\tfrac{a}{2}) \\
 \vec{J}_2(\tfrac{a}{2}) = \vec{J}_3(\tfrac{a}{2}) \\
 \phi_1(-\tfrac{a}{2}) = \phi_2(-\tfrac{a}{2}) \\
-\vec{J}_1(-\tfrac{a}{2}) = \vec{J}_3(-\tfrac{a}{2}) 
+\vec{J}_1(-\tfrac{a}{2}) = \vec{J}_2(-\tfrac{a}{2}) 
 \end{gather*}
 \else
 \vspace*{12em}\\
