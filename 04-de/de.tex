@@ -297,13 +297,13 @@ Expand the scattering cross section in Legendre Polynomials, which are a sequenc
 
 Use the polynomials as follows and begin writing out terms of the expansion:
 \begin{align*}
-&\Sigma_s(\vOmega' \cdot \vOmega) = \sum_{l=0}^{\infty} \frac{2l+1}{4\pi} \Sigma_{sl} P_l(\vOmega')P_l(\vOmega) \\
+&\Sigma_s(\vOmega' \cdot \vOmega) = \sum_{l=0}^{\infty} \frac{2l+1}{4\pi} \Sigma_{sl} P_l(\vOmega' \cdot \vOmega) \\
 %
-&l=0 \text{ is isotropic; (note } P_0 (\vOmega) = 1 \text{)}\\
+&l=0 \text{ is isotropic; (note } P_0 (\vOmega' \cdot \vOmega) = P_0(\mu) = 1 \text{)}\\
 &\qquad \Sigma_s(\vOmega' \cdot \vOmega) \cong \frac{1}{4\pi}\Sigma_{s0} \\
 %
-&l=1 \text{ is linearly anisotropic; (note } P_1 (\vOmega) = \vOmega \text{)}\\
-&\qquad \Sigma_s(\vOmega' \cdot \vOmega) \cong \frac{1}{4\pi}\bigl( \Sigma_{s0} + 3\vOmega' \vOmega \Sigma_{s1} \bigr) 
+&l=1 \text{ is linearly anisotropic; (note } P_1 (\vOmega' \cdot \vOmega) = P(\mu) = \mu \text{)}\\
+&\qquad \Sigma_s(\vOmega' \cdot \vOmega) \cong \frac{1}{4\pi}\bigl( \Sigma_{s0} + 3 \mu \Sigma_{s1} \bigr) = \frac{1}{4\pi}\bigl( \Sigma_{s0} + 3 \vOmega' \cdot \vOmega \Sigma_{s1} \bigr)
 \end{align*}
 
 We're going to \textbf{assume that scattering is at most linearly anisotropic}, so we will stop expanding here.
@@ -424,7 +424,7 @@ If we also assume \underline{steady state} (or weak temporal dependence) and \un
 %
 \ifeqns
 \begin{align*}
-\frac{1}{3} \nabla \phi(\vec{r}, t) +
+\frac{1}{3} \nabla \phi(\vec{r}) +
 \Sigma_{tr}  &\vec{J}(\vec{r}) = 0 \\
 &\boxed{\vec{J}(\vec{r}) = -\frac{1}{3\Sigma_{tr}} \nabla \phi(\vec{r}) = -D\nabla \phi(\vec{r}) } \qquad \text{Fick's Law}
 \end{align*}
