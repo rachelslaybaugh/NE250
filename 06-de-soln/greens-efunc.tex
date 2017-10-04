@@ -176,7 +176,7 @@ and an eigenvalue is
 -----------------------------\\
 We'll start with an example to see how the method works for our problems. We'll look at a similar problem as before:
 \begin{align*}
-\nabla^2\phi(\vec{r}) &- \frac{1}{L^2}\phi(\vec{r}) = -\frac{S(\vec{r})}{D} \:, \quad \forall \vec{r} \in V \\
+\nabla^2\phi(\vec{r}) &- \Sigma_a\phi(\vec{r}) = -\frac{S(\vec{r})}{D} \:, \quad \forall \vec{r} \in V \\
 & \phi(\vec{r}) &= 0\:, \quad \forall \vec{r} \in \mathcal{S}
 \end{align*}
 Now, we introduce the eigenfuction expansion, where the subscript $n$ indicates the $n$th mode:
@@ -187,9 +187,44 @@ Now, we introduce the eigenfuction expansion, where the subscript $n$ indicates 
 \psi_n (\vec{r}) &= 0\:, \quad \forall \vec{r} \in \mathcal{S}
 \end{align*}
 
-We will use the orthonormality condition 
+We will use the property that eigenfunctions form a complete set. That is, any function, including our solution, can be expressed as a linear combination of eigenfunctions:
+\[
+\phi(\vec{r}) = \sum_{n=1}^N c_n \psi_n\:, \quad \text{where } c_n \text{ are coefficients.}
+\]
+We substitute this, and then our eigenvalue relationship, into the diffusion equation while also expanding the source term:
+\begin{align}
+\nabla^2\sum_{n=1}^N c_n \psi_n &- \Sigma_a\sum_{n=1}^N c_n \psi_n = -\frac{-}{D}\sum_{n=1}^N S_n \psi_n \nonumber \\
+%
+\sum_{n=1}^N c_n &(B_n^2 + \Sigma_a)\psi_n = -\frac{1}{D}\sum_{n=1}^N S_n \psi_n
+\label{eq:evec}
+\end{align}
 
+Next, we're going to use the orthonormality property of eigenvectors:
+\[
+\int_V dV\: \psi_n \psi_m = \left\{
+	\begin{array}{ll}
+		1  & \mbox{if } n = m \\
+		0 & \mbox{if } n \neq m
+	\end{array}
+	\right.
+\]
+We will use this to find our $c_n$ by multiplying \autoref{eq:evec} by $\psi_m$ and integrating over volume:
+\begin{align*}
+\int_V dV\: \sum_{n=1}^N c_n &(B_n^2 + \Sigma_a)\psi_n \psi_m = -\int_V dV\:\frac{1}{D}\sum_{n=1}^N S_n \psi_n \psi_m \\
+%
+c_n &(B_n^2 + \Sigma_a) = \frac{1}{D} S_n\\
+c_n &= \frac{S_n / \Sigma_a}{1 + B_n^2  L^2}
+\end{align*}
+Noting 
+\[
+S_n = \int_V dV\: S(\vec{r}) \psi_n
+\]
+We get
+\[
+\phi(\vec{r}) = \int_V dV\:\sum_{n=1}^N \\frac{S(\vec{r}) / \Sigma_a}{1 + B_n^2  L^2} \psi_n \psi_n 
+\]
 
-
+\subsection*{Examples}
+Let's solve a problem to see what this looks like in a system we're trying to solve. 
 
 \end{document}
