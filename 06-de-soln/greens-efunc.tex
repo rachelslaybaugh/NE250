@@ -46,6 +46,8 @@
 \newcommand{\el}{\ensuremath{\ell}}
 \newcommand{\sigso}{\ensuremath{\Sigma_{s,0}}}
 \newcommand{\sigsi}{\ensuremath{\Sigma_{s,1}}}
+\newcommand{\cc}[1]{\ensuremath{\overline{#1}}}
+\newcommand{\ccm}[1]{\ensuremath{\overline{\mathbf{#1}}}}
 %---------------------------------------------------------------------------
 %---------------------------------------------------------------------------
 \begin{document}
@@ -136,6 +138,56 @@ Then we substitute this in to get
 
 %-------------------------
 \subsection*{Eigenfunction Expansion Method}
+A powerful method for solving boundary value problems is to obtain the solution as an expansion in the set of eigenfunctions. 
+
+\subsection*{Eigenvalue Review}
+
+Eigenvalues are a special set of scalars associated with a linear system of equations (a matrix equation) that are sometimes also known as characteristic roots. 
+
+Each eigenvalue is paired with a corresponding so-called eigenvector.
+
+The decomposition of a square matrix $\ve{A}$ into eigenvalues and eigenvectors is known as eigen decomposition, and the fact that \textbf{this decomposition is always possible as long as the matrix consisting of the eigenvectors of $\ve{A}$ is square} is known as the eigen decomposition theorem.
+
+Let $\ve{A} \in \mathbb{R}^{n \times n}$. If there is a vector $\vec{x} \in \mathbb{R}^{n}$ such that
+%
+\[\ve{A} \vec{x} = \lambda \vec{x}\]
+%
+for some scalar $\lambda$, then $\lambda$ is an eigenvalue of $\ve{A}$ with a corresponding (right) eigenvector $\vec{x}$. Note that the eigenvalue represents the ``stretching factor" in the direction of its associated eigenvector. 
+
+(\url{http://math.stackexchange.com/questions/54176/is-there-a-geometric-meaning}\\ \url{-of-the-frobenius-norm})
+ 
+We find eigenvalues by re-writing the stated relationship as $(\ve{A} - \lambda \ve{I})\vec{x}=0$ and solving for the $\lambda$s that make this true. The $\lambda$s are then the eigenvalues and the $\vec{x}$s that go with them are the corresponding eigenvectors. 
+
+A linear system of equations has nontrivial solutions iff the determinant vanishes (Cramer's rule; related to the theorem for finding out if a solution exits that we talked about above), so the solutions of this equation are given by
+%
+\[\det(\ve{A} - \lambda \ve{I})=0 \:.\] 	
+%
+This equation is known as the characteristic equation of $\ve{A}$, and the left-hand side is known as the characteristic polynomial.
+
+Since an \nth degree polynomial has $n$ roots, $\ve{A}_{n \times n}$ is guaranteed to have $n$ real and/or complex eigenvalues, some of which may be repeated: $\lambda_1, \lambda_2, \dots, \lambda_n$.
+
+This gives $\ve{A}\vec{u}_1 = \lambda_1 \vec{u}_1$, etc.
+
+The spectrum of eigenvalues of a matrix $\ve{A}$ are defined formally as
+\[\sigma(\ve{A}) = [ \lambda \in \mathbb{C} : \det(\ve{A} - \lambda \ve{I})=0] \] 
+and an eigenvalue is 
+\[ \lambda \in \sigma(\ve{A})\:,\]
+
+-----------------------------\\
+We'll start with an example to see how the method works for our problems. We'll look at a similar problem as before:
+\begin{align*}
+\nabla^2\phi(\vec{r}) &- \frac{1}{L^2}\phi(\vec{r}) = -\frac{S(\vec{r})}{D} \:, \quad \forall \vec{r} \in V \\
+& \phi(\vec{r}) &= 0\:, \quad \forall \vec{r} \in \mathcal{S}
+\end{align*}
+Now, we introduce the eigenfuction expansion, where the subscript $n$ indicates the $n$th mode:
+\begin{align*}
+\nabla^2 \psi_n (\vec{r}) &+ B_n^2 \psi_n (\vec{r}) = 0\:, \quad \forall \vec{r} \in V  \\
+%
+\nabla^2 &\psi_n (\vec{r}) =  -B_n^2 \psi_n (\vec{r}) \qquad \text{Note: } \ve{A} = \nabla^2\: \text{ and }\: \lambda = -B_n^2\\
+\psi_n (\vec{r}) &= 0\:, \quad \forall \vec{r} \in \mathcal{S}
+\end{align*}
+
+We will use the orthonormality condition 
 
 
 
