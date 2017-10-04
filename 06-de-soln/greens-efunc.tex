@@ -1,0 +1,143 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\newif\ifeqns
+\eqnstrue
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% writing elements
+\usepackage{mhchem}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\vecr}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\sigs}{\ensuremath{\Sigma_s(\rvec,E'\rightarrow E,\omvec'\rightarrow\omvec)}}
+\newcommand{\el}{\ensuremath{\ell}}
+\newcommand{\sigso}{\ensuremath{\Sigma_{s,0}}}
+\newcommand{\sigsi}{\ensuremath{\Sigma_{s,1}}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, F17\\
+October 5, 2017 
+}
+\end{center}
+
+Duderstadt and Hamilton Chp.\ 5.
+
+The last thing we were working on was how to solve the \textbf{one-speed} diffusion equation:
+
+\begin{equation*}
+\frac{1}{v_1}\frac{\partial \phi_1(\rvec,t)}{\partial t} = S_1(\rvec,t) - 
+\Sigma_{a,1}(\rvec)\phi_1(\rvec,t) + \nabla\cdot[D_1(\rvec)\nabla\phi_1(\rvec,t)]
+\end{equation*}
+We had then looked at steady state and homogeneous to get 
+\ifeqns
+\begin{equation*}
+\nabla^2\phi(\vecr) - \frac{1}{L^2}\phi(\rvec) = -\frac{S(\rvec)}{D},
+\end{equation*}
+\else
+\vspace*{3em}
+\fi
+
+The one-group formulation is actually quite useful when thinking through initial design concepts. You can layer together geometry components and see if ideas have any validity at all, and this is something you can do by hand to check computational results. 
+
+There are three main ways to solve this. Last time we focused on variation of constants/parameters, which is likely what you learned first in differential equations class. You can get more information in any Diff.\ Eq.\ text book, or start at Wikipedia and go from there (\url{https://en.wikipedia.org/wiki/Variation_of_parameters}).
+
+This class we'll look at \textbf{Green's Functions} and the \textbf{Eigenfunction Expansion} method. Having multiple tools available can allow you to solve different problems with whichever one is the easiest for that problem. Further, these methods can be used in more sophisticated contexts later on, so it's worth understanding each of them. 
+
+\subsection*{Green's Functions}
+A Green's function is the impulse response of an inhomogeneous linear differential equation defined on a domain, with specified initial conditions or boundary conditions.
+
+Through the superposition principle for linear operator problems, the convolution of a Green's function with an arbitrary function $f(x)$ on that domain is the solution to the inhomogeneous differential equation for $f (x)$. \url{https://en.wikipedia.org/wiki/Green\%27s_function}
+
+To see how this works, we start with two equations. We'll consider a unit source located at $\vec{r'}$. The first equation is the way we're used to seeing it:
+\begin{align}
+\nabla &\cdot D \nabla \phi(\vec{r}) + \Sigma_a \phi(\vec{r}) = -S(\vec{r}) \:, \qquad \forall \vec{r} \in V  \\
+%
+&\phi(\vec{r}) = 0\:, \qquad \forall \vec{r} \in \mathcal{S} \equiv \partial V\:.\ \nonumber
+ \label{eq:de}
+\end{align}
+%
+We will also state that $G(\vec{r}, \vec{r'})$ is the flux at $\vec{r}$ due to a unit source at $\vec{r'}$. Since this is a solution to our problem, we can write:
+\begin{align}
+\nabla &\cdot D \nabla G(\vec{r}, \vec{r'}) + \Sigma_a G(\vec{r}, \vec{r'}) = -\delta(\vec{r} - \vec{r'}) \:, \qquad \forall \vec{r} \in V  \\
+%
+&G(\vec{r}, \vec{r'}) = 0\:, \qquad \forall \vec{r} \in \mathcal{S} \equiv \partial V\:. \nonumber
+\label{eq:green}
+\end{align}
+
+Now, we'll take the approach of multiplying the LHS of each equation by the opposite solution function, subtracting, and integrating over phase space. This is a common math trick that we'll use again later.
+\begin{align*}
+\int_V dV\: \bigl[(\nabla &\cdot D \nabla \phi(\vec{r}))G(\vec{r}, \vec{r'}) + (\Sigma_a \phi(\vec{r})) G(\vec{r}, \vec{r'}) \\
+-(\nabla &\cdot D \nabla G(\vec{r}, \vec{r'}))\phi(\vec{r}) - (\Sigma_a G(\vec{r}, \vec{r'}))\phi(\vec{r}) \bigr] = 0\\
+\end{align*}
+We can see this by using divergence theorem and the boundary conditions to note:
+\[\int_{\mathcal{S}} d\mathcal{S}\: \hat{e}_s \cdot D[\nabla \phi(\vec{r}))G(\vec{r}, \vec{r'}) - \nabla G(\vec{r}, \vec{r'}))\phi(\vec{r})] = 0\]
+
+From there, we can subtract the right hand sides to see:
+\begin{align*}
+\int_V dV\: &S(\vec{r})G(\vec{r}, \vec{r'}) - \delta(\vec{r} - \vec{r'})\phi(\vec{r}) = 0\\%
+\phi(\vec{r'}) = \int_V dV\: S(\vec{r})G(\vec{r}, \vec{r'})\\
+\text{or }\: \phi(\vec{r}) = \int_V dV\: S(\vec{r'})G(\vec{r'}, \vec{r})
+\end{align*}
+%
+Thus, we have shown that the Green's function is the general solution to the diffusion equation. This is also known as a kernel.
+
+The challenge is: how do we find $G(\vec{r}, \vec{r'})$? We'll use some of the strategies we've already developed. Consider a plane source in an infinite medium:
+\begin{align*}
+\frac{d^2\phi}{dx^2} &- \frac{1}{L^2}\phi(x) = -S(x)\delta(x)\\
+&\lim_{x \rightarrow \pm \infty} \phi(x) = 0\\
+%
+\frac{d^2 G(x,x')}{dx^2} &- \frac{1}{L^2}G(x,x') = -S(x)\delta(x)\\
+&\lim_{x \rightarrow \pm \infty} G(x,x') = 0
+\end{align*}
+
+Now we use variation of constants like we were doing before to get
+\[
+G(x,x') = \frac{L}{2D} H(x-x') \exp[\frac{-|x-x'|}{L}] +  \frac{L}{2D}(1- H(x-x')) \exp[\frac{|x-x'|}{L}]\]
+Then we substitute this in to get
+\begin{align*}
+\phi &= \int_{-\infty}^{\infty} dx'\: G(x,x')\delta(x') S\\
+\phi &= \frac{SL}{2D} \exp(\frac{-|x|}{L})
+\end{align*}
+
+%-------------------------
+\subsection*{Eigenfunction Expansion Method}
+
+
+
+
+\end{document}
