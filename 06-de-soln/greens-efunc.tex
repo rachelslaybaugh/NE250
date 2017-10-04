@@ -59,6 +59,8 @@ October 5, 2017
 
 Duderstadt and Hamilton Chp.\ 5.
 
+** In these notes, $\psi$ is a generic function, the the angular flux **
+
 The last thing we were working on was how to solve the \textbf{one-speed} diffusion equation:
 
 \begin{equation*}
@@ -221,10 +223,77 @@ S_n = \int_V dV\: S(\vec{r}) \psi_n
 \]
 We get
 \[
-\phi(\vec{r}) = \int_V dV\:\sum_{n=1}^N \\frac{S(\vec{r}) / \Sigma_a}{1 + B_n^2  L^2} \psi_n \psi_n 
+\phi(\vec{r}) = \int_V dV\:\sum_{n=1}^N \frac{S(\vec{r}) / \Sigma_a}{1 + B_n^2  L^2} \psi_n \psi_n 
 \]
 
-\subsection*{Examples}
-Let's solve a problem to see what this looks like in a system we're trying to solve. 
+
+-------------------------------\\
+Our question now is that are the $\psi_n$ and $B_n$?
+We'll look at a real example to figure that out. %$S_0$ is a uniform source over $-a/2 \leq x \leq a/2$:
+\begin{align*}
+\frac{d^2 \phi}{dx^2} &- \frac{1}{L^2} \phi(x) = \frac{-S(x)}{D}\:, \quad -a/2 \leq x \leq a/2\\
+\phi(\pm \frac{\tilde{a}}{2}) &= 0
+\end{align*}
+%From before, we know the homogeneous solution can be written as a combination of exponentials, and the particular solution is $\frac{S_0 L^2}{D}$ giving
+%\[
+%\phi(x) = A \exp(-\frac{|x|}{L}) + B \exp(\frac{|x|}{L}) + \frac{S_0 L^2}{D} \:.
+%\]
+We're taking the source to be arbitrary, so we cannot assume symmetry. To solve, we'll take a somewhat roundabout approach to connect our problem to an eigenvalue solution. We'll look at how to solve the similar problem
+\begin{align*}
+\frac{d^2 \psi}{dx^2} &- B^2 \psi(x) = 0\:, \quad -a/2 \leq x \leq a/2\\
+\psi(\pm \frac{\tilde{a}}{2}) &= 0\:,
+\end{align*}
+where $B^2$ is an arbitrary parameter.
+
+We can get the homogeneous solution as a combination of trig functions:
+\begin{align*}
+\psi(x) &= A_1 \cos(Bx) + A_2 \sin(Bx)\\
+\psi(\pm \frac{\tilde{a}}{2}) &= A_1 \cos(\frac{B \tilde{a}}{2}) \pm A_2 \sin(\frac{B \tilde{a}}{2}) \:.
+\end{align*}
+To get a non-trivial solution, we need
+\begin{align*}
+c_2 &= 0 \:, \quad \cos(\frac{B \tilde{a}}{2}) = 0 \rightarrow \cos(\frac{B \tilde{a}}{2}) = \frac{n \pi}{\tilde{a}} \text{ when }n \text{ is odd}\\
+c_1 &= 0 \:, \quad \sin(\frac{B \tilde{a}}{2}) = 0 \rightarrow \cos(\frac{B \tilde{a}}{2}) = \frac{n \pi}{\tilde{a}} \text{ when }n \text{ is event}\\
+\psi_n(x) &= 
+\left\{
+	\begin{array}{ll}
+		A_n \cos(\frac{n \pi x}{\tilde{a}})  & \mbox{if } n = \text{ odd} \\
+		A_n \sin(\frac{n \pi x}{\tilde{a}}) & \mbox{if } n = \text{ even}
+	\end{array}
+	\right.
+\end{align*}
+%
+What we are seeing here is that the eigenvalues are $B_n = \frac{n \pi}{\tilde{a}}$, and the eigenvectors are the $\psi_n$. 
+
+Note that in a symmetric problem, the sin term would drop out b/c it's not symmetric. Further, another term for the eigenvectors or eigenfucntions is \textit{normal modes} or \textit{harmonic modes}. 
+
+Also note that the $A_n$ remain undetermined. These are arbitrary, and in a real system would determine the amplitude of the flux shape. What do you think would set $A_n$ in a real system?
+
+What now? Well, we can see clearly that our functions hold the orthogonality property. We can also see that they form a complete set. Thus, we will use our eigenfuctions to create solutions like we did above:
+\begin{align*}
+\phi(\vec{r}) &= \sum_{n=1}^N c_n \psi_n \\
+S(\vec{r}) &= \sum_{n=1}^N \phi_n S_n
+\end{align*}
+This time our problem has defined boundaries and thus
+\[
+S_n = \int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx\: S(x) \psi_n
+\]
+
+To find the $c_n$ we substitute our expansion into our original equation:
+\begin{align*}
+\frac{d^2 }{dx^2} &\sum_{n=1}^N c_n \psi_n - \frac{1}{L^2} \sum_{n=1}^N c_n \psi_n = \frac{-1}{D}\sum_{n=1}^N \phi_n S_n\:,\\
+%
+\sum_{n=1}^N c_n& \bigl( B_n + \frac{1}{L^2}\bigr)\psi_n = \frac{1}{D}\sum_{n=1}^N \phi_n S_n
+\end{align*}
+We do our multiply, integrate, orthogonality trick, and we again see
+\begin{align*}
+c_n &= \frac{S_n / \Sigma_a}{1 + B_n^2  L^2} \\
+\phi(x) = \frac{1}{\Sigma_a} \sum_{n=1}^N \frac{s_n}{1 + B_n^2  L^2} \psi_n
+\end{align*}
+Only know we know $\psi_n$ and $B_n$!
+
+
+\subsection*{Connection to Green's Functions}
+And finally, we can see this is the same things as Green's Functions.
 
 \end{document}
