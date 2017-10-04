@@ -276,7 +276,7 @@ S(\vec{r}) &= \sum_{n=1}^N \phi_n S_n
 \end{align*}
 This time our problem has defined boundaries and thus
 \[
-S_n = \int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx\: S(x) \psi_n
+S_n = \frac{2}{\tilde{a}} \int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx\: S(x) \psi_n
 \]
 
 To find the $c_n$ we substitute our expansion into our original equation:
@@ -290,10 +290,23 @@ We do our multiply, integrate, orthogonality trick, and we again see
 c_n &= \frac{S_n / \Sigma_a}{1 + B_n^2  L^2} \\
 \phi(x) = \frac{1}{\Sigma_a} \sum_{n=1}^N \frac{s_n}{1 + B_n^2  L^2} \psi_n
 \end{align*}
-Only know we know $\psi_n$ and $B_n$!
+Only now we know $\psi_n$ and $B_n$!
 
 
 \subsection*{Connection to Green's Functions}
-And finally, we can see this is the same things as Green's Functions.
+And finally, we can see this is the same things as Green's Functions. We start by again substitute the source expansion coefficients into the flux:
+\[
+\phi(x) = \int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx\: \biggl[\frac{2}{\tilde{a} \Sigma_a} \sum_{n=1}^N \frac{\psi_n(x) \psi_n(x')}{1 + B_n^2  L^2}  \biggr] S(x')
+\]
+If we compare this to how we expect a Green's Function to look
+\[
+\phi_x = \int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx\: G(x,x') S(x')\:,
+\]
+we can see that
+\[
+G(x,x') = \frac{2}{\tilde{a} \Sigma_a} \sum_{n=1}^N \frac{\psi_n(x) \psi_n(x')}{1 + B_n^2  L^2}\:.
+\]
+
+This relationship between eigenfunctions and Green's Functions is a general result. The coefficients out front will differ based on the dimensionality of the problem, but the concept always holds.
 
 \end{document}
