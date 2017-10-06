@@ -83,7 +83,79 @@ We can write the one-group diffusion equation with fission
 \frac{1}{v} \frac{\partial \phi(\vec{r}, t)}{\partial t} - \nabla \cdot D(\vec{r}) \nabla	\phi(\vec{r}, t) + \Sigma_a(\vec{r}) \phi(\vec{r}, t) = \Sigma_f (\vec{r})\phi(\vec{r}, t)
 \end{equation}
 
-\subsection*{Solutions}
-Let's look at some example cases. 
+\subsection*{Solutions with time dependence}
+Let's start by looking at a uniform slab. We'll keep time dependence.
+\begin{align*}
+\frac{1}{v} \frac{\partial \phi(x, t)}{\partial t}& - D(\vec{r}) \frac{\partial ^2 \phi(x, t)}{\partial x^2} + \Sigma_a(x) \phi(x, t) = \Sigma_f (x)\phi(x, t) \\
+\phi(x,0) &= \phi_0(x) = \phi_0(-x) \quad \text{symmetric}\\
+\phi(\frac{\tilde{a}}{2}, t) &= \phi(-\frac{\tilde{a}}{2}, t) = 0
+\end{align*}
+The starting condition of symmetry (in a symmetric system) means that our flux will stay symmetric over all times.
+
+Notice that by retaining time dependence we have a PDE instead of an ODE. The way we'll handle this here is by assuming a separation of variables:
+\[
+\phi(x,t) = \psi(x) T(t)
+\]
+again noting that $\psi$ is a function and not angular flux.
+
+We can substitute this in and divide by $\psi(x) T(t)$ to get
+\[
+\frac{1}{T}\frac{dT}{dt} = \frac{v}{\psi}\bigl[ D\frac{d^2 \psi}{dx^s} + (\nu \Sigma_f - \Sigma_a) \psi(x) \bigr] = constant \equiv -\lambda \:.
+\]
+This has to be constant b/c one side of the equation varies in space and one varies in time. 
+
+We now have two ODEs:
+\begin{align*}
+\frac{dT}{dt} &= -\lambda T(t) \\
+\bigl[ D\frac{d^2 \psi}{dx^s} &+ (\nu \Sigma_f - \Sigma_a) \psi(x) = -\frac{\lambda}{v} \psi(x) \:.
+\end{align*}
+The time dependent solution is one we're quite used to:
+\[
+T(t) = T(0) e^{-\lambda t}\:,
+\]
+where $T(0)$ is something we must find or be given.
+
+For the spatial problem, we will rearrange the equation adapt our original boundary conditions:
+\begin{align*}
+\bigl[ D\frac{d^2 \psi}{dx^s} &+ (\frac{\lambda}{v} + \nu \Sigma_f - \Sigma_a) \psi(x) = 0 \\
+\psi(\frac{\tilde{a}}{2}, t) &= \psi(-\frac{\tilde{a}}{2}, t) = 0\:.
+\end{align*}
+
+We're going to use the eigenvalue approach we learned last time. Consider the problem
+\begin{align*}
+\frac{d^s \psi_n}{dx^2} &+ B_n^2 \psi_n(x) = 0 \:,\\
+\psi_n(\frac{\tilde{a}}{2}, t) &= \psi_n(-\frac{\tilde{a}}{2}, t) = 0\:.
+\end{align*}
+This time we know we have symmetric solutions, so we only have a cos term:
+\begin{align*}
+\psi_n(x) &= \cos(B_n x) \quad \text{eigenvectors}\\
+B_n^s &= (\frac{n\pi}{\tilde{a}})^2 \quad n = \text{ odd} \quad \text{eigenvalues}
+\end{align*}
+
+We can compare our eigenvalue problem to our space-dependent ODE. If we rearrange things, we can see that 
+\[
+\lambda = v \Sigma_a + v D B_n^2 - v \nu \Sigma_f \equiv \lambda_n \:.
+\]
+The $\lambda_n$ are the time eigenvalues of the equation since they go with the time behavior. 
+
+The general solution of our problem must then look like
+\[
+\phi(x,t) = \sum_{n=\text{odd}} A_n e^(-\lambda_n t) \cos(\frac{n \pi x}{\tilde{a}}) \:.
+\]
+We can use the initial condition and orthogonality to find $A_n$:
+\begin{align*}
+\phi(x,0) &= \phi_0(x) = \sum_{n=\text{odd}} A_n e\cos(\frac{n \pi x}{\tilde{a}})\\
+%
+A_n &= \frac{2}{\tilde{a}}\int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx\: \phi_0(x) \cos(\frac{n \pi x}{\tilde{a}}) \:.
+\end{align*}
+
+This means the flux (for our symmetric distribution) is a superposition of modes weighted by an exponential
+\[
+\phi(x,t) = \sum_{n=\text{odd}} \bigl[\frac{2}{\tilde{a}}\int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx'\: \phi_0(x') \cos(B_n x')\bigr] e^(-\lambda_n t) \cos(B_nx) \:,
+\]
+where
+\[
+\lambda_n = v \Sigma_a + v D B_n^2 - v \nu \Sigma_f \qquad B_n = \frac{n \pi}{\tilde{a}} \:.
+\]
 
 \end{document}
