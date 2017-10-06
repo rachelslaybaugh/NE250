@@ -140,22 +140,36 @@ The $\lambda_n$ are the time eigenvalues of the equation since they go with the 
 
 The general solution of our problem must then look like
 \[
-\phi(x,t) = \sum_{n=\text{odd}} A_n e^(-\lambda_n t) \cos(\frac{n \pi x}{\tilde{a}}) \:.
+\phi(x,t) = \sum_{n=\text{odd}} A_n e^{(-\lambda_n t)} \cos(\frac{n \pi x}{\tilde{a}}) \:.
 \]
 We can use the initial condition and orthogonality to find $A_n$:
 \begin{align*}
-\phi(x,0) &= \phi_0(x) = \sum_{n=\text{odd}} A_n e\cos(\frac{n \pi x}{\tilde{a}})\\
+\phi(x,0) &= \phi_0(x) = \sum_{n=\text{odd}} A_n \cos(\frac{n \pi x}{\tilde{a}})\\
 %
 A_n &= \frac{2}{\tilde{a}}\int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx\: \phi_0(x) \cos(\frac{n \pi x}{\tilde{a}}) \:.
 \end{align*}
 
 This means the flux (for our symmetric distribution) is a superposition of modes weighted by an exponential
 \[
-\phi(x,t) = \sum_{n=\text{odd}} \bigl[\frac{2}{\tilde{a}}\int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx'\: \phi_0(x') \cos(B_n x')\bigr] e^(-\lambda_n t) \cos(B_nx) \:,
+\phi(x,t) = \sum_{n=\text{odd}} \bigl[\frac{2}{\tilde{a}}\int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx'\: \phi_0(x') \cos(B_n x')\bigr] e^{(-\lambda_n t)} \cos(B_nx) \:,
 \]
 where
 \[
 \lambda_n = v \Sigma_a + v D B_n^2 - v \nu \Sigma_f \qquad B_n = \frac{n \pi}{\tilde{a}} \:.
 \]
+Note that the separation of variables approach is essentially the same as the eigenfunction expansion approach. There are times when that is the better path to take.
 
+\subsection*{Behavior at long times}
+You'll note that as time goes on, only the first eigenmodes will survive. This means
+\[
+\phi(x,t) = A_1 e^{(-\lambda_1 t)}\cos(B_1 x)
+\]
+This mode is characterized by
+\[
+B_1^2 = (\frac{\pi}{\tilde{a}})^2 \equiv B_g^2 \:,
+\]
+which we call the \textbf{geometric buckling}. This is a measure of the curvature of the shape of the dominant mode:
+\[
+B_1^2 = - \frac{1}{\psi_1}\frac{d^2 \psi_1}{dx^2}\:.
+\]
 \end{document}
