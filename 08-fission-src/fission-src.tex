@@ -172,4 +172,49 @@ which we call the \textbf{geometric buckling}. This is a measure of the curvatur
 \[
 B_1^2 = - \frac{1}{\psi_1}\frac{d^2 \psi_1}{dx^2}\:.
 \]
+
+\subsection*{Criticality}
+We also care a lot about long time behavior and reactor criticality.  This is where the reactor reaches a time-independent neutron flux, in the absence of sources other than fission, because each neutron causes one more neutron (neglecting depletion of fissionable material). 
+
+If we look at our solution, where the higher modes decay over time, we can see that the fundamental time mode needs to vanish
+\begin{align*}
+\phi(x,t) &= A_1 e^{(-\lambda_1 t)}\cos(B_1 x) + \sum_{n=3,\text{odd}} A_n e^{(-\lambda_n t)} \cos(B_nx)\\
+%
+\lambda_1 &= 0 = v(\Sigma_a - \nu \Sigma_f) + v D B_1^2\\
+%
+\phi(x,t) &= A_1 \cos(B_1 x) \neq f(t)
+\end{align*}
+
+We can use the time eigenvalue of zero to get another relationship, that we call the \textbf{material buckling}.
+\[
+\frac{\nu \Sigma_f - \Sigma_a}{D} \equiv B_m^2
+\]
+The material buckling only contains materials, where as geometric buckling only represents geometry. The materials and geometry must match for criticality. Otherwise, we need to adjust our materials or our geometry:
+\begin{itemize}
+\item $B_m^2 > B_g^2 \rightarrow \lambda_1 < 0$ gives a supercritical state
+\item $B_m^2 = B_g^2 \rightarrow \lambda_1 = 0$ gives a critical state
+\item $B_m^2 < B_g^2 \rightarrow \lambda_1 > 0$ gives a subcritical state
+\end{itemize}
+Another way to think of this is that by increasing core size we decrease $B_g^2$ (less slope, less leakage), which increases system multiplication. When we increase the concentration of fissionable material, we increase $B_m^2$, and increase system multiplication. Those physics are represented in the math we just described. 
+
+How does all of that relate to $k$? Recall
+\[
+k = \frac{\int_V dV\: \nu \Sigma_f \phi(\vec{r})}{\int_V dV\: [\Sigma_a \phi(\vec{r}) - D \nabla^2 \phi(\vec{r})]} = 1 \:.
+\]
+From past courses, hopefully you also recall that
+\[
+k_{\infty} = \frac{\nu \Sigma_f}{\Sigma_a}\:.
+\]
+We also know $L^2 = D/\Sigma_a$. Thus we can say
+\[
+\nabla^2 \phi(\vec{r}) + \frac{k_{\infty} - 1}{L^2} \phi(\vec{r}) = 0\:.
+\]
+If we compare this to our eigenvalue equation
+\[
+\nabla^2 \psi + B^s \psi(\vec{r}) = 0\:,
+\]
+we can see that the system will only be critical when
+\[
+B^2 = \frac{k_{\infty} - 1}{L^2} = B_m^2
+\]
 \end{document}
