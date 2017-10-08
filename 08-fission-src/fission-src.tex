@@ -80,13 +80,13 @@ In diffusion we use the scalar flux rather than the angular flux. Further, for o
 
 We can write the one-group diffusion equation with fission
 \begin{equation}
-\frac{1}{v} \frac{\partial \phi(\vec{r}, t)}{\partial t} - \nabla \cdot D(\vec{r}) \nabla	\phi(\vec{r}, t) + \Sigma_a(\vec{r}) \phi(\vec{r}, t) = \Sigma_f (\vec{r})\phi(\vec{r}, t)
+\frac{1}{v} \frac{\partial \phi(\vec{r}, t)}{\partial t} - \nabla \cdot D(\vec{r}) \nabla	\phi(\vec{r}, t) + \Sigma_a(\vec{r}) \phi(\vec{r}, t) = \nu\Sigma_f (\vec{r})\phi(\vec{r}, t)
 \end{equation}
 
 \subsection*{Solutions with time dependence}
 Let's start by looking at a uniform slab. We'll keep time dependence.
 \begin{align*}
-\frac{1}{v} \frac{\partial \phi(x, t)}{\partial t}& - D(\vec{r}) \frac{\partial ^2 \phi(x, t)}{\partial x^2} + \Sigma_a(x) \phi(x, t) = \Sigma_f (x)\phi(x, t) \\
+\frac{1}{v} \frac{\partial \phi(x, t)}{\partial t}& - D \frac{\partial ^2 \phi(x, t)}{\partial x^2} + \Sigma_a \phi(x, t) = \nu\Sigma_f \phi(x, t) \\
 \phi(x,0) &= \phi_0(x) = \phi_0(-x) \quad \text{symmetric}\\
 \phi(\frac{\tilde{a}}{2}, t) &= \phi(-\frac{\tilde{a}}{2}, t) = 0
 \end{align*}
@@ -107,7 +107,7 @@ This has to be constant b/c one side of the equation varies in space and one var
 We now have two ODEs:
 \begin{align*}
 \frac{dT}{dt} &= -\lambda T(t) \\
-\bigl[ D\frac{d^2 \psi}{dx^s} &+ (\nu \Sigma_f - \Sigma_a) \psi(x) = -\frac{\lambda}{v} \psi(x) \:.
+D\frac{d^2 \psi}{dx^2} &+ (\nu \Sigma_f - \Sigma_a) \psi(x) = -\frac{\lambda}{v} \psi(x) \:.
 \end{align*}
 The time dependent solution is one we're quite used to:
 \[
@@ -117,20 +117,21 @@ where $T(0)$ is something we must find or be given.
 
 For the spatial problem, we will rearrange the equation adapt our original boundary conditions:
 \begin{align*}
-\bigl[ D\frac{d^2 \psi}{dx^s} &+ (\frac{\lambda}{v} + \nu \Sigma_f - \Sigma_a) \psi(x) = 0 \\
-\psi(\frac{\tilde{a}}{2}, t) &= \psi(-\frac{\tilde{a}}{2}, t) = 0\:.
+D\frac{d^2 \psi}{dx^2} &+ (\frac{\lambda}{v} + \nu \Sigma_f - \Sigma_a) \psi(x) = 0 \\
+\psi(\frac{\tilde{a}}{2}) &= \psi(-\frac{\tilde{a}}{2}) = 0\:.
 \end{align*}
 
 We're going to use the eigenvalue approach we learned last time. Consider the problem
 \begin{align*}
-\frac{d^s \psi_n}{dx^2} &+ B_n^2 \psi_n(x) = 0 \:,\\
-\psi_n(\frac{\tilde{a}}{2}, t) &= \psi_n(-\frac{\tilde{a}}{2}, t) = 0\:.
+\frac{d^2 \psi_n}{dx^2} &+ B_n^2 \psi_n(x) = 0 \:,\\
+\psi_n(\frac{\tilde{a}}{2}) &= \psi_n(-\frac{\tilde{a}}{2}) = 0\:.
 \end{align*}
 This time we know we have symmetric solutions, so we only have a cos term:
 \begin{align*}
-\psi_n(x) &= \cos(B_n x) \quad \text{eigenvectors}\\
-B_n^s &= (\frac{n\pi}{\tilde{a}})^2 \quad n = \text{ odd} \quad \text{eigenvalues}
+\psi_n(x) &= \cos(B_n x) \quad \text{(eigenvectors)}\\
+B_n^2 &= (\frac{n\pi}{\tilde{a}})^2 \quad n = \text{ odd} \quad \text{(eigenvalues)}
 \end{align*}
+Note that *every* eigenmode has to satisfy the system boundary conditions. 
 
 We can compare our eigenvalue problem to our space-dependent ODE. If we rearrange things, we can see that 
 \[
