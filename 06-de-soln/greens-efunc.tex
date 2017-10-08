@@ -178,10 +178,10 @@ and an eigenvalue is
 -----------------------------\\
 We'll start with an example to see how the method works for our problems. We'll look at a similar problem as before:
 \begin{align*}
-\nabla^2\phi(\vec{r}) &- \Sigma_a\phi(\vec{r}) = -\frac{S(\vec{r})}{D} \:, \quad \forall \vec{r} \in V \\
+\nabla^2\phi(\vec{r}) &- \frac{1}{L^2}\phi(\vec{r}) = -\frac{S(\vec{r})}{D} \:, \quad \forall \vec{r} \in V \\
 & \phi(\vec{r}) &= 0\:, \quad \forall \vec{r} \in \mathcal{S}
 \end{align*}
-Now, we introduce the eigenfuction expansion, where the subscript $n$ indicates the $n$th mode:
+Now, we introduce the eigenfuction expansion. Here, we solve a problem that looks like the diffusion equation we're solving, but is homogeneous instead of having a source. The subscript $n$ indicates the $n$th mode:
 \begin{align*}
 \nabla^2 \psi_n (\vec{r}) &+ B_n^2 \psi_n (\vec{r}) = 0\:, \quad \forall \vec{r} \in V  \\
 %
@@ -195,9 +195,9 @@ We will use the property that eigenfunctions form a complete set. That is, any f
 \]
 We substitute this, and then our eigenvalue relationship, into the diffusion equation while also expanding the source term:
 \begin{align}
-\nabla^2\sum_{n=1}^N c_n \psi_n &- \Sigma_a\sum_{n=1}^N c_n \psi_n = -\frac{-}{D}\sum_{n=1}^N S_n \psi_n \nonumber \\
+\nabla^2\sum_{n=1}^N c_n \psi_n &- \frac{1}{L^2}\sum_{n=1}^N c_n \psi_n = -\frac{1}{D} \sum_{n=1}^N S_n \psi_n \nonumber \\
 %
-\sum_{n=1}^N c_n &(B_n^2 + \Sigma_a)\psi_n = -\frac{1}{D}\sum_{n=1}^N S_n \psi_n
+\sum_{n=1}^N c_n &(B_n^2 + \frac{1}{L^2})\psi_n = \frac{1}{D} \sum_{n=1}^N S_n \psi_n
 \label{eq:evec}
 \end{align}
 
@@ -212,9 +212,9 @@ Next, we're going to use the orthonormality property of eigenvectors:
 \]
 We will use this to find our $c_n$ by multiplying \autoref{eq:evec} by $\psi_m$ and integrating over volume:
 \begin{align*}
-\int_V dV\: \sum_{n=1}^N c_n &(B_n^2 + \Sigma_a)\psi_n \psi_m = -\int_V dV\:\frac{1}{D}\sum_{n=1}^N S_n \psi_n \psi_m \\
+\int_V dV\: \sum_{n=1}^N c_n &(B_n^2 + \frac{1}{L^2})\psi_n \psi_m = \int_V dV\:\frac{1}{D}\sum_{n=1}^N S_n \psi_n \psi_m \\
 %
-c_n &(B_n^2 + \Sigma_a) = \frac{1}{D} S_n\\
+c_n &(B_n^2 + \frac{1}{L^2}) = \frac{S_n}{D} \\
 c_n &= \frac{S_n / \Sigma_a}{1 + B_n^2  L^2}
 \end{align*}
 Noting 
@@ -231,14 +231,11 @@ We get
 Our question now is that are the $\psi_n$ and $B_n$?
 We'll look at a real example to figure that out. %$S_0$ is a uniform source over $-a/2 \leq x \leq a/2$:
 \begin{align*}
-\frac{d^2 \phi}{dx^2} &- \frac{1}{L^2} \phi(x) = \frac{-S(x)}{D}\:, \quad -a/2 \leq x \leq a/2\\
+\frac{d^2 \phi}{dx^2} &- \frac{1}{L^2} \phi(x) = -\frac{S(x)}{D}\:, \quad -a/2 \leq x \leq a/2\\
 \phi(\pm \frac{\tilde{a}}{2}) &= 0
 \end{align*}
-%From before, we know the homogeneous solution can be written as a combination of exponentials, and the particular solution is $\frac{S_0 L^2}{D}$ giving
-%\[
-%\phi(x) = A \exp(-\frac{|x|}{L}) + B \exp(\frac{|x|}{L}) + \frac{S_0 L^2}{D} \:.
-%\]
-We're taking the source to be arbitrary, so we cannot assume symmetry. To solve, we'll take a somewhat roundabout approach to connect our problem to an eigenvalue solution. We'll look at how to solve the similar problem
+%
+We're taking the source to be arbitrary, so we cannot assume symmetry. To solve, we'll take a somewhat roundabout approach to connect our problem to an eigenvalue solution. We'll again look at how to solve the similar homogeneous problem
 \begin{align*}
 \frac{d^2 \psi}{dx^2} &- B^2 \psi(x) = 0\:, \quad -a/2 \leq x \leq a/2\\
 \psi(\pm \frac{\tilde{a}}{2}) &= 0\:,
@@ -248,12 +245,12 @@ where $B^2$ is an arbitrary parameter.
 We can get the homogeneous solution as a combination of trig functions:
 \begin{align*}
 \psi(x) &= A_1 \cos(Bx) + A_2 \sin(Bx)\\
-\psi(\pm \frac{\tilde{a}}{2}) &= A_1 \cos(\frac{B \tilde{a}}{2}) \pm A_2 \sin(\frac{B \tilde{a}}{2}) \:.
+\psi(\pm \frac{\tilde{a}}{2}) &= A_1 \cos(\frac{B \tilde{a}}{2}) \pm A_2 \sin(\frac{B \tilde{a}}{2}) = 0 \:.
 \end{align*}
 To get a non-trivial solution, we need
 \begin{align*}
-c_2 &= 0 \:, \quad \cos(\frac{B \tilde{a}}{2}) = 0 \rightarrow \cos(\frac{B \tilde{a}}{2}) = \frac{n \pi}{\tilde{a}} \text{ when }n \text{ is odd}\\
-c_1 &= 0 \:, \quad \sin(\frac{B \tilde{a}}{2}) = 0 \rightarrow \cos(\frac{B \tilde{a}}{2}) = \frac{n \pi}{\tilde{a}} \text{ when }n \text{ is event}\\
+A_2 &= 0 \:, \quad A_1\cos(\frac{B \tilde{a}}{2}) = 0 \rightarrow \cos(\frac{B \tilde{a}}{2}) = 0 \text{ with } B=\frac{n \pi}{\tilde{a}} \text{ when }n \text{ is odd}\\
+A_1 &= 0 \:, \quad A_2\sin(\frac{B \tilde{a}}{2}) = 0 \rightarrow \sin(\frac{B \tilde{a}}{2})  = 0 \text{ with } B = \frac{n \pi}{\tilde{a}} \text{ when }n \text{ is even}\\
 \psi_n(x) &= 
 \left\{
 	\begin{array}{ll}
@@ -271,8 +268,8 @@ Also note that the $A_n$ remain undetermined. These are arbitrary, and in a real
 
 What now? Well, we can see clearly that our functions hold the orthogonality property. We can also see that they form a complete set. Thus, we will use our eigenfuctions to create solutions like we did above:
 \begin{align*}
-\phi(\vec{r}) &= \sum_{n=1}^N c_n \psi_n \\
-S(\vec{r}) &= \sum_{n=1}^N \phi_n S_n
+\phi(x) &= \sum_{n=1}^N c_n \psi_n \\
+S(x) &= \sum_{n=1}^N \psi_n S_n
 \end{align*}
 This time our problem has defined boundaries and thus
 \[
@@ -281,14 +278,14 @@ S_n = \frac{2}{\tilde{a}} \int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx\:
 
 To find the $c_n$ we substitute our expansion into our original equation:
 \begin{align*}
-\frac{d^2 }{dx^2} &\sum_{n=1}^N c_n \psi_n - \frac{1}{L^2} \sum_{n=1}^N c_n \psi_n = \frac{-1}{D}\sum_{n=1}^N \phi_n S_n\:,\\
+\frac{d^2 }{dx^2} &\sum_{n=1}^N c_n \psi_n - \frac{1}{L^2} \sum_{n=1}^N c_n \psi_n = \frac{-1}{D}\sum_{n=1}^N \psi_n S_n\:,\\
 %
-\sum_{n=1}^N c_n& \bigl( B_n + \frac{1}{L^2}\bigr)\psi_n = \frac{1}{D}\sum_{n=1}^N \phi_n S_n
+\sum_{n=1}^N c_n& \bigl( B^2_n + \frac{1}{L^2}\bigr)\psi_n = \frac{1}{D}\sum_{n=1}^N \phi_n S_n
 \end{align*}
 We do our multiply, integrate, orthogonality trick, and we again see
 \begin{align*}
 c_n &= \frac{S_n / \Sigma_a}{1 + B_n^2  L^2} \\
-\phi(x) = \frac{1}{\Sigma_a} \sum_{n=1}^N \frac{s_n}{1 + B_n^2  L^2} \psi_n
+\phi(x) &= \frac{1}{\Sigma_a} \sum_{n=1}^N \frac{S_n}{1 + B_n^2  L^2} \psi_n
 \end{align*}
 Only now we know $\psi_n$ and $B_n$!
 
@@ -298,9 +295,11 @@ And finally, we can see this is the same things as Green's Functions. We start b
 \[
 \phi(x) = \int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx\: \biggl[\frac{2}{\tilde{a} \Sigma_a} \sum_{n=1}^N \frac{\psi_n(x) \psi_n(x')}{1 + B_n^2  L^2}  \biggr] S(x')
 \]
+Note that in this expression, the $x$ values are where we evaluate the flux; the $x'$ values are from the integral of the $c_n$ coefficients over space, where the integral is from substituting in the $S_n$ expression.
+
 If we compare this to how we expect a Green's Function to look
 \[
-\phi_x = \int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx\: G(x,x') S(x')\:,
+\phi(x) = \int_{-\frac{\tilde{a}}{2}}^{\frac{\tilde{a}}{2}} dx\: G(x,x') S(x')\:,
 \]
 we can see that
 \[
