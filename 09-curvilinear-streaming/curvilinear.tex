@@ -48,8 +48,8 @@
 %---------------------------------------------------------------------------
 \begin{document}
 \begin{center}
-{\bf NE 250, F15\\
-September 28, 2015 
+{\bf NE 250, F17\\
+October 10, 2017 
 }
 \end{center}
 
@@ -59,8 +59,13 @@ Mid-semester Public Service Announcement:
 \item Sexual assault support on campus: \url{http://survivorsupport.berkeley.edu/}
 \end{itemize}
 
+We reached a spot with fission where we can start understanding the balance in the system. What we'll do next is look at criticality from the perspective of how do we perfectly balance materials and geometry -- which will lead us to eigenvalue iterations. 
 
-Because we just went through looking at fission in more general geometries, I want to take a minute to go through streaming in curvilinear coordinates. We'll do this for the transport equation, because it is the most complex case. Bear with  me through the math. I think it's worth going through because it comes up in what we want to use in the real world, and books often treat other coordinate systems as ``exercises left to the reader." This way I'm hoping you have this in your back pocket if you need it. This material will come largely from Bell and Glasstone's \textit{Nuclear Reactor Theory} (freely available online). 
+Before entering into iteration concepts, I wanted to cover some tools beyond diffusion that are used in reactor design. We will end up at both the Method of Characteristics and understanding uncollided and multiply-collided fluxes. Each of these are a valuable complement to the diffusion equation. 
+
+To get there, we will start with \underline{streaming in curvilinear coordinates} for the transport equation. Bear with me through the math. I think it's worth going through because it comes up in what we want to use in the real world, and books often treat other coordinate systems as ``exercises left to the reader." I'd like to actually go through it with you.
+
+This material will come largely from Bell and Glasstone's \textit{Nuclear Reactor Theory} (freely available online) and Lewis and Miller's \textit{Computational Methods of Neutron Transport} (I have a bunch of copies you can borrow). 
 
 With that in mind, here's a reminder of what the TE looks like, where $\psi(\vec{r}, E, \vOmega, t)$ is the angular neutron flux. 
 %
@@ -69,7 +74,7 @@ With that in mind, here's a reminder of what the TE looks like, where $\psi(\vec
  +& \frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega', t) + S(\vec{r}, E, \vOmega, t)
 \end{align*}
 
-For generality (and because it can be tricky), I want to cover the \underline{streaming term in curvilinear coordinates}. 
+How do we manage this equation in \underline{Curvilinear Systems?}
  This is taken from B \& G Chp.\ 1.3.
 Recall that $\vOmega \cdot \nabla$ is the derivative of angular flux along the direction of motion $\vOmega$. (See Figure~\ref{fig:cart-coord}).
 %
@@ -125,8 +130,10 @@ I've included a table of the spherical conservative form terms as well as the co
     \begin{center}
     \includegraphics[keepaspectratio, width = 5 in]{../figs/cyl-operator}
     \end{center}    
-    \caption{Cylindrical: L\&M Chp.\ 1}
+    \caption{Spherical and Cylindrical terms: L\&M Chp.\ 1}
 \end{figure}
+
+
 
 
 \end{document}
