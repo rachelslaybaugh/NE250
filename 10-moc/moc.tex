@@ -1,0 +1,277 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% writing elements
+\usepackage{mhchem}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\vecr}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+\newcommand{\sigs}{\ensuremath{\Sigma_s(\rvec,E'\rightarrow E,\omvec'\rightarrow\omvec)}}
+\newcommand{\el}{\ensuremath{\ell}}
+\newcommand{\sigso}{\ensuremath{\Sigma_{s,0}}}
+\newcommand{\sigsi}{\ensuremath{\Sigma_{s,1}}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, F17\\
+October 11, 2017 
+}
+\end{center}
+
+\subsection*{Integral form of TE} 
+We'll use some of the concepts we just went through to understand the integral form of the transport equation using MOC formalism (B\&G 1.2).
+
+``The neutron transport equation is an integro-differential equation for the
+neutron angular density (or flux). We will derive an equivalent integral equation. This raises the question of whether there is or is not also an
+equivalent purely differential expression for the neutron transport problem.
+The answer is that there is not. In deriving the transport
+equation, it was necessary to consider the neutron angular density in the 
+immediate (space-time) vicinity only of the point under consideration, whereas the
+whole range of energies and angles had to be included in the transport equation
+for the angular density at a particular energy and angle. Hence, the formulation
+IS local, involving derivatives, in space and time, but it is extended, involving
+integrals, in energy and angle.
+
+``In a collision, the position
+and time associated with a neutron change continuously whereas the energy and
+angle will change in a discontinuous manner. As a consequence, a mathematical
+formulation of the neutron transport problem must contain integrals over energy
+and angle."
+
+Since the neutron transport equation is a linear, first order, partial differential,
+integral equation, it can be converted into an integral equation by a standard
+procedure known as the \textit{method of characteristics}.
+
+We begin with the transport equation, where $q$ can contain any of fixed, scattering, and/or fission sources:
+\[\vOmega \cdot \nabla \psi(\rvec, \vOmega, E) + \Sigma_t \psi(\rvec, \vOmega, E) = q(\rvec, \vOmega, E)\:,\]
+
+We will use a somewhat simpler way to describe the angle space, using \autoref{fig:angles}.
+\begin{figure}[h!] 
+    \label{fig:cosines}
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 2 in]{../figs/cosines}
+    \end{center}    
+    \caption{Angle Space}
+    \label{fig:angles}
+\end{figure}
+
+The streaming term is 
+\begin{align*}
+\vOmega \cdot \nabla \psi(\rvec, \vOmega, E) &= \mu \frac{\partial \psi}{\partial x} + \eta \frac{\partial \psi}{\partial x} + \xi \frac{\partial \psi}{\partial z} \\
+\mu^2 &+ \eta^2 + \xi^2 = 1 \\
+\vOmega &= \mu \hat{x} + \eta \hat{y} + \xi \hat{z}
+\end{align*}
+%
+%Note that in this figure $\vOmega$ is a direction of motion of a point on a unit sphere, not a point in space.
+
+We will use Figure~\ref{fig:stream} in our derivation, with $\vec{r} = \rvec_0 + s(\mu \hat{x} + \eta \hat{y} + \xi \hat{z})$, where $\rvec_0$ is an arbitrary point.
+Further $x = x_0 + s\mu$, $y = y_0 + s\eta$, and $z = z_0 + s\xi$.
+%
+\begin{figure}[h!] 
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 2.5 in]{../figs/moc-stream}    
+    \end{center}   
+    \caption{Characteristic Line}
+    \label{fig:stream}
+\end{figure}
+
+Using this we can see
+\[\frac{d\psi}{ds} = \frac{d\psi}{dx}\underbrace{\frac{dx}{ds}}_{\mu} + \frac{d\psi}{dy}\underbrace{\frac{dy}{ds}}_{\eta} + \frac{d\psi}{dz}\underbrace{\frac{dz}{ds}}_{\xi}\:,\]
+which shows 
+\[\frac{d\psi}{ds} = \vOmega \cdot \nabla \psi\:,\]
+Now we can look at
+\begin{equation}
+\frac{d}{ds}\psi(\rvec_0 + \vOmega s, \vOmega, E) + \Sigma_t \psi = q(\rvec_0 + \vOmega s, \vOmega, E)\:.
+\label{eq:ds-te}
+\end{equation}
+This is a derivative along a characteristic curve. 
+The equation is a linear, first-order ODE that can be integrated. 
+
+
+We will do this by introducing an integrating factor: $\exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]$, which is the total number of mean free paths from an arbitrary starting point to the point $s$ distance away.
+
+-----------\\
+Note: if you are unfamiliar with integrating factors, look in a textbook or Wolfram Mathworld (when I first saw this material I hadn't learned about them and was pretty confused). \\
+--------
+
+First, we will note that
+\[\frac{d}{ds}\exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)] = \exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)] \Sigma_t(\rvec_0 + \vOmega s, E)\]
+And that
+\begin{align*}
+\frac{d}{ds}\biggl[\exp[\int^s ds'' \: \Sigma_t(\rvec_0 &+ \vOmega s'', E)]\psi(\rvec_0 + \vOmega s, \vOmega, E)\biggr] =\\ &\exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]\frac{d \psi}{ds} + \psi \Sigma_t \exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]
+\end{align*}
+We can see that the RHS of this expression is equal to the LHS of Eqn.~\ref{eq:ds-te} multiplied by the integrating factor.
+
+We can therefore multiply the RHS of Eqn.~\ref{eq:ds-te} by the same factor and say:
+%
+\begin{equation}
+\frac{d}{ds}\biggl[\exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]\psi(\rvec_0 + \vOmega s, \vOmega, E)  \biggr] = \exp[\int^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]q(\rvec_0 + \vOmega s, \vOmega, E)
+\label{eq:int-fact}
+\end{equation}
+%
+Now, we will integrate this equation from $s'=-\infty$ to $s'=s$. Let's first look at the LHS of Eqn.~\ref{eq:int-fact}. 
+%
+\begin{align*}
+\int_{-\infty}^s ds' \: \frac{d}{ds'}&\biggl[\exp[\int^{s'} ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]\psi(\rvec_0 + \vOmega s', \vOmega, E)  \biggr]  \\
+= \: &\exp[\int^{s'} ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]\psi(\rvec_0 + \vOmega s', \vOmega, E)  |_{-\infty}^s  \\
+= \: &\psi(\rvec_0 + \vOmega s, \vOmega, E) \exp[\int^{s} ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)] \\
+&- \psi(-\infty, \vOmega, E) \exp[\int^{-\infty} ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]
+\end{align*}
+The second term here goes to 0 since the integrating factor is going to 0 ($e^{-\infty} \rightarrow 0$). 
+
+\begin{figure}[h!] 
+    \begin{center}
+    \includegraphics[keepaspectratio, width = 2.5 in]{../figs/moc-s}    
+    \end{center}   
+    \caption{Integration Lengths}
+    \label{fig:int-s}
+\end{figure}
+%
+Now, we can combine this with the RHS of Eqn.~\ref{eq:int-fact}:
+\begin{align*}
+\psi(\rvec_0 + \vOmega s, \vOmega, E) &\exp[\int^{s} ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)] = \int_{-\infty}^s ds' \:\exp[\int^{s'} ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]q(\rvec_0 + \vOmega s', \vOmega, E) \\
+%
+&\psi(\rvec_0 + \vOmega s, \vOmega, E) = \int_{-\infty}^s ds' \:\exp[-\int_{s'}^s ds'' \: \Sigma_t(\rvec_0 + \vOmega s'', E)]q(\rvec_0 + \vOmega s', \vOmega, E)
+\end{align*}
+%
+Functionally, this means that the flux at any point is a result of all sources up to that point attenuated by the exponent of the negative integral of the total number of mean free paths up to that point (optical length). See Figure~\ref{fig:int-s}.
+
+Some notes about this form:
+\begin{itemize}
+\item The integro-differential form is a local balance and the \textit{coupling is local}.
+\item The integral form is a tracking mechanism of particles from birth to observation; it is an accumulation process and the \textit{coupling is global}. 
+\end{itemize}
+%
+We can write this more nicely by setting $\rho' \equiv s-s'$, $d\rho' = -ds'$ and  $\rho'' \equiv s-s''$, $d\rho'' = -ds''$. Then:
+\begin{align*}
+\psi(\rvec, \vOmega, E) &= -\int_{\infty}^0 d\rho' \: \exp[-\int_0^{\rho'} d\rho'' \: \Sigma_t(\overbrace{\rvec_0 + \vOmega s}^{\vec{r}} - \overbrace{\vOmega s + \vOmega s''}^{\rho''\vOmega}, E)]q(\overbrace{\rvec_0 + \vOmega s}^{\vec{r}} - \overbrace{\vOmega s + \vOmega s'}^{\rho'\vOmega}, \vOmega, E) \\
+\psi(\rvec, \vOmega, E) &=\int_0^{\infty} d\rho' \:\exp[-\int_0^{\rho'} d\rho'' \: \Sigma_t(\rvec-\rho''\vOmega,E)]q(\rvec-\rho'\vOmega,\vOmega,E)
+\end{align*}
+%
+The exponential represents the attenuation of neutrons as they move from $\rvec-\rho'\vOmega$ to $\rvec$. \\
+The source term represents the production of neutrons at $\rvec-\rho'\vOmega$ of neutrons in $(\vOmega, E)$.
+
+
+Notes about MOC:\\
+The issues with 3-D MOC are purely due to the computational burden.  The number of rays necessary to resolve a 3-D geometry makes it intractable, both from the standpoint of actually storing all of the rays as well as the computational time required to do a sweep.  3-D MOC has been attempted several times. Some newer work is focusing on extruded 2-D geometries. We'll see what ends up being tractable.
+
+Most people to MOC in 2D and an axial integration in the $z$ direction. The biggest reason for doing MOC is that it handles complex geometries very naturally.  Curved surfaces (i.e. everything in a reactor) don't have to get approximated by polygons; that greatly reduces the number of cells needed to geometrically represent a problem.  Think about the clad around a fuel pin, it can be a single spatial cell in MOC but would require possibly a huge number of cells/edges to resolve it, even with an unstructured mesh.
+
+\subsection*{Un- and First-Collided Flux}
+Recall the integral form of the TE:
+\begin{equation}
+\psi(\rvec, \vOmega, E) =\int_0^{\infty} d\rho' \:\exp[-\int_0^{\rho'} d\rho'' \: \Sigma_t(\rvec-\rho''\vOmega,E)]q(\rvec-\rho'\vOmega,\vOmega,E)
+\label{eq:integral}
+\end{equation}
+%
+We can rewrite this with operators to think about how the levels of collisions build up the flux at a given point in phase space. Such an understand both helps us conceptualize transport, but also builds tools we can use computationally.\\
+If we define $Q'$ as the integrated fixed source and\\
+$K$ as the appropriate integral operator \\
+then $K\psi$ is the neutron production by scattering and fission. \\
+We can then see
+\[\psi = K \psi + Q'\]
+We can think about this equation 
+\begin{align*}
+\psi_0 &= Q' \quad \text{uncollided flux}\\
+\psi_1 &= K \psi_0 \quad \text{flux of neutrons that have had one collision}\\
+&\vdots \\
+\psi_n &= K \psi_{n-1} \quad \text{flux of neutrons that have had n collisions} \\
+\psi &= \sum_{j=0}^{\infty} \psi_j \quad \text{total flux distribution}
+\end{align*}
+
+---------------------------\\
+If we have \textbf{isotropic scattering} and \textbf{isotropic sources}, we can remove the angle dependence and up with a volume integral.
+%
+\begin{itemize}
+\item The fission process is isotropic:
+\[\frac{\chi(E)}{4\pi} \int_0^{\infty} dE' \: \nu(E') \Sigma_f(\rvec, E') \underbrace{\int_{4\pi} d\vOmega' \: \psi(\rvec, \vOmega', E')}_{\phi(\rvec,E')}\]
+\item The fixed source becomes
+\[S(\rvec, \vOmega, E) = \frac{S(\rvec, E)}{4 \pi}\]
+\item and the scattering source becomes
+\[\int_0^{\infty} dE' \int_{4\pi} d\vOmega' \: \frac{\Sigma_s(\rvec,E' \rightarrow E)}{4\pi} \psi(\rvec, \vOmega', E') = \frac{1}{4\pi}\int_0^{\infty} dE'\:\Sigma_s(\rvec,E' \rightarrow E) \phi(\rvec,E')\]
+\item The total source is the sum of these three, and is now independent of angle.
+\end{itemize}
+%
+We can use this source in Eqn.~\ref{eq:integral}, integrate the integrating factor over angle, and get an expression for the scalar flux. When doing this, we will note the following things based on \autoref{fig:diff-area}:
+%
+\begin{figure}[h]
+\begin{center}
+  \includegraphics[width=1.25 in]{../figs/diff-area}
+  \caption{Differential Angular Area}
+  \label{fig:diff-area}
+\end{center}
+\end{figure}
+\begin{align*}
+d\vOmega &= \frac{dA}{\rho'^2}\\
+d\rho' dA &= dV \\
+\int_{4\pi} d\vOmega \int_0^{\infty} d\rho' &-= \int_{V} \frac{dV}{\rho'^2}
+\end{align*}
+%
+We can also recall that $\rho' = |\vec{r} - \vec{r}'|$, we can let $dV = d^3r'$, and we will define
+\[\int_0^{\rho'} d\rho'' \: \Sigma_t(\rvec-\rho''\vOmega,E) \equiv \tau(E,\vec{r} - \rho' \vOmega \rightarrow \vec{r})
+\]
+which is the optical path length. 
+
+Combining all of this we get
+\begin{align}
+\phi(\rvec,E) &= \int_V d^3r' \: \biggl[\frac{\exp[-\tau(E,\vec{r}' \rightarrow \vec{r})]}{4\pi|\vec{r} - \vec{r}'|^2} \biggl(S(\vec{r}',E) + \frac{\chi(E)}{4\pi} \int_0^{\infty} dE' \: \nu(E') \Sigma_f(\rvec', E')\phi(\vec{r}', E') \nonumber \\
+&+ \int_0^{\infty} dE'\:\Sigma_s(\rvec',E' \rightarrow E) \phi(\rvec',E') \biggr)  \biggr]
+\label{eq:iso-integral}
+\end{align}
+%
+Interestingly, if $|\vec{r} - \vec{r}'|$ is replaced by $R$, then in the simple case of total cross section being independent of position, Eqn.~\ref{eq:iso-integral} becomes
+\[\phi(\rvec,E) = \int_V d^3r' \: \biggl[\frac{\exp[-\Sigma_t(E)R]}{4\pi R^2} \biggl( \text{isotropic source at }\vec{r}' \biggr)\biggr]\]
+
+In both of these equations, the source term is the rate at which neutrons of energy $E$ appear at $\vec{r}'$ from each source type. \\
+In this last equation, the term multiplying the source is the probability that a neutron appearing at $\vec{r}'$ will reach $\vec{r}$ without suffering a collision.\\
+The integration over all values of $\vec{r}'$ is equivalent to adding neutrons from all possible sources. \\
+It is of interest to note that the exponential term, including the denominator, is a Green's function for a unit isotropic source at $\vec{r}'$ in an absorbing medium.
+
+---------------------------\\
+We frequently, however, have \textbf{anisotopric scattering}. We can derive an equation similar to the isotropic one.\\
+We will reframe how we think about the source. We will say the production kernel is
+%
+\[\Pi(\rvec, \vOmega',E' \rightarrow \vOmega, E) \equiv \Sigma_s(\rvec, \vOmega',E' \rightarrow \vOmega, E) + \frac{\chi(E)}{4\pi} \nu(E') \Sigma_f(\rvec', E')\]
+Then, the collision source of neutrons is
+\[\Phi(\vec{r}, \vOmega, E) = \int_{4\pi} d\vOmega' \int_0^{\infty} dE' \: \Pi(\rvec, \vOmega',E' \rightarrow \vOmega, E) \psi(\rvec, \vOmega', E')\]
+%
+We can say that $q$ is the collision source combined with the external source. We perform the same sort of operations as above, and now we have an integral equation that has $\Phi$ as a dependent variable. See B\&G 1.2d for a full treatment.
+
+
+
+\end{document}
