@@ -1,0 +1,125 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\newif\ifeqns
+\eqnstrue
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% writing elements
+\usepackage{mhchem}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\vecr}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+\newcommand{\sigs}{\ensuremath{\Sigma_s(\rvec,E'\rightarrow E,\omvec'\rightarrow\omvec)}}
+\newcommand{\el}{\ensuremath{\ell}}
+\newcommand{\sigso}{\ensuremath{\Sigma_{s,0}}}
+\newcommand{\sigsi}{\ensuremath{\Sigma_{s,1}}}
+\newcommand{\cc}[1]{\ensuremath{\overline{#1}}}
+\newcommand{\ccm}[1]{\ensuremath{\overline{\mathbf{#1}}}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, F17\\
+October 19, 2017 
+}
+\end{center}
+
+
+\subsection*{Reflected Slab}
+Duderstadt and Hamilton Chp.\ 5.III.E 
+
+Before looking at MOC, we had looked at the criticality state for bare geometries using the one-group, steady state diffusion equation with fission
+\begin{equation}
+ - \nabla \cdot D(\vec{r}) \nabla	\phi(\vec{r}) + \Sigma_a(\vec{r}) \phi(\vec{r}) = \nu\Sigma_f (\vec{r})\phi(\vec{r})\:.
+\end{equation}
+% 
+We're going to take a moment to look at what happens when we add a reflector (in your homework you're getting to look at a case with moderator). 
+
+We'll look at a symmetric slab of fuel with thickness $a$ centered at zero, having a reflector with thickness $b$ on each side. We will have equations in two regions, recognizing symmetry (c = core and r = reflector):
+\begin{align*}
+-D_c\frac{d^2 \psi_c}{dx^2} &+ (\Sigma_a^c - \nu \Sigma_f^c) \psi^c(x) = 0  \qquad 0 \leq x \leq a/2\\
+-D^r\frac{d^2 \psi^r}{dx^2} &+ \Sigma_a^r \psi^r(x) = 0  \qquad a/2 \leq x \leq a/2+b
+\end{align*}
+with boundary conditions
+\begin{align*}
+\frac{d \phi^c}{dx}|_{x=0} &= 0 \\
+\phi^c(a/2) &= \phi^r(a/2)\\
+J^c(a/2) &= J^r(a/2)\\
+\phi^r(a/2+\tilde{b}) &= 0\:.
+\end{align*}
+
+We anticipate that we will need an exact balance of materials and geometry to get criticality. Let's see what that relationship turns out to be. 
+From previous experience and using symmetry, we know (or can solve for) the core region solution will look like:
+\begin{align*}
+\phi^c(x) &= C_1 \cos(B_m^c x)\\
+\text{and }&(B_m^c)^2 = \frac{\nu \Sigma_f^c - \Sigma_a^c}{D^c}
+\end{align*}
+
+In the reflector, we know 
+\begin{align*}
+\phi^r(x) &= C_3 \sinh(\frac{a/2+\tilde{b} - x}{L^r}) + C_4 \cosh(\frac{a/2+\tilde{b} - x}{L^r}) \\
+C_4 &= 0 \text{ from the vacuum condition.}
+\end{align*}
+
+Now we need to apply the rest of the interface conditions:
+\begin{align*}
+C_1 \cos(\frac{B_m^c a}{2}) &= C_3 \sinh(\frac{\tilde{b}}{L^r})\\
+C_1 D^c B_m^c \sin(\frac{B_m^c a}{2}) &= C_3 \frac{D^r}{L^r}\cosh(\frac{\tilde{b}}{L^r})
+\end{align*}
+We can manipulate these to see
+\[
+D^c B_m^c \tan(\frac{B_m^c a}{2}) = \frac{D^r}{L^r}\coth(\frac{\tilde{b}}{L^r})\:.
+\]
+This is the criticality relationship for a reflected slab. You can see it relates the materials ($B_m$ in the core and $L$ in the reflector) and the geometry ($a$ and $b$). These all have to match for criticality.
+
+Duderstadt discusses some numerical and graphical approaches for solving this problem. In the graphical approach it can be seen that
+\begin{align*}
+\frac{B_m^c a}{2} &< \frac{\pi}{2}\\
+(B_m^c)^2 &< (\frac{\pi}{a})^2
+\end{align*}
+
+Recall that in an \textit{unreflected core} $B_m = \frac{\pi}{\tilde{a}}$. This means that the width for a reflected core is smaller than the width for a bare core. The difference is what we call \textbf{reflector savings}:
+\[
+\delta = a_{\text{bare}} - a_{\text{reflected}}.
+\]
+
+\subsection*{Eigenvalue Solution}
+Some from Duderstadt and Hamilton Chp.\ 5.III.E 
+
+Transcendental solutions and graphing techniques are all well and good, but not idea. We'd rather have something that we can solve much more easily. That's where eigenvalue solution techniques come in. 
+
+\end{document}
