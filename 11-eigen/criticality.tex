@@ -118,8 +118,69 @@ Recall that in an \textit{unreflected core} $B_m = \frac{\pi}{\tilde{a}}$. This 
 \]
 
 \subsection*{Eigenvalue Solution}
-Some from Duderstadt and Hamilton Chp.\ 5.III.E 
+Some from Duderstadt and Hamilton Chp.\ 5.IV (see textbook for rest of notes)
 
 Transcendental solutions and graphing techniques are all well and good, but not idea. We'd rather have something that we can solve much more easily. That's where eigenvalue solution techniques come in. 
+
+
+
+
+\subsection*{In the Transport Equation}
+We can do the same kind of thing in the transport equation when there is fission and no source:
+\begin{align*}
+\bigl[\vOmega \cdot \nabla + \Sigma_t\bigr] \psi(\vec{r}, E, \vOmega) &= \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega')\\
+ &+ \frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega')
+\end{align*}
+%
+We again use a mathematical ``knob" to give us more flexibility. However, with the TE there are two ways we do this:
+\begin{enumerate}
+\item Alter the effective cross section by adding an $\alpha$  term (which I don't think anyone does in diffusion), or
+\item Alter the effective fission yield, $\nu$, by scaling it with $k$ (which is what we just did with diffusion).
+\end{enumerate}
+
+\textbf{The $\alpha$ version}, which is used more frequently at LLNL and LANL, looks like this:
+%
+\begin{align*}
+\bigl[\vOmega \cdot \nabla + \bigl(\Sigma_t + \underbrace{\frac{\alpha_0}{v}}_{\text{new}}\bigr)\bigr]\psi(\vec{r}, E, \vOmega) &= \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega')\\
+ +& \frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega')
+\end{align*}
++ boundary conditions.\\
+%
+Some important notes about this
+\begin{itemize}
+\item In the $\alpha$-evaluation problem, the total cross section is modified by a 1/v absorber.
+\item There is numerical difficulty if $\alpha_0 < 0$.\\
+If $\frac{-\alpha_0}{v} > \Sigma_t$ then total interaction becomes a ``source" rather than a loss!
+\item If $\alpha_0 > 0$, absorption of \textbf{slow} neutrons is enhanced by an $\alpha_0$/v absorber $\rightarrow$ harder spectrum.
+\item If $\alpha_0 < 0$, absorption of \textbf{fast} neutrons is enhanced by an $\alpha_0$/v absorber $\rightarrow$ softer spectrum.
+\item These spectral effects are important because reaction rate is $\int_0^{\infty} dE \:\Sigma_j(E) \phi(E)$
+\end{itemize}
+
+\textbf{The $k$-eigenvalue problem} is a little bit different:
+%
+\begin{align*}
+\bigl[\vOmega \cdot \nabla + \Sigma_t \bigr]\psi(\vec{r}, E, \vOmega) &= \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega')\\
+ +& \underbrace{\frac{1}{k}}_{\text{new}}\frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega')
+\end{align*}
+\vspace*{-.5em}
++  boundary conditions.\\
+%
+Important notes about this version:
+\begin{itemize}
+\item we can see that $k=1$ means $\alpha_0 = 0$ and vice versa.
+\item $k$ as a multiplication factor: the ratio of neutron production in one generation to the neutron production in the previous generation.
+\item We often use the $k$ version because we don't have the mathematical difficulties associated with the $\alpha$ form, and the physical interpretation is helpful.
+\end{itemize}
+
+More on the physical meaning: Let's define $p$ as all phase space, then
+  \[\int dp = \int_{V} d\rvec \int_{4 \pi} d\vOmega \int_0^{\infty} dE\]
+compute neutron production in $p$:
+  \[\int dp\:\frac{\chi(E)}{4 \pi}\int_0^{\infty} dE' \: \nu(E') \Sigma_f(E') \int_{4 \pi} d\vOmega' \:\psi(\vec{r}, E', \vOmega') \]
+compute neutron losses in $p$:
+  \[\int dp\:\biggl[\vOmega \cdot \nabla \psi + \Sigma_t \psi - \int_{4 \pi} d\vOmega' \int_0^{\infty} dE' \: \Sigma_s(E', \vOmega' \rightarrow E, \vOmega) \psi(\vec{r}, E', \vOmega') \biggr] \]
+Steady state: losses in this generation = production in the immediate past generation.\\
+$k$ is the ratio of these two equations, giving the multiplication factor over $p$.\\
+Note that $p$ is arbitrary, it applies pointwise over the system (limit as $V$ goes to zero).\\
+We move the scattering to the LHS since it involves neutrons from this generation while fission is the only term involving neutrons from the previous one.
 
 \end{document}
