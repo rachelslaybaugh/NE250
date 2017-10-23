@@ -1,0 +1,73 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{amsmath}
+\usepackage{graphicx} % for graphics files
+
+% Draw figures yourself
+\usepackage{tikz} 
+
+% writing elements
+\usepackage{mhchem}
+
+% The float package HAS to load before hyperref
+\usepackage{float} % for psuedocode formatting
+\usepackage{xspace}
+
+% from Denovo Methods Manual
+\usepackage{mathrsfs}
+\usepackage[mathcal]{euscript}
+\usepackage{color}
+\usepackage{array}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[parfill]{parskip}
+
+% math syntax
+\newcommand{\nth}{n\ensuremath{^{\text{th}}} }
+\newcommand{\ve}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Macro}{\ensuremath{\Sigma}}
+\newcommand{\rvec}{\ensuremath{\vec{r}}}
+\newcommand{\vecr}{\ensuremath{\vec{r}}}
+\newcommand{\omvec}{\ensuremath{\hat{\Omega}}}
+\newcommand{\vOmega}{\ensuremath{\hat{\Omega}}}
+\newcommand{\sigs}{\ensuremath{\Sigma_s(\rvec,E'\rightarrow E,\omvec'\rightarrow\omvec)}}
+\newcommand{\el}{\ensuremath{\ell}}
+\newcommand{\sigso}{\ensuremath{\Sigma_{s,0}}}
+\newcommand{\sigsi}{\ensuremath{\Sigma_{s,1}}}
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+\begin{document}
+\begin{center}
+{\bf NE 250, F17\\
+October 26, 2017 
+}
+\end{center}
+
+\subsection*{Adjoint Transport Equation} (L\&M 1.6)
+
+The adjoint TE has two main applications: use in MC variance reduction and use in perturbation theory for eigenvalue problems (estimate changes in the neutron multiplication caused by small changes in material properties). \\
+We will start with some mathematical concepts we will use.
+
+\textit{Inner product}
+\begin{itemize}
+\item An inner product is a binary operation (takes 2 arguments) that combines 2 vectors into a scalar quantity.
+\item in Euclidean space comprises all 3D vectors the inner product is the project of one vector onto another ($\vec{v}_1 \cdot \vec{v}_2 = |v_1||v_2|\cos(\theta)$).
+\item Euclidean space (comprises all 3D vectors)
+\item A function space comprises all functions that have a given property. e.g.\ all continuous functions; all functions with Dirichlet BCs; etc.
+\item $f \: \in$ a function space: $f$ satisfies the properties of the space
+\item one way to define an inner product: $<f,g> \equiv \int_{\rho} d\rho \: f^{*}(\rho) g(\rho)$, where superscript $*$ indicates complex conjugate.
+\item Inner products are linear: $<f, [ag_1 + bg_2]> = a<f, g_1> + b<f, g_2>$ ($a$ and $b$ are scalars).
+\end{itemize}
+
+
+\end{document}
