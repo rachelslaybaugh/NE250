@@ -123,12 +123,18 @@ This means that the surface integral has to vanish for all $\vOmega$ giving
 \]
 %
 \item Finally we'll look at the scattering term. As with total interaction, we know $\zeta^{\dagger} \Sigma_s \zeta  = \zeta \Sigma_s \zeta^{\dagger}$. \\
-We will also swap $E'$ and $E$, $\vOmega'$ and $\vOmega$ to get (leaving out volume integration but we'll add it later)
+First, we will swap $E'$ and $E$, $\vOmega'$ and $\vOmega$ (which we can do because this is an arbitrary change)
 \begin{align*}
 \int d\vOmega \int dE\: &\zeta^{\dagger}(\rvec, \vOmega, E) \int d\vOmega' \int dE'\: \Sigma_s(\rvec, E' \rightarrow E, \vOmega' \cdot \vOmega) \zeta(\rvec, \vOmega', E') = \\
 %
-&\int d\vOmega \int dE\: \zeta(\rvec, \vOmega, E) \int d\vOmega' \int dE'\: \Sigma_s(\rvec, E \rightarrow E', \vOmega \cdot \vOmega') \zeta^{\dagger}(\rvec, \vOmega', E') 
+&\int d\vOmega' \int dE'\: \zeta^{\dagger}(\rvec, \vOmega', E') \int d\vOmega \int dE\: \Sigma_s(\rvec, E \rightarrow E', \vOmega \cdot \vOmega') \zeta^{\dagger}(\rvec, \vOmega, E) 
 \end{align*}
+Then we rearrange the integration (which we can do based on the dependencies) to get something that looks like what we want
+\[
+\int d\vOmega \int dE\: \zeta(\rvec, \vOmega, E) \int d\vOmega' \int dE'\: \Sigma_s(\rvec, E \rightarrow E', \vOmega \cdot \vOmega') \zeta^{\dagger}(\rvec, \vOmega', E') 
+\]
+
+
 \end{itemize}
 %
 We now combine all three terms to get the adjoint form of the transport equation (!):
