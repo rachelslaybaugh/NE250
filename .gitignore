@@ -9,3 +9,4 @@
 *.toc
 *.nav
 *.out
+Unused/*/*.pdf
