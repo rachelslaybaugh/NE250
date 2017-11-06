@@ -92,7 +92,7 @@ We will use a somewhat simpler way to describe the angle space, using \autoref{f
 
 The streaming term is 
 \begin{align*}
-\vOmega \cdot \nabla \psi(\rvec, \vOmega, E) &= \mu \frac{\partial \psi}{\partial x} + \eta \frac{\partial \psi}{\partial x} + \xi \frac{\partial \psi}{\partial z} \\
+\vOmega \cdot \nabla \psi(\rvec, \vOmega, E) &= \mu \frac{\partial \psi}{\partial x} + \eta \frac{\partial \psi}{\partial y} + \xi \frac{\partial \psi}{\partial z} \\
 \mu^2 &+ \eta^2 + \xi^2 = 1 \\
 \vOmega &= \mu \hat{x} + \eta \hat{y} + \xi \hat{z}
 \end{align*}
@@ -199,7 +199,7 @@ Recall the integral form of the TE:
 \label{eq:integral}
 \end{equation}
 %
-We can rewrite this with operators to think about how the levels of collisions build up the flux at a given point in phase space. Such an understand both helps us conceptualize transport, but also builds tools we can use computationally.\\
+We can rewrite this with operators to think about how the levels of collisions build up the flux at a given point in phase space. Such an understanding both helps us conceptualize transport, but also builds tools we can use computationally.\\
 If we define $Q'$ as the integrated fixed source and\\
 $K$ as the appropriate integral operator \\
 then $K\psi$ is the neutron production by scattering and fission. \\
@@ -239,7 +239,7 @@ We can use this source in Eqn.~\ref{eq:integral}, integrate the integrating fact
 \begin{align*}
 d\vOmega &= \frac{dA}{\rho'^2}\\
 d\rho' dA &= dV \\
-\int_{4\pi} d\vOmega \int_0^{\infty} d\rho' &-= \int_{V} \frac{dV}{\rho'^2}
+\int_{4\pi} d\vOmega \int_0^{\infty} d\rho' &= \int_{V} \frac{dV}{\rho'^2}
 \end{align*}
 %
 We can also recall that $\rho' = |\vec{r} - \vec{r}'|$, we can let $dV = d^3r'$, and we will define
